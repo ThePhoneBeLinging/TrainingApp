@@ -1,4 +1,4 @@
-package Group15;
+package Group15.Api;
 
 import javafx.application.Platform;
 import org.springframework.core.ParameterizedTypeReference;
