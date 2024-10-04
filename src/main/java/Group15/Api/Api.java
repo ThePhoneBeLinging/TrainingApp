@@ -6,13 +6,13 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-public class Api {
+public class Api
+{
     public static void getWorkout()
     {
         new Thread(() -> {
             String URL = "https://www.dnd5eapi.co/api/";
-            try
-            {
+            try {
                 RestTemplate restTemplate = new RestTemplate();
                 ResponseEntity<Boolean> response = restTemplate.exchange(URL, HttpMethod.GET, null,
                         new ParameterizedTypeReference<Boolean>()
@@ -29,5 +29,4 @@ public class Api {
             }
         }).start();
     }
-    
 }
