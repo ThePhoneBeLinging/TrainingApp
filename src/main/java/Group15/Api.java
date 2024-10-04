@@ -1,25 +1,33 @@
 package Group15;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import javafx.application.Platform;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 public class Api {
-    public static void runApi(){
-
-        HttpClient client = HttpClient.newHttpClient();
-
-        HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create("https://api.api-ninjas.com/v1/exercises?muscle=biceps"))
-            .GET()
-            .build();
-
-        client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-            .thenApply(HttpResponse::body)
-            .thenAccept(System.out::println)
-            .join();
-
+    public static void getWorkout()
+    {
+        new Thread(() -> {
+            String URL = "https://www.dnd5eapi.co/api/";
+            try
+            {
+                RestTemplate restTemplate = new RestTemplate();
+                ResponseEntity<Boolean> response = restTemplate.exchange(URL, HttpMethod.GET, null,
+                        new ParameterizedTypeReference<Boolean>()
+                        {
+                        });
+                Boolean bool = response.getBody();
+                Platform.runLater(() ->
+                {
+                });
+            }
+            catch (Exception e)
+            {
+                System.out.println("Exception occurred: " + e.getMessage());
+            }
+        }).start();
     }
     
 }
