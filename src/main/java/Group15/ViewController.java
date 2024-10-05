@@ -12,6 +12,12 @@ public class ViewController
         ViewController.stage = new Stage();
         ViewController.stage.show();
     }
+
+    public static Scene getScene()
+    {
+        return ViewController.stage.getScene();
+    }
+
     public static void setScene(Scene scene)
     {
         ViewController.stage.setScene(scene);
