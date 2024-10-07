@@ -25,7 +25,7 @@ public class Api
                 List<Exercise> exercise = response.getBody();
                 Platform.runLater(() ->
                     {
-                    System.out.println(exercise.getFirst().description);
+                    System.out.println(exercise.getFirst().title);
                     });
             }
             catch (Exception e)
