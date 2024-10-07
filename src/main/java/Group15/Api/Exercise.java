@@ -2,74 +2,50 @@ package Group15.Api;
 
 public class Exercise
 {
-    private String name;
-    private String type;
-    private String muscle;
-    private String equipment;
-    private String difficulty;
-    private String instructions;
+    private final String title;
+    private final String description;
+    private final String type;
+    private final String bodyPart;
+    private final String equipment;
+    private final String difficulty;
 
-    public Exercise(String name, String type, String muscle, String equipment, String difficulty, String instructions)
+    public Exercise(String title, String description, String type, String bodyPart, String equipment, String difficulty)
     {
-        this.name = name;
+        this.title = title;
+        this.description = description;
         this.type = type;
-        this.muscle = muscle;
+        this.bodyPart = bodyPart;
         this.equipment = equipment;
         this.difficulty = difficulty;
-        this.instructions = instructions;
     }
 
-    public String getInstructions()
+    public String getTitle()
     {
-        return instructions;
+        return title;
     }
 
-    public void setInstructions(String instructions)
+    public String getDescription()
     {
-        this.instructions = instructions;
+        return description;
     }
 
-    public String getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(String difficulty) {
-        this.difficulty = difficulty;
-    }
-
-    public String getMuscle() {
-        return muscle;
-    }
-
-    public void setMuscle(String muscle) {
-        this.muscle = muscle;
-    }
-
-    public String getEquipment() {
-        return equipment;
-    }
-
-    public void setEquipment(String equipment) {
-        this.equipment = equipment;
-    }
-
-    public String getType() {
+    public String getType()
+    {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public String getBodyPart()
+    {
+        return bodyPart;
     }
 
-    public String getName() {
-        return name;
+    public String getEquipment()
+    {
+        return equipment;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getDifficulty()
+    {
+        return difficulty;
     }
-
-
-
-
 }
