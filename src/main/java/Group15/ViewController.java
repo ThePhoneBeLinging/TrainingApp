@@ -1,5 +1,6 @@
 package Group15;
 
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -13,28 +14,12 @@ import java.util.ArrayList;
 public class ViewController
 {
     private static Stage stage;
-    private static HBox hBox;
-    private static VBox vBox;
-    private static String muscleString = "";
-    private ArrayList<String> musclesSelected = new ArrayList<>();
 
     public static void init(Stage stage)
     {
-        hBox = new HBox(20);
-        vBox = new VBox(30);
-        TextField txtField = new TextField();
-        Button btn = new Button("Add Muscle");
-        btn.setOnAction(e -> {
-            muscleString = String.valueOf(txtField.getText());
-
-        });
-        hBox.getChildren().addAll(txtField,btn);
-        vBox.getChildren().add(hBox);
-        Scene sc = new Scene(hBox, 300, 300);
-        stage.setScene(sc);
-        stage.show();
-        //ViewController.stage = new Stage();
-        //ViewController.stage.show();
+        ViewController.stage = new Stage();
+        setScene(createMuscleSelector());
+        ViewController.stage.show();
     }
 
     public static Scene getScene()
@@ -45,5 +30,18 @@ public class ViewController
     public static void setScene(Scene scene)
     {
         ViewController.stage.setScene(scene);
+    }
+
+    public static Scene createMuscleSelector() {
+        int buttonAmount = 7;
+        VBox vbox = new VBox();
+        Scene scene = new Scene(vbox,650,650);
+        for(int i = 0; i < buttonAmount; i++) {
+            Button btn = new Button("Button " + i);
+            vbox.getChildren().add(btn);
+        }
+
+
+        return scene;
     }
 }
