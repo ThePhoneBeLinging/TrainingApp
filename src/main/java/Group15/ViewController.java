@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -38,7 +39,7 @@ public class ViewController
         VBox vbox = new VBox();
         Scene scene = new Scene(vbox,650,650);
         for(BodyPart bodyPart : BodyPart.values()) {
-            Button btn = new Button(bodyPart.toString());
+            ToggleButton btn = new ToggleButton(bodyPart.toString());
             btn.setOnAction(e -> {
                 System.out.println("I am body part: " + bodyPart.toString());
             });
