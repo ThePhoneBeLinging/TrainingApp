@@ -1,5 +1,7 @@
 package Group15;
 
+import Group15.Api.BodyPart;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -33,11 +35,13 @@ public class ViewController
     }
 
     public static Scene createMuscleSelector() {
-        int buttonAmount = 7;
         VBox vbox = new VBox();
         Scene scene = new Scene(vbox,650,650);
-        for(int i = 0; i < buttonAmount; i++) {
-            Button btn = new Button("Button " + i);
+        for(BodyPart bodyPart : BodyPart.values()) {
+            Button btn = new Button(bodyPart.toString());
+            btn.setOnAction(e -> {
+                System.out.println("I am body part: " + bodyPart.toString());
+            });
             vbox.getChildren().add(btn);
         }
 
