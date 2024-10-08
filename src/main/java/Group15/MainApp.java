@@ -17,6 +17,6 @@ public class MainApp extends Application
     public void start(Stage primaryStage)
     {
         Api.getWorkout();
-        ViewController.init();
+        ViewController.init(primaryStage);
     }
 }
