@@ -13,13 +13,5 @@ public enum BodyPart {
     Shoulders,
     Triceps,
     ;
-
-    @Override
-    public String toString() {
-        if(this.equals(LowerBack)) {
-            return "Lower Back";
-        }
-        return super.toString();
-    }
 }
 
