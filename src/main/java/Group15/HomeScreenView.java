@@ -15,7 +15,7 @@ public class HomeScreenView {
     private static String title = "Workout App";
     private static String[] buttons = {"New Workout", "My Workouts", "Exit"};
 
-    public static Scene getScene() {
+    public static Scene createScene() {
         VBox layout = new VBox();
         layout.setSpacing(20);
         layout.setAlignment(Pos.CENTER);
