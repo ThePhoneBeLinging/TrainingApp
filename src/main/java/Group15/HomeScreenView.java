@@ -44,7 +44,8 @@ public class HomeScreenView {
 
     // Here we can display some sort of list of workout, maybe predefined, saved, random or idk
     private static Pane quickWorkoutPane() {
-        HBox quickWorkoutPane = new HBox();
+        VBox quickWorkoutPane = new VBox();
+        quickWorkoutPane.setSpacing(20);
         quickWorkoutPane.setAlignment(Pos.CENTER);
         quickWorkoutPane.setPrefSize(640, 600);
         quickWorkoutPane.setMaxWidth(Region.USE_PREF_SIZE);
@@ -52,7 +53,9 @@ public class HomeScreenView {
         Label quickWorkoutLabel = new Label("A list of some sort of workouts could be displayed " +
                 "here in the colored area. They could have a title and a description\nand be formatted in a way" +
                 "where we can have 5-6 workouts displayed.");
+        Label additionalComment = new Label("The color should not be green btw, it's just to show the area to use");
         quickWorkoutPane.getChildren().add(quickWorkoutLabel);
+        quickWorkoutPane.getChildren().add(additionalComment);
 
         return quickWorkoutPane;
     }
