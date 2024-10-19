@@ -10,7 +10,7 @@ public class ViewController
     public static void init()
     {
         ViewController.stage = new Stage();
-        ViewController.stage.setScene(ExerciseDetailsView.createScene());
+        ViewController.stage.setScene(HomeScreenView.createScene());
         ViewController.stage.show();
     }
 
