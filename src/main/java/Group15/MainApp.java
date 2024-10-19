@@ -16,7 +16,6 @@ public class MainApp extends Application
     @Override
     public void start(Stage primaryStage)
     {
-        ApiUtils.getWorkout();
         ViewController.init();
     }
 }
