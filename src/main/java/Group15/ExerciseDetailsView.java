@@ -1,5 +1,6 @@
 package Group15;
 
+import Group15.Api.Exercise;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,12 +13,12 @@ import javafx.scene.text.FontWeight;
 
 public class ExerciseDetailsView {
 
-    private static String exerciseTitle = "Bench Press";
-    private static String exerciseDescription = "This is a description of bench press. It is a compound exercise that works multiple muscle groups including the chest, shoulders, and triceps. Just press Bro!";
-    private static String exerciseType = "Compound";
-    private static String exerciseBodyPart = "Chest, Shoulders, Triceps";
-    private static String exerciseEquipment = "Bench, Barbell";
-    private static String exerciseDifficulty = "Intermediate";
+    private static Exercise benchPress = new Exercise("Bench Press",
+            "This is a description of bench press. It is a compound exercise that works multiple muscle groups including the chest, shoulders, and triceps. Just press Bro!",
+            "Compound",
+            "Chest, Triceps, Shoulders",
+            "Barbell, Bench",
+            "Intermediate");
 
     public static Scene createScene() {
         VBox layout = new VBox();
@@ -55,24 +56,24 @@ public class ExerciseDetailsView {
         infoPane.setSpacing(10);
         infoPane.setAlignment(Pos.CENTER);
 
-        Label nameLabel = new Label(exerciseTitle);
+        Label nameLabel = new Label(benchPress.title);
         nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 36));
 
-        Label descriptionLabel = new Label(exerciseDescription);
+        Label descriptionLabel = new Label(benchPress.description);
         descriptionLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
         descriptionLabel.setWrapText(true);
         descriptionLabel.setMaxWidth(600);
 
-        Label typeLabel = new Label("Type: " + exerciseType);
+        Label typeLabel = new Label("Type: " + benchPress.type);
         typeLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
-        Label bodyPartLabel = new Label("Body Part: " + exerciseBodyPart);
+        Label bodyPartLabel = new Label("Body Part: " + benchPress.bodyPart);
         bodyPartLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
-        Label equipmentLabel = new Label("Equipment needed: " + exerciseEquipment);
+        Label equipmentLabel = new Label("Equipment needed: " + benchPress.equipment);
         equipmentLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
-        Label difficultyLabel = new Label("Difficulty: " + exerciseDifficulty);
+        Label difficultyLabel = new Label("Difficulty: " + benchPress.difficulty);
         difficultyLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
         infoPane.getChildren().addAll(nameLabel, descriptionLabel, typeLabel, bodyPartLabel, equipmentLabel, difficultyLabel);
@@ -89,14 +90,12 @@ public class ExerciseDetailsView {
         favoriteButton.setPrefSize(200, 50);
         favoriteButton.setOnAction(e -> {
             //TODO: Add functionality to add exercise to favorites
-            System.out.println("Added to Favorites");
         });
 
         Button backButton = new Button("Back");
         backButton.setPrefSize(200, 50);
         backButton.setOnAction(e -> {
             //TODO: add functionality to go back to previous screen, eg. ExerciseListView or WorkoutView
-            System.out.println("Back to previous screen");
         });
 
         buttonPane.getChildren().addAll(favoriteButton, backButton);

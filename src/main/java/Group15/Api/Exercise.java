@@ -9,6 +9,15 @@ public class Exercise
     public String equipment;
     public String difficulty;
 
+    public Exercise(String title, String description, String type, String bodyPart, String equipment, String difficulty)
+    {
+        this.title = title;
+        this.description = description;
+        this.type = type;
+        this.bodyPart = bodyPart;
+        this.equipment = equipment;
+        this.difficulty = difficulty;
+    }
     public Exercise()
     {
     }
