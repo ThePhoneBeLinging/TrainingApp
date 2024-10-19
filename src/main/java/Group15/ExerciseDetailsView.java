@@ -12,9 +12,12 @@ import javafx.scene.text.FontWeight;
 
 public class ExerciseDetailsView {
 
-    private static String exerciseName = "Bench Press";
+    private static String exerciseTitle = "Bench Press";
     private static String exerciseDescription = "This is a description of bench press. It is a compound exercise that works multiple muscle groups including the chest, shoulders, and triceps. Just press Bro!";
+    private static String exerciseType = "Compound";
+    private static String exerciseBodyPart = "Chest, Shoulders, Triceps";
     private static String exerciseEquipment = "Bench, Barbell";
+    private static String exerciseDifficulty = "Intermediate";
 
     public static Scene createScene() {
         VBox layout = new VBox();
@@ -52,7 +55,7 @@ public class ExerciseDetailsView {
         infoPane.setSpacing(10);
         infoPane.setAlignment(Pos.CENTER);
 
-        Label nameLabel = new Label(exerciseName);
+        Label nameLabel = new Label(exerciseTitle);
         nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 36));
 
         Label descriptionLabel = new Label(exerciseDescription);
@@ -60,10 +63,19 @@ public class ExerciseDetailsView {
         descriptionLabel.setWrapText(true);
         descriptionLabel.setMaxWidth(600);
 
+        Label typeLabel = new Label("Type: " + exerciseType);
+        typeLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
+
+        Label bodyPartLabel = new Label("Body Part: " + exerciseBodyPart);
+        bodyPartLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
+
         Label equipmentLabel = new Label("Equipment needed: " + exerciseEquipment);
         equipmentLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
-        infoPane.getChildren().addAll(nameLabel, descriptionLabel, equipmentLabel);
+        Label difficultyLabel = new Label("Difficulty: " + exerciseDifficulty);
+        difficultyLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
+
+        infoPane.getChildren().addAll(nameLabel, descriptionLabel, typeLabel, bodyPartLabel, equipmentLabel, difficultyLabel);
 
         return infoPane;
     }
