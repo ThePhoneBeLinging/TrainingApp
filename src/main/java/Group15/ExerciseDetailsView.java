@@ -13,22 +13,15 @@ import javafx.scene.text.FontWeight;
 
 public class ExerciseDetailsView {
 
-    private static Exercise benchPress = new Exercise("Bench Press",
-            "This is a description of bench press. It is a compound exercise that works multiple muscle groups including the chest, shoulders, and triceps. Just press Bro!",
-            "Compound",
-            "Chest, Triceps, Shoulders",
-            "Barbell, Bench",
-            "Intermediate");
-
-    public static Scene createScene() {
+    public static Scene createScene(Exercise exercise) {
         VBox layout = new VBox();
         layout.setSpacing(20);
         layout.setAlignment(Pos.CENTER);
 
-        Pane exerciseImagePane = createExerciseImagePane();
+        Pane exerciseImagePane = createExerciseImagePane(exercise.imagePath);
         layout.getChildren().add(exerciseImagePane);
 
-        Pane exerciseInfoPane = createExerciseInfoPane();
+        Pane exerciseInfoPane = createExerciseInfoPane(exercise);
         layout.getChildren().add(exerciseInfoPane);
 
         Pane buttonPane = createButtonPane();
@@ -37,12 +30,12 @@ public class ExerciseDetailsView {
         return new Scene(layout, 1000, 800);
     }
 
-    private static Pane createExerciseImagePane() {
+    private static Pane createExerciseImagePane(String imagePath) {
         VBox imagePane = new VBox();
         imagePane.setAlignment(Pos.CENTER);
         imagePane.setPrefSize(640, 400);
 
-        Image exerciseImage = new Image("file:src/main/resources/benchPress.png");
+        Image exerciseImage = new Image(imagePath);
         ImageView imageView = new ImageView(exerciseImage);
         imageView.setFitHeight(300);
         imageView.setFitWidth(300);
@@ -51,29 +44,29 @@ public class ExerciseDetailsView {
         return imagePane;
     }
 
-    private static Pane createExerciseInfoPane() {
+    private static Pane createExerciseInfoPane(Exercise exercise) {
         VBox infoPane = new VBox();
         infoPane.setSpacing(10);
         infoPane.setAlignment(Pos.CENTER);
 
-        Label nameLabel = new Label(benchPress.title);
+        Label nameLabel = new Label(exercise.title);
         nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 36));
 
-        Label descriptionLabel = new Label(benchPress.description);
+        Label descriptionLabel = new Label(exercise.description);
         descriptionLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
         descriptionLabel.setWrapText(true);
         descriptionLabel.setMaxWidth(600);
 
-        Label typeLabel = new Label("Type: " + benchPress.type);
+        Label typeLabel = new Label("Type: " + exercise.type);
         typeLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
-        Label bodyPartLabel = new Label("Body Part: " + benchPress.bodyPart);
+        Label bodyPartLabel = new Label("Body Part: " + exercise.bodyPart);
         bodyPartLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
-        Label equipmentLabel = new Label("Equipment needed: " + benchPress.equipment);
+        Label equipmentLabel = new Label("Equipment needed: " + exercise.equipment);
         equipmentLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
-        Label difficultyLabel = new Label("Difficulty: " + benchPress.difficulty);
+        Label difficultyLabel = new Label("Difficulty: " + exercise.difficulty);
         difficultyLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
         infoPane.getChildren().addAll(nameLabel, descriptionLabel, typeLabel, bodyPartLabel, equipmentLabel, difficultyLabel);
