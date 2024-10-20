@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-public class Api
+public class ApiUtils
 {
     public static void getWorkout()
     {
