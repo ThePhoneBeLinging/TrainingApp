@@ -19,8 +19,8 @@ public class ViewController
     public static void init(Stage stage)
     {
         ViewController.stage = stage;
-        stage.setScene(createMuscleSelectorScene());
-        stage.show();
+        ViewController.stage.setScene(HomeScreenView.createScene());
+        ViewController.stage.show();
     }
 
     public static Scene getScene()
