@@ -13,9 +13,4 @@ public class Exercise
     {
     }
 
-    @Override
-    public String toString() {
-        return "Title: " + title + "\n" + "Description: " + description + "\n" + "Type: " + type + "\n" + "Body Part: "
-                + bodyPart + "\n" + "Equipment: " + equipment + "\n" + "Difficulty: " + difficulty;
-    }
 }
