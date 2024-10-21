@@ -1,6 +1,5 @@
 package Group15;
 
-import Group15.Api.Api;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -16,7 +15,6 @@ public class MainApp extends Application
     @Override
     public void start(Stage primaryStage)
     {
-        Api.getWorkout();
-        ViewController.init();
+        ViewController.init(primaryStage);
     }
 }
