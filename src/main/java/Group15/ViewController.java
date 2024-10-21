@@ -22,7 +22,7 @@ import java.util.List;
 public class ViewController
 {
     private static Stage stage;
-    private static final int MAX_BUTTON_SELECTION = 5;
+    private static final int MAX_BUTTON_SELECTION = 3;
 
     public static void init(Stage stage)
     {

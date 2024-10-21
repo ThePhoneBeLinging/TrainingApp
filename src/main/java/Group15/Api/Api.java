@@ -49,7 +49,7 @@ public class Api
                         List<Exercise> exercises = response.getBody();
                         Platform.runLater(() -> {
 
-                            System.out.println("Exercise: " + exercises.getFirst().title + "\n");
+                            System.out.println("Exercise for " + uBody + ": " + exercises.getFirst().title + "\n");
                         });
             } catch (Exception e) {
                 System.out.println("Exception occured: " + e.getMessage());
