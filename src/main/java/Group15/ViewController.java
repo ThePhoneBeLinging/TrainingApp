@@ -2,18 +2,11 @@ package Group15;
 
 import Group15.Api.BodyPart;
 import Group15.Api.Api;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -22,13 +15,11 @@ import java.util.List;
 public class ViewController
 {
     private static Stage stage;
-    private static final int MAX_BUTTON_SELECTION = 3;
 
     public static void init(Stage stage)
     {
-        ViewController.stage = new Stage();
-        setScene(createMuscleSelector());
-        ViewController.stage.show();
+        stage.setScene(createMuscleSelectorScene());
+        stage.show();
     }
 
     public static Scene getScene()
@@ -41,7 +32,7 @@ public class ViewController
         ViewController.stage.setScene(scene);
     }
 
-    public static Scene createMuscleSelector() {
+    public static Scene createMuscleSelectorScene() {
         VBox vBox = new VBox();
         List<ToggleButton> toggleButtons = new ArrayList<>();
 
@@ -49,15 +40,6 @@ public class ViewController
             ToggleButton toggleButton = new ToggleButton(bodyPart.toString());
             toggleButtons.add(toggleButton);
             vBox.getChildren().add(toggleButton);
-
-            toggleButton.setOnAction(e -> {
-                long amountSelected = toggleButtons.stream().filter(ToggleButton::isSelected).count();
-
-                if(amountSelected > MAX_BUTTON_SELECTION) {
-                    toggleButton.setSelected(false);
-                    System.out.println("You have exceeded max selection: " + MAX_BUTTON_SELECTION);
-                }
-            });
         }
 
         Button submitButton = new Button("Submit");
@@ -68,7 +50,13 @@ public class ViewController
             List<String> selectedButtonNames = new ArrayList<>();
             for (ToggleButton toggleButton : toggleButtons) {
                 if (toggleButton.isSelected()) {
-                    Api.getWorkoutFromInterface(toggleButton.getText(), MAX_BUTTON_SELECTION);
+                    try {
+                        Thread.sleep(10);
+                        Api.getExercisesFromBodypart(toggleButton.getText(), 1);
+                    } catch (InterruptedException ex) {
+                        throw new RuntimeException(ex);
+                    }
+
                 }
             }
             System.out.println("Selected buttons: " + String.join(", ", selectedButtonNames));
