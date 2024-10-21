@@ -10,24 +10,21 @@ import java.util.List;
 
 public class Api
 {
-    public static void getExercisesFromBodypart(String bodyPart, int exerciseAmout) {
-        String uBody = bodyPart.substring(0,1).toUpperCase() + bodyPart.substring(1);
-        new Thread(() -> {
-            String URL = "https://158.179.205.63/api/v3/get/exercise/byBodyPart?bodyPart=" + uBody + "&amountOfExercises=" + Integer.toString(exerciseAmout);
+    public static List<Exercise> getExercisesFromBodypart(String bodyPart, int exerciseAmount) {
+        String upperCaseBodyPart = bodyPart.substring(0,1).toUpperCase() + bodyPart.substring(1);
+
+            String URL = "https://158.179.205.63/api/v3/get/exercise/byBodyPart?bodyPart=" + upperCaseBodyPart + "&amountOfExercises=" + exerciseAmount;
             try {
                 RestTemplate restTemplate = new RestTemplate();
                 ResponseEntity<List<Exercise>> response = restTemplate.exchange(URL, HttpMethod.GET, null,
                         new ParameterizedTypeReference<List<Exercise>>() {
                         });
                         List<Exercise> exercises = response.getBody();
-                        Platform.runLater(() -> {
-
-                            System.out.println("Exercise for " + uBody + ": " + exercises.getFirst().title + "\n");
-                        });
+                        System.out.println(exercises);
+                        return exercises;
             } catch (Exception e) {
                 System.out.println("Exception occured: " + e.getMessage());
             }
-
-        }).start();
+        return null;
     }
 }

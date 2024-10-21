@@ -51,7 +51,7 @@ public class ViewController
             for (ToggleButton toggleButton : toggleButtons) {
                 if (toggleButton.isSelected()) {
                     try {
-                        Thread.sleep(10);
+                        Thread.sleep(1);
                         Api.getExercisesFromBodypart(toggleButton.getText(), 1);
                     } catch (InterruptedException ex) {
                         throw new RuntimeException(ex);
