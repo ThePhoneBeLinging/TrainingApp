@@ -18,6 +18,7 @@ public class ViewController
 
     public static void init(Stage stage)
     {
+        ViewController.stage = stage;
         stage.setScene(createMuscleSelectorScene());
         stage.show();
     }
@@ -50,13 +51,7 @@ public class ViewController
             List<String> selectedButtonNames = new ArrayList<>();
             for (ToggleButton toggleButton : toggleButtons) {
                 if (toggleButton.isSelected()) {
-                    try {
-                        Thread.sleep(1);
-                        Api.getExercisesFromBodypart(toggleButton.getText(), 1);
-                    } catch (InterruptedException ex) {
-                        throw new RuntimeException(ex);
-                    }
-
+                    Api.getExercisesFromBodypart(toggleButton.getText(), 1);
                 }
             }
             System.out.println("Selected buttons: " + String.join(", ", selectedButtonNames));
