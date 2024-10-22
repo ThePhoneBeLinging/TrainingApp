@@ -15,8 +15,12 @@ public class Workout {
     }
 
     public void swapExercise(Exercise toRemove, Exercise toAdd) {
-        removeExercise(toRemove);
-        addExercise(toAdd);
+        if (exercises.contains(toRemove)) {
+            removeExercise(toRemove);
+            addExercise(toAdd);
+        }
+        System.err.println("Exercise not found in workout");
+        System.exit(1);
 
     }
 
