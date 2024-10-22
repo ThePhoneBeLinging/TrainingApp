@@ -3,6 +3,7 @@ package Group15;
 import Group15.Api.BodyPart;
 import Group15.Api.Api;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
@@ -49,19 +50,16 @@ public class ViewController
         Button backButton = new Button("Back");
         submitButton.setPrefSize(200,50);
         backButton.setPrefSize(200,50);
-        VBox.setMargin(backButton, new Insets(0, 25, 0, 0));
         VBox.setMargin(submitButton, new Insets(50, 0, 0, 0));
         vBox.getChildren().add(submitButton);
         vBox.getChildren().add(backButton);
 
         submitButton.setOnAction(e -> {
-            List<String> selectedButtonNames = new ArrayList<>();
             for (ToggleButton toggleButton : toggleButtons) {
                 if (toggleButton.isSelected()) {
-                    Api.getExercisesFromBodypart(toggleButton.getText(), 1);
+
                 }
             }
-            System.out.println("Selected buttons: " + String.join(", ", selectedButtonNames));
         });
 
         backButton.setOnAction(e -> {
@@ -71,6 +69,7 @@ public class ViewController
         });
 
         vBox.setSpacing(20);
+        vBox.setAlignment(Pos.CENTER);
 
         return new Scene(vBox, 1000,800);
     }
