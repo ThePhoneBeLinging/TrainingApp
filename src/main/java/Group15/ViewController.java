@@ -19,6 +19,7 @@ public class ViewController
 
     public static void init(Stage stage)
     {
+        Api.getAllExercises();
         ViewController.stage = stage;
         ViewController.stage.setScene(HomeScreenView.createScene());
         ViewController.stage.show();
