@@ -1,5 +1,6 @@
 package Group15;
 
+import Group15.Api.Exercise;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -69,7 +70,7 @@ public class HomeScreenView {
             newButton.setPrefSize(200, 50);
             newButton.setOnAction(_ -> {
                 switch (button) {
-                    case "New Workout" -> System.out.println("New Workout pressed");
+                    case "New Workout" -> ViewController.setScene(WorkoutView.createScene());
                     case "My Workouts" -> System.out.println("My Workouts pressed");
                     case "Exit" -> System.exit(0);
                 }
