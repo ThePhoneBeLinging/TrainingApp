@@ -19,18 +19,45 @@ public class WorkoutClassTest {
 
     @Test
     public void testAddExercise() {
-        //Add when fred eventually manages to get his PR through
-        //Exercise pushup = new Exercise("Pushup", "Push your body up and down", "Strength", "Chest", "None", "Easy");
-        testWorkout.addExercise(new Exercise());
+        Exercise pushup = new Exercise("Pushup", "Push your body up and down", "Strength", "Chest", "None", "Easy");
+        testWorkout.addExercise(pushup);
         Assert.assertEquals(1, testWorkout.getExercises().size());
+        Assert.assertEquals("Pushup", testWorkout.getExercises().get(0).title);
         testWorkout.addExercise(new Exercise());
+        Assert.assertNotEquals(1, testWorkout.getExercises().size());
         testWorkout.addExercise(new Exercise());
         Assert.assertEquals(3, testWorkout.getExercises().size());
+        Assert.assertNotEquals("Pushup", testWorkout.getExercises().get(1).title);
     }
 
     @Test
     public void testRemoveExercise() {
-        //Add when fred eventually manages to get his PR through
+        Exercise situp = new Exercise("Situp", "Sit up and down", "Strength", "Abs", "None", "Easy");
+        testWorkout.addExercise(situp);
+        Assert.assertEquals(1, testWorkout.getExercises().size());
+        testWorkout.addExercise(new Exercise());
+        testWorkout.addExercise(new Exercise());
+        testWorkout.addExercise(new Exercise());
+        Assert.assertEquals(4, testWorkout.getExercises().size());
+        Assert.assertTrue(testWorkout.getExercises().contains(situp));
+        testWorkout.removeExercise(situp);
+        Assert.assertEquals(3, testWorkout.getExercises().size());
+        Assert.assertFalse(testWorkout.getExercises().contains(situp));
+    }
+
+    @Test
+    public void testSwapExercise() {
+        Exercise situp = new Exercise("Situp", "Sit up and down", "Strength", "Abs", "None", "Easy");
+        Exercise pushup = new Exercise("Pushup", "Push your body up and down", "Strength", "Chest", "None", "Easy");
+        testWorkout.addExercise(situp);
+        testWorkout.addExercise(pushup);
+        Assert.assertEquals(2, testWorkout.getExercises().size());
+        Assert.assertTrue(testWorkout.getExercises().contains(situp));
+        Assert.assertTrue(testWorkout.getExercises().contains(pushup));
+        testWorkout.swapExercise(situp, pushup);
+        Assert.assertEquals(2, testWorkout.getExercises().size());
+        Assert.assertFalse(testWorkout.getExercises().contains(situp));
+        Assert.assertTrue(testWorkout.getExercises().contains(pushup));
     }
 
 
