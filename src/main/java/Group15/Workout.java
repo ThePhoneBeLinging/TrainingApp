@@ -2,10 +2,11 @@ package Group15;
 
 import Group15.Api.Exercise;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Workout {
-    private List<Exercise> exercises;
+    private List<Exercise> exercises = new ArrayList<>();
 
     public Workout() {}
 
