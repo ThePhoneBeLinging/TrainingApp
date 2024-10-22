@@ -8,6 +8,7 @@ public class Exercise
     public String bodyPart;
     public String equipment;
     public String difficulty;
+    public int timePerRep;
 
     public Exercise()
     {

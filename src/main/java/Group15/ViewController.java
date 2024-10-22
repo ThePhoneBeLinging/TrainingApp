@@ -37,15 +37,22 @@ public class ViewController
         VBox vBox = new VBox();
         List<ToggleButton> toggleButtons = new ArrayList<>();
 
+
         for (BodyPart bodyPart : BodyPart.values()) {
             ToggleButton toggleButton = new ToggleButton(bodyPart.toString());
+            toggleButton.setPrefSize(200,50);
             toggleButtons.add(toggleButton);
             vBox.getChildren().add(toggleButton);
         }
 
         Button submitButton = new Button("Submit");
+        Button backButton = new Button("Back");
+        submitButton.setPrefSize(200,50);
+        backButton.setPrefSize(200,50);
+        VBox.setMargin(backButton, new Insets(0, 25, 0, 0));
         VBox.setMargin(submitButton, new Insets(50, 0, 0, 0));
         vBox.getChildren().add(submitButton);
+        vBox.getChildren().add(backButton);
 
         submitButton.setOnAction(e -> {
             List<String> selectedButtonNames = new ArrayList<>();
@@ -57,6 +64,14 @@ public class ViewController
             System.out.println("Selected buttons: " + String.join(", ", selectedButtonNames));
         });
 
-        return new Scene(vBox, 600,600);
+        backButton.setOnAction(e -> {
+            Scene homeScreen = HomeScreenView.createScene();
+            Stage thisStage = (Stage) backButton.getScene().getWindow();
+            thisStage.setScene(homeScreen);
+        });
+
+        vBox.setSpacing(20);
+
+        return new Scene(vBox, 1000,800);
     }
 }
