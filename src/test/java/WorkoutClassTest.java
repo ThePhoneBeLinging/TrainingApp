@@ -33,13 +33,10 @@ public class WorkoutClassTest {
     @Test
     public void testRemoveExercise() {
         Exercise situp = new Exercise("Situp", "Sit up and down", "Strength", "Abs", "None", "Easy");
+        testAddExercise();
         testWorkout.addExercise(situp);
-        Assert.assertEquals(1, testWorkout.getExercises().size());
-        testWorkout.addExercise(new Exercise());
-        testWorkout.addExercise(new Exercise());
-        testWorkout.addExercise(new Exercise());
-        Assert.assertEquals(4, testWorkout.getExercises().size());
         Assert.assertTrue(testWorkout.getExercises().contains(situp));
+        Assert.assertEquals(4, testWorkout.getExercises().size());
         testWorkout.removeExercise(situp);
         Assert.assertEquals(3, testWorkout.getExercises().size());
         Assert.assertFalse(testWorkout.getExercises().contains(situp));
@@ -47,17 +44,13 @@ public class WorkoutClassTest {
 
     @Test
     public void testSwapExercise() {
-        Exercise situp = new Exercise("Situp", "Sit up and down", "Strength", "Abs", "None", "Easy");
-        Exercise pushup = new Exercise("Pushup", "Push your body up and down", "Strength", "Chest", "None", "Easy");
-        testWorkout.addExercise(situp);
-        testWorkout.addExercise(pushup);
-        Assert.assertEquals(2, testWorkout.getExercises().size());
-        Assert.assertTrue(testWorkout.getExercises().contains(situp));
-        Assert.assertTrue(testWorkout.getExercises().contains(pushup));
-        testWorkout.swapExercise(situp, pushup);
-        Assert.assertEquals(2, testWorkout.getExercises().size());
-        Assert.assertFalse(testWorkout.getExercises().contains(situp));
-        Assert.assertTrue(testWorkout.getExercises().contains(pushup));
+        testRemoveExercise();
+        Assert.assertEquals("Pushup", testWorkout.getExercises().get(0).title);
+        Exercise pullup = new Exercise("Pullup", "Pull your body up and down", "Strength", "Back", "Pullup bar", "Hard");
+        testWorkout.swapExercise(testWorkout.getExercises().get(0), pullup);
+        Assert.assertTrue(testWorkout.getExercises().contains(pullup));
+        Assert.assertFalse(testWorkout.getExercises().contains(new Exercise("Pushup", "Push your body up and down", "Strength", "Chest", "None", "Easy")));
+
     }
 
 

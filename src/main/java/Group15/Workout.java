@@ -15,10 +15,9 @@ public class Workout {
     }
 
     public void swapExercise(Exercise toRemove, Exercise toAdd) {
-        if (exercises.contains(toRemove)) {
-            exercises.remove(toRemove);
-            exercises.add(toAdd);
-        }
+        removeExercise(toRemove);
+        addExercise(toAdd);
+
     }
 
     public void removeExercise(Exercise exercise) {
