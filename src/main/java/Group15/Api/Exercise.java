@@ -18,4 +18,8 @@ public class Exercise {
         this.difficulty = difficulty;
         this.imagePath = imagePath;
     }
+
+    public Exercise(){
+
+    }
 }
