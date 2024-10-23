@@ -18,6 +18,7 @@ public class Workout {
         if (exercises.contains(toRemove)) {
             removeExercise(toRemove);
             addExercise(toAdd);
+            return;
         }
         System.err.println("Exercise not found in workout");
         System.exit(1);
