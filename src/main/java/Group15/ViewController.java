@@ -2,6 +2,7 @@ package Group15;
 
 import Group15.Api.BodyPart;
 import Group15.Api.Api;
+import Group15.WorkoutAlgorithm;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -54,11 +55,12 @@ public class ViewController
         VBox.setMargin(submitButton, new Insets(50, 0, 0, 0));
         vBox.getChildren().add(submitButton);
         vBox.getChildren().add(backButton);
+        WorkoutAlgorithm workoutAlgorithm = new WorkoutAlgorithm();
 
         submitButton.setOnAction(e -> {
             for (ToggleButton toggleButton : toggleButtons) {
                 if (toggleButton.isSelected()) {
-
+                    workoutAlgorithm.createWorkoutFromExercises(toggleButton.getText());
                 }
             }
         });
