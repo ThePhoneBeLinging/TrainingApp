@@ -10,17 +10,19 @@ import java.util.List;
 public class WorkoutAlgorithm {
     private static final String FILE_NAME = "exercises.json";
 
-    //TODO: Should return a workout, when class is implemented
-    public void createWorkoutFromExercises(String bodyPart) {
+    public Workout createWorkoutFromExercises(String bodyPart) {
         List<Exercise> exercises = loadExercisesFromFile();
+        Workout workout = new Workout();
 
         if(exercises != null) {
             for(int i = 0; i < exercises.size(); i++) {
                 if(exercises.get(i).bodyPart.equals(bodyPart)) {
-                    System.out.println(i + ". Exercise for: " + exercises.get(i).bodyPart + " " + exercises.get(i).title);
+                    workout.addExercise(exercises.get(i));
+                    System.out.println(i + ". " + exercises.get(i).title);
                 }
             }
         }
+        return workout;
     }
 
     private static List<Exercise> loadExercisesFromFile() {
