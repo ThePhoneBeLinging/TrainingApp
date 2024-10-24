@@ -25,7 +25,7 @@ public class WorkoutView {
         Pane titlePane = createTitlePane();
         layout.getChildren().add(titlePane);
 
-        Pane WorkoutPane = createWorkoutPane();
+        Pane WorkoutPane = createWorkoutPane(workout);
         layout.getChildren().add(WorkoutPane);
 
         Pane buttonPane = createButtonPane();
@@ -44,7 +44,7 @@ public class WorkoutView {
         return titlePane;
     }
 
-    private static Pane createWorkoutPane(){
+    private static Pane createWorkoutPane(Workout workout){
         VBox workoutPane = new VBox();
         workoutPane.setAlignment(Pos.CENTER);
         workoutPane.setSpacing(20);
@@ -52,9 +52,11 @@ public class WorkoutView {
         workoutPane.setMaxWidth(Region.USE_PREF_SIZE);
 
         workoutPane.setBackground(new Background(new BackgroundFill(Color.GREY, null, null)));
-        Label workoutLabel = new Label("A list of exercises from the given workout");
 
-        workoutPane.getChildren().add(workoutLabel);
+        for (Exercise exercise : workout.getExercises()){
+            Label exerciseLabel = new Label(exercise.title);
+            workoutPane.getChildren().add(exerciseLabel);
+        }
 
         return workoutPane;
     }
