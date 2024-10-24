@@ -1,6 +1,5 @@
 package Group15;
 
-import Group15.Api.Api;
 import Group15.Api.Exercise;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,9 +15,9 @@ public class WorkoutAlgorithm {
         List<Exercise> exercises = loadExercisesFromFile();
 
         if(exercises != null) {
-            for(Exercise exercise : exercises) {
-                if(exercise.bodyPart.equals(bodyPart)) {
-                    System.out.println("Found Body Part!");
+            for(int i = 0; i < exercises.size(); i++) {
+                if(exercises.get(i).bodyPart.equals(bodyPart)) {
+                    System.out.println(i + ". Exercise for: " + exercises.get(i).bodyPart + " " + exercises.get(i).title);
                 }
             }
         }
