@@ -29,12 +29,16 @@ public class MuscleSelectionView {
         Button submitButton = new Button("Submit");
         Button backButton = new Button("Back");
         TextField inputField = new TextField();
+
         submitButton.setPrefSize(200,50);
         backButton.setPrefSize(200,50);
+
         inputField.setPrefSize(200, 50);
         inputField.setMaxSize(200, 50);
         inputField.setPromptText("Input how many minutes to workout");
+
         VBox.setMargin(submitButton, new Insets(50, 0, 0, 0));
+
         vBox.getChildren().add(inputField);
         vBox.getChildren().add(submitButton);
         vBox.getChildren().add(backButton);
@@ -42,21 +46,21 @@ public class MuscleSelectionView {
         WorkoutAlgorithm workoutAlgorithm = new WorkoutAlgorithm();
 
         submitButton.setOnAction(_ -> {
-                if(inputField.getText() != null && !inputField.getText().isEmpty()) {
-                    if(!inputField.getText().matches("\\d+")){
-                        System.out.println("Input is not a number!");
-                    } else {
-                        int timeInSeconds = Integer.parseInt(inputField.getText()) * 60;
-                        for(ToggleButton toggleButton : toggleButtons) {
-                            if (toggleButton.isSelected()) {
-                                workoutAlgorithm.createWorkoutFromExercises(toggleButton.getText(), timeInSeconds);
-                            }
+            if(inputField.getText() != null && !inputField.getText().isEmpty()) {
+                if(!inputField.getText().matches("\\d+")){
+                    System.out.println("Input is not a number!");
+                } else {
+                    int timeInSeconds = Integer.parseInt(inputField.getText()) * 60;
+                    for(ToggleButton toggleButton : toggleButtons) {
+                        if (toggleButton.isSelected()) {
+                            workoutAlgorithm.createWorkoutFromExercises(toggleButton.getText(), timeInSeconds);
                         }
                     }
                 }
+            }
         });
 
-        backButton.setOnAction(e -> {
+        backButton.setOnAction(_ -> {
             Scene homeScreen = HomeScreenView.createScene();
             Stage thisStage = (Stage) backButton.getScene().getWindow();
             thisStage.setScene(homeScreen);
