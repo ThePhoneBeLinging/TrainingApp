@@ -6,7 +6,7 @@ import Group15.Api.Exercise;
 import java.util.List;
 
 public class WorkoutAlgorithm {
-    public Workout createWorkoutFromExercises(String bodyPart) {
+    public Workout createWorkoutFromExercises(String bodyPart, int timeInSeconds) {
         List<Exercise> exercises = ApiUtils.getAllExercises();
         Workout workout = new Workout();
 

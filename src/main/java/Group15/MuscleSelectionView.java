@@ -41,27 +41,19 @@ public class MuscleSelectionView {
 
         WorkoutAlgorithm workoutAlgorithm = new WorkoutAlgorithm();
 
-        for(ToggleButton toggleButton : toggleButtons) {
-            if (toggleButton.isSelected()) {
-                workoutAlgorithm.createWorkoutFromExercises(toggleButton.getText());
-            }
-        }
-
         submitButton.setOnAction(_ -> {
                 if(inputField.getText() != null && !inputField.getText().isEmpty()) {
                     if(!inputField.getText().matches("\\d+")){
                         System.out.println("Input is not a number!");
                     } else {
                         int timeInSeconds = Integer.parseInt(inputField.getText()) * 60;
-                        System.out.println("Amount of time in seconds: " + timeInSeconds);
+                        for(ToggleButton toggleButton : toggleButtons) {
+                            if (toggleButton.isSelected()) {
+                                workoutAlgorithm.createWorkoutFromExercises(toggleButton.getText(), timeInSeconds);
+                            }
+                        }
                     }
                 }
-
-            for(ToggleButton toggleButton : toggleButtons) {
-                if (toggleButton.isSelected()) {
-                    workoutAlgorithm.createWorkoutFromExercises(toggleButton.getText());
-                }
-            }
         });
 
         backButton.setOnAction(e -> {
