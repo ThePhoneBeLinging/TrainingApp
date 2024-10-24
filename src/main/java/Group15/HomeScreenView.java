@@ -11,8 +11,6 @@ import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import javax.swing.text.View;
-
 public class HomeScreenView {
 
     private static String title = "Workout App";
@@ -73,7 +71,7 @@ public class HomeScreenView {
             newButton.setOnAction(_ -> {
                 switch (button) {
                     case "New Workout":
-                        Scene createWorkoutScene = ViewController.createMuscleSelectorScene();
+                        Scene createWorkoutScene = MuscleSelectionView.createMuscleSelectorScene();
                         Stage thisStage = (Stage) newButton.getScene().getWindow();
                         thisStage.setScene(createWorkoutScene);
                         break;

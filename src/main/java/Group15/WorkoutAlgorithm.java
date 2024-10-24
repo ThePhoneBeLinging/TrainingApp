@@ -2,10 +2,7 @@ package Group15;
 
 import Group15.Api.ApiUtils;
 import Group15.Api.Exercise;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.File;
 import java.util.List;
 
 public class WorkoutAlgorithm {
