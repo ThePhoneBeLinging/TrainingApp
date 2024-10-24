@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-public class Api
+public class ApiUtils
 {
     public static List<Exercise> getExercisesFromBodypart(String bodyPart, int exerciseAmount) {
         String upperCaseBodyPart = bodyPart.substring(0,1).toUpperCase() + bodyPart.substring(1);
