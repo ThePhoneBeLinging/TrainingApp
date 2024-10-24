@@ -1,7 +1,7 @@
 package Group15;
 
 import Group15.Api.BodyPart;
-import Group15.Api.Api;
+import Group15.Api.ApiUtils;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -51,7 +51,7 @@ public class ViewController
             List<String> selectedButtonNames = new ArrayList<>();
             for (ToggleButton toggleButton : toggleButtons) {
                 if (toggleButton.isSelected()) {
-                    Api.getExercisesFromBodypart(toggleButton.getText(), 1);
+                    ApiUtils.getExercisesFromBodypart(toggleButton.getText(), 1);
                 }
             }
             System.out.println("Selected buttons: " + String.join(", ", selectedButtonNames));
