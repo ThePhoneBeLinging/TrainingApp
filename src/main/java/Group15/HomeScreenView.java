@@ -1,6 +1,5 @@
 package Group15;
 
-import Group15.Api.Exercise;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

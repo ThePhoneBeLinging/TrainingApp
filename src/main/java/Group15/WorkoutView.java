@@ -2,7 +2,6 @@ package Group15;
 
 import Group15.Api.Exercise;
 
-import ch.qos.logback.core.Layout;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,9 +11,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 
 public class WorkoutView {
-
+    private  static Workout testWorkout = new Workout();
     private static String title = "Workout";
     private static String[] buttons = {"Back", "Edit Workout", "Save As PDF"};
     public static Scene createScene(){
@@ -25,7 +27,7 @@ public class WorkoutView {
         Pane titlePane = createTitlePane();
         layout.getChildren().add(titlePane);
 
-        Pane WorkoutPane = createWorkoutPane(workout);
+        Pane WorkoutPane = createWorkoutPane(testWorkout);
         layout.getChildren().add(WorkoutPane);
 
         Pane buttonPane = createButtonPane();
@@ -51,11 +53,24 @@ public class WorkoutView {
         workoutPane.setPrefSize(640, 600);
         workoutPane.setMaxWidth(Region.USE_PREF_SIZE);
 
-        workoutPane.setBackground(new Background(new BackgroundFill(Color.GREY, null, null)));
-
         for (Exercise exercise : workout.getExercises()){
-            Label exerciseLabel = new Label(exercise.title);
-            workoutPane.getChildren().add(exerciseLabel);
+            ImageView imageView = null;
+
+            try{
+                Image image = new Image(WorkoutView.class.getResource("/benchPress.png").toExternalForm(), 100, 100, true, true);
+                imageView = new ImageView(image);
+            } catch (Exception e) {
+                System.out.println("Error loading image for exercise: " + exercise.title);
+                imageView = new ImageView();
+            }
+
+            Label exerciseLabel = new Label(exercise.title + ": " + exercise.description);
+
+            HBox exerciseBox = new HBox();
+            exerciseBox.setSpacing(15);
+            exerciseBox.getChildren().addAll(imageView, exerciseLabel);
+
+            workoutPane.getChildren().add(exerciseBox);
         }
 
         return workoutPane;
@@ -71,7 +86,11 @@ public class WorkoutView {
             newButton.setOnAction(_ -> {
                 switch (button){
                     case "Back" -> ViewController.setScene(HomeScreenView.createScene());
-                    case "Edit Workout" -> System.out.println("Edit Workout Pressed");
+                    case "Edit Workout" -> {
+                        testWorkout.addExercise(new Exercise("Push-up", "Push-ups are a great upper body exercise.", "Strength", "Chest", "None", "Intermediate", "src/main/resources/benchPress.png"));
+                        testWorkout.addExercise(new Exercise("Squat", "Squats are a fundamental lower body exercise.", "Strength", "Legs", "None", "Beginner", "src/main/resources/benchPress.png"));
+                        ViewController.setScene(WorkoutView.createScene());
+                    }
                     case "Save As PDF" -> System.out.println("Save As PDF Pressed");
                 }
             });
