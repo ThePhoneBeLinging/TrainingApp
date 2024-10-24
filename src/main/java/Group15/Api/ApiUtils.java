@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.File;
 import java.util.List;
 
-public class Api
+public class ApiUtils
 {
     private static final String URL = "https://158.179.205.63/api/v3/get/exercise/all";
     private static final String FILE_NAME = "exercises.json";

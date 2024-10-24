@@ -1,7 +1,7 @@
 package Group15;
 
 import Group15.Api.BodyPart;
-import Group15.Api.Api;
+import Group15.Api.ApiUtils;
 import Group15.WorkoutAlgorithm;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,7 +20,7 @@ public class ViewController
 
     public static void init(Stage stage)
     {
-        Api.getAllExercises();
+        ApiUtils.getAllExercises();
         ViewController.stage = stage;
         ViewController.stage.setScene(HomeScreenView.createScene());
         ViewController.stage.show();
@@ -39,7 +39,6 @@ public class ViewController
     public static Scene createMuscleSelectorScene() {
         VBox vBox = new VBox();
         List<ToggleButton> toggleButtons = new ArrayList<>();
-
 
         for (BodyPart bodyPart : BodyPart.values()) {
             ToggleButton toggleButton = new ToggleButton(bodyPart.toString());
