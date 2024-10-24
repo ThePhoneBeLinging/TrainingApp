@@ -13,18 +13,9 @@ import java.util.List;
 public class ApiUtils
 {
     private static final String URL = "https://158.179.205.63/api/v3/get/exercise/all";
-    private static final String FILE_NAME = "exercises.json";
 
     public static List<Exercise> getAllExercises() {
-        File file = new File(FILE_NAME);
-        if(file.exists()) {
-            return loadFromFile(file);
-        }
-        else {
-            List<Exercise> exercises = getExercisesFromAPI();
-            saveToFile(exercises, file);
-            return exercises;
-        }
+        return getExercisesFromAPI();
     }
 
     private static List<Exercise> getExercisesFromAPI() {
@@ -38,23 +29,5 @@ public class ApiUtils
             System.out.println("Exception occured: " + e.getMessage());
         }
         return null;
-    }
-
-    private static void saveToFile(List<Exercise> exercises, File file) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            objectMapper.writeValue(file, exercises);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static List<Exercise> loadFromFile(File file) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            return objectMapper.readValue(file, new TypeReference<List<Exercise>>() {});
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 }
