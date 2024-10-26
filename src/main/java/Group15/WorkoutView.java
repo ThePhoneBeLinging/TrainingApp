@@ -2,6 +2,7 @@ package Group15;
 
 import Group15.Api.Exercise;
 
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -57,18 +58,27 @@ public class WorkoutView {
             ImageView imageView = null;
 
             try{
-                Image image = new Image(WorkoutView.class.getResource("/benchPress.png").toExternalForm(), 100, 100, true, true);
+                Image image = new Image(WorkoutView.class.getResource("/" + exercise.title + ".png").toExternalForm(), 100, 100, true, true);
                 imageView = new ImageView(image);
             } catch (Exception e) {
                 System.out.println("Error loading image for exercise: " + exercise.title);
                 imageView = new ImageView();
             }
 
-            Label exerciseLabel = new Label(exercise.title + ": " + exercise.description);
+            Label exerciseLabel1 = new Label(exercise.title + ": ");
+            exerciseLabel1.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+
+            Label exerciseLabel2 = new Label(exercise.description);
+            exerciseLabel2.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
+
 
             HBox exerciseBox = new HBox();
-            exerciseBox.setSpacing(15);
-            exerciseBox.getChildren().addAll(imageView, exerciseLabel);
+            exerciseBox.setSpacing(10);
+            exerciseBox.setAlignment(Pos.CENTER_LEFT);
+            exerciseBox.setBackground(Background.fill(Color.LIGHTGRAY));
+            exerciseBox.setPadding(new Insets(10));
+
+            exerciseBox.getChildren().addAll(imageView, exerciseLabel1, exerciseLabel2);
 
             workoutPane.getChildren().add(exerciseBox);
         }
