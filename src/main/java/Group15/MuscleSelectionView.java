@@ -5,8 +5,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -17,16 +20,43 @@ public class MuscleSelectionView {
 
     public static Scene createMuscleSelectorScene() {
         VBox vBox = new VBox();
+        HBox inputAndEquipBox = new HBox();
+
+        ComboBox comboBox = new ComboBox<>();
+        comboBox.getItems().addAll(
+                "All",
+                "Bodyweight",
+                "Barbell",
+                "Dumbell",
+                "Machine"
+        );
+        comboBox.setMinSize(200,50);
+        comboBox.setPromptText("Select Equipment...");
+
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(20);
+        gridPane.setVgap(20);
+        gridPane.setAlignment(Pos.CENTER);
+
         List<ToggleButton> toggleButtons = new ArrayList<>();
 
+        int col = 0;
+        int row = 0;
         for (BodyPart bodyPart : BodyPart.values()) {
             ToggleButton toggleButton = new ToggleButton(bodyPart.toString());
             toggleButton.setMinSize(200,50);
             toggleButtons.add(toggleButton);
-            vBox.getChildren().add(toggleButton);
+            gridPane.add(toggleButton, col, row);
+
+            col++;
+            if(col > 1) {
+                col = 0;
+                row++;
+            }
         }
 
         Button submitButton = new Button("Submit");
+
         Button backButton = new Button("Back");
         TextField inputField = new TextField();
 
@@ -39,7 +69,12 @@ public class MuscleSelectionView {
 
         VBox.setMargin(submitButton, new Insets(50, 0, 0, 0));
 
-        vBox.getChildren().add(inputField);
+        inputAndEquipBox.getChildren().addAll(inputField,comboBox);
+        inputAndEquipBox.setSpacing(20);
+        inputAndEquipBox.setAlignment(Pos.CENTER);
+
+        vBox.getChildren().add(gridPane);
+        vBox.getChildren().add(inputAndEquipBox);
         vBox.getChildren().add(submitButton);
         vBox.getChildren().add(backButton);
 
