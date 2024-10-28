@@ -2,6 +2,8 @@ package Group15;
 
 import Group15.Api.Exercise;
 
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -71,6 +73,12 @@ public class WorkoutView {
             Label exerciseLabel2 = new Label(exercise.description);
             exerciseLabel2.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
+            EventHandler<MouseEvent> clickAction = event -> {
+                System.out.println("Clicked on exercise: " + exercise.title);
+                //ViewController.setScene(ExerciseDetailsView.createScene(exercise));
+            };
+
+            imageView.setOnMouseClicked(clickAction);
 
             HBox exerciseBox = new HBox();
             exerciseBox.setSpacing(10);
@@ -97,8 +105,8 @@ public class WorkoutView {
                 switch (button){
                     case "Back" -> ViewController.setScene(HomeScreenView.createScene());
                     case "Edit Workout" -> {
-                        testWorkout.addExercise(new Exercise("Push-up", "Push-ups are a great upper body exercise.", "Strength", "Chest", "None", "Intermediate", "src/main/resources/benchPress.png"));
-                        testWorkout.addExercise(new Exercise("Squat", "Squats are a fundamental lower body exercise.", "Strength", "Legs", "None", "Beginner", "src/main/resources/benchPress.png"));
+                        testWorkout.addExercise(new Exercise("benchPress", "Push-ups are a great upper body exercise.", "Strength", "Chest", "None", "Intermediate", "src/main/resources/benchPress.png"));
+                        testWorkout.addExercise(new Exercise("benchPress", "Squats are a fundamental lower body exercise.", "Strength", "Legs", "None", "Beginner", "src/main/resources/benchPress.png"));
                         ViewController.setScene(WorkoutView.createScene());
                     }
                     case "Save As PDF" -> System.out.println("Save As PDF Pressed");
