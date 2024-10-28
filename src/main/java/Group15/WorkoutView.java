@@ -2,6 +2,7 @@ package Group15;
 
 import Group15.Api.Exercise;
 
+import javafx.stage.Stage;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.geometry.Insets;
@@ -21,8 +22,8 @@ import javafx.scene.image.ImageView;
 public class WorkoutView {
     private  static Workout testWorkout = new Workout();
     private static String title = "Workout";
-    private static String[] buttons = {"Back", "Edit Workout", "Save As PDF"};
-    public static Scene createScene(){
+    private static String[] buttons = {"Back", "Edit Workout", "Save"};
+    public static Scene createScene(Stage stage){
         VBox layout = new VBox();
         layout.setSpacing(20);
         layout.setAlignment(Pos.CENTER);
@@ -30,7 +31,7 @@ public class WorkoutView {
         Pane titlePane = createTitlePane();
         layout.getChildren().add(titlePane);
 
-        Pane WorkoutPane = createWorkoutPane(testWorkout);
+        Pane WorkoutPane = createWorkoutPane(testWorkout, stage);
         layout.getChildren().add(WorkoutPane);
 
         Pane buttonPane = createButtonPane();
@@ -49,7 +50,7 @@ public class WorkoutView {
         return titlePane;
     }
 
-    private static Pane createWorkoutPane(Workout workout){
+    private static Pane createWorkoutPane(Workout workout, Stage stage){
         VBox workoutPane = new VBox();
         workoutPane.setAlignment(Pos.CENTER);
         workoutPane.setSpacing(20);
@@ -74,11 +75,16 @@ public class WorkoutView {
             exerciseLabel2.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
             EventHandler<MouseEvent> clickAction = event -> {
-                System.out.println("Clicked on exercise: " + exercise.title);
-                //ViewController.setScene(ExerciseDetailsView.createScene(exercise));
+                System.out.println("Image or title clicked for exercise: " + exercise.title);
+                Scene currentScene = stage.getScene();
+                Scene exerciseDetailsScene = ExerciseDetailsView.createScene(exercise, stage, currentScene);
+                stage.setScene(exerciseDetailsScene);
             };
 
             imageView.setOnMouseClicked(clickAction);
+            exerciseLabel1.setOnMouseClicked(clickAction);
+
+
 
             HBox exerciseBox = new HBox();
             exerciseBox.setSpacing(10);
@@ -107,9 +113,9 @@ public class WorkoutView {
                     case "Edit Workout" -> {
                         testWorkout.addExercise(new Exercise("benchPress", "Push-ups are a great upper body exercise.", "Strength", "Chest", "None", "Intermediate", "src/main/resources/benchPress.png"));
                         testWorkout.addExercise(new Exercise("benchPress", "Squats are a fundamental lower body exercise.", "Strength", "Legs", "None", "Beginner", "src/main/resources/benchPress.png"));
-                        ViewController.setScene(WorkoutView.createScene());
+                        ViewController.setScene(WorkoutView.createScene(ViewController.getStage()));
                     }
-                    case "Save As PDF" -> System.out.println("Save As PDF Pressed");
+                    case "Save" -> System.out.println("Save Pressed");
                 }
             });
 

@@ -9,6 +9,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 public class HomeScreenView {
 
@@ -69,7 +70,7 @@ public class HomeScreenView {
             newButton.setPrefSize(200, 50);
             newButton.setOnAction(_ -> {
                 switch (button) {
-                    case "New Workout" -> ViewController.setScene(WorkoutView.createScene());
+                    case "New Workout" -> ViewController.setScene(WorkoutView.createScene(ViewController.getStage()));
                     case "My Workouts" -> System.out.println("My Workouts pressed");
                     case "Exit" -> System.exit(0);
                 }
