@@ -21,7 +21,7 @@ public class MuscleSelectionView {
 
         for (BodyPart bodyPart : BodyPart.values()) {
             ToggleButton toggleButton = new ToggleButton(bodyPart.toString());
-            toggleButton.setPrefSize(200,50);
+            toggleButton.setMinSize(200,50);
             toggleButtons.add(toggleButton);
             vBox.getChildren().add(toggleButton);
         }
@@ -46,16 +46,13 @@ public class MuscleSelectionView {
         WorkoutAlgorithm workoutAlgorithm = new WorkoutAlgorithm();
 
         submitButton.setOnAction(_ -> {
-            if(inputField.getText() != null && !inputField.getText().isEmpty()) {
-                if(!inputField.getText().matches("\\d+")){
-                    System.out.println("Input is not a number!");
-                } else {
-                    int timeInSeconds = Integer.parseInt(inputField.getText()) * 60;
-                    for(ToggleButton toggleButton : toggleButtons) {
-                        if (toggleButton.isSelected()) {
-                            workoutAlgorithm.createWorkoutFromExercises(toggleButton.getText(), timeInSeconds);
-                        }
-                    }
+            if(inputField.getText() == null || inputField.getText().isEmpty() || !inputField.getText().matches("\\d+")) {
+                System.out.println("Invalid input");
+            }
+            int timeInSeconds = Integer.parseInt(inputField.getText());
+            for(ToggleButton toggleButton : toggleButtons) {
+                if (toggleButton.isSelected()) {
+                    workoutAlgorithm.createWorkoutFromExercises(toggleButton.getText(), timeInSeconds);
                 }
             }
         });
