@@ -3,7 +3,6 @@ package Group15;
 import Group15.Api.ApiUtils;
 import Group15.Api.Exercise;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class WorkoutAlgorithm {
