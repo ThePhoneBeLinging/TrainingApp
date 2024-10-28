@@ -22,16 +22,17 @@ public class MuscleSelectionView {
         VBox vBox = new VBox();
         HBox inputAndEquipBox = new HBox();
 
-        ComboBox comboBox = new ComboBox<>();
-        comboBox.getItems().addAll(
+        ComboBox equipmentSelector = new ComboBox<>();
+        equipmentSelector.getItems().addAll(
                 "All",
-                "Bodyweight",
+                "Body weight",
                 "Barbell",
-                "Dumbell",
+                "Dumbbell",
                 "Machine"
         );
-        comboBox.setMinSize(200,50);
-        comboBox.setPromptText("Select Equipment...");
+        equipmentSelector.setMinSize(200,50);
+        equipmentSelector.setPromptText("Select Equipment...");
+        String selectedEquipment = (String) equipmentSelector.getValue();
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(20);
@@ -69,7 +70,7 @@ public class MuscleSelectionView {
 
         VBox.setMargin(submitButton, new Insets(50, 0, 0, 0));
 
-        inputAndEquipBox.getChildren().addAll(inputField,comboBox);
+        inputAndEquipBox.getChildren().addAll(inputField,equipmentSelector);
         inputAndEquipBox.setSpacing(20);
         inputAndEquipBox.setAlignment(Pos.CENTER);
 
@@ -87,7 +88,7 @@ public class MuscleSelectionView {
             int timeInSeconds = Integer.parseInt(inputField.getText());
             for(ToggleButton toggleButton : toggleButtons) {
                 if (toggleButton.isSelected()) {
-                    workoutAlgorithm.createWorkoutFromExercises(toggleButton.getText(), timeInSeconds);
+                    workoutAlgorithm.createWorkoutFromExercises(toggleButton.getText(), selectedEquipment, timeInSeconds);
                 }
             }
         });
