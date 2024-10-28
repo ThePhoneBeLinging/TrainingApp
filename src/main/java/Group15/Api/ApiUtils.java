@@ -11,18 +11,30 @@ public class ApiUtils
 {
     private static final String URL = "https://158.179.205.63/api/v3/get/exercise/all";
 
-    public static List<Exercise> getAllExercises() {
-        return getExercisesFromAPI();
+    private static List<Exercise> exercises;
+
+    public static List<Exercise> getAllExercises()
+    {
+        if (exercises == null)
+        {
+            exercises = getExercisesFromAPI();
+        }
+        return exercises;
     }
 
-    private static List<Exercise> getExercisesFromAPI() {
-        try {
+    private static List<Exercise> getExercisesFromAPI()
+    {
+        try
+        {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<List<Exercise>> response = restTemplate.exchange(URL, HttpMethod.GET, null,
-                    new ParameterizedTypeReference<List<Exercise>>() {
+                    new ParameterizedTypeReference<List<Exercise>>()
+                    {
                     });
             return response.getBody();
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             System.out.println("Exception occured: " + e.getMessage());
         }
         return null;
