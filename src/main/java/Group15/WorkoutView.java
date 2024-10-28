@@ -2,6 +2,8 @@ package Group15;
 
 import Group15.Api.Exercise;
 
+import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -31,7 +33,7 @@ public class WorkoutView {
         Pane titlePane = createTitlePane();
         layout.getChildren().add(titlePane);
 
-        Pane WorkoutPane = createWorkoutPane(testWorkout, stage);
+        Node WorkoutPane = createWorkoutPane(testWorkout, stage);
         layout.getChildren().add(WorkoutPane);
 
         Pane buttonPane = createButtonPane();
@@ -50,7 +52,7 @@ public class WorkoutView {
         return titlePane;
     }
 
-    private static Pane createWorkoutPane(Workout workout, Stage stage){
+    private static Node createWorkoutPane(Workout workout, Stage stage){
         VBox workoutPane = new VBox();
         workoutPane.setAlignment(Pos.CENTER);
         workoutPane.setSpacing(20);
@@ -98,7 +100,13 @@ public class WorkoutView {
             workoutPane.getChildren().add(exerciseBox);
         }
 
-        return workoutPane;
+        ScrollPane  scrollPane = new ScrollPane(workoutPane);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setPrefViewportHeight(400);
+        scrollPane.setMaxWidth(Region.USE_PREF_SIZE);
+        scrollPane.setPadding(new Insets(10));
+
+        return scrollPane;
     }
 
     private static Pane createButtonPane(){
