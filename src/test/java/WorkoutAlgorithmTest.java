@@ -64,7 +64,7 @@ public class WorkoutAlgorithmTest {
         assertFalse(workout.getExercises().isEmpty());
         workout.getExercises().forEach(exercise -> {
             assertEquals("chest", exercise.bodyPart);
-            assertTrue("bodyweight".equals(exercise.equipment));
+            assertEquals("bodyweight", exercise.equipment);
         });
     }
 

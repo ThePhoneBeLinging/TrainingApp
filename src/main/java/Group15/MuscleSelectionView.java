@@ -4,10 +4,9 @@ import Group15.Api.BodyPart;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -15,12 +14,14 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MuscleSelectionView {
 
     public static Scene createMuscleSelectorScene() {
         VBox vBox = new VBox();
         HBox inputAndEquipBox = new HBox();
+        HBox imageAndTextButtons;
 
         ComboBox equipmentSelector = new ComboBox<>();
         equipmentSelector.getItems().addAll(
@@ -44,7 +45,23 @@ public class MuscleSelectionView {
         int col = 0;
         int row = 0;
         for (BodyPart bodyPart : BodyPart.values()) {
-            ToggleButton toggleButton = new ToggleButton(bodyPart.toString());
+            Image bodyPartImage = new Image(Objects.requireNonNull(MuscleSelectionView.class.getResourceAsStream("/bodyparts/" +bodyPart.toString()+ ".png")));
+            ImageView bodyPartImageView = new ImageView(bodyPartImage);
+            bodyPartImageView.setFitHeight(60);
+            bodyPartImageView.setFitWidth((double) 200 /2);
+            bodyPartImageView.setPreserveRatio(true);
+
+            Label bodyPartName = new Label(bodyPart.toString());
+            bodyPartName.setMinWidth((double) 200 /3);
+            bodyPartName.setAlignment(Pos.CENTER);
+
+            imageAndTextButtons = new HBox(bodyPartImageView, bodyPartName);
+            imageAndTextButtons.setAlignment(Pos.CENTER);
+            imageAndTextButtons.setSpacing(10);
+
+
+            ToggleButton toggleButton = new ToggleButton();
+            toggleButton.setGraphic(imageAndTextButtons);
             toggleButton.setMinSize(200,50);
             toggleButtons.add(toggleButton);
             gridPane.add(toggleButton, col, row);
