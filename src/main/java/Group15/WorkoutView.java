@@ -61,10 +61,11 @@ public class WorkoutView {
             ImageView imageView = null;
 
             try{
-                Image image = new Image(WorkoutView.class.getResource("/" + exercise.title + ".png").toExternalForm(), 100, 100, true, true);
+                Image image = new Image(WorkoutView.class.getResource("/images/" + exercise.title + ".png").toExternalForm(), 100, 100, true, true);
                 imageView = new ImageView(image);
             } catch (Exception e) {
                 System.out.println("Error loading image for exercise: " + exercise.title);
+                e.printStackTrace();
                 imageView = new ImageView();
             }
 
@@ -111,8 +112,8 @@ public class WorkoutView {
                 switch (button){
                     case "Back" -> ViewController.setScene(HomeScreenView.createScene());
                     case "Edit Workout" -> {
-                        testWorkout.addExercise(new Exercise("benchPress", "Push-ups are a great upper body exercise.", "Strength", "Chest", "None", "Intermediate", "src/main/resources/benchPress.png"));
-                        testWorkout.addExercise(new Exercise("benchPress", "Squats are a fundamental lower body exercise.", "Strength", "Legs", "None", "Beginner", "src/main/resources/benchPress.png"));
+                        testWorkout.addExercise(new Exercise("benchPress", "Push-ups are a great upper body exercise.", "Strength", "Chest", "None", "Intermediate", "/images/benchPress.png"));
+                        testWorkout.addExercise(new Exercise("benchPress", "Squats are a fundamental lower body exercise.", "Strength", "Legs", "None", "Beginner", "/images/benchPress.png"));
                         ViewController.setScene(WorkoutView.createScene(ViewController.getStage()));
                     }
                     case "Save" -> System.out.println("Save Pressed");

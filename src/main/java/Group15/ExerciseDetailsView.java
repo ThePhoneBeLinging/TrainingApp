@@ -40,12 +40,16 @@ public class ExerciseDetailsView {
         imagePane.setPrefSize(640, 400);
 
         try {
-            Image exerciseImage = new Image(imagePath);
+            String fullImagePath = WorkoutView.class.getResource(imagePath).toExternalForm();
+            System.out.println("Loading image from: " + fullImagePath);
+
+            Image exerciseImage = new Image(fullImagePath);
             ImageView imageView = new ImageView(exerciseImage);
-            imageView.setFitHeight(400);
-            imageView.setFitWidth(640);
+            imageView.setFitHeight(300);
+            imageView.setFitWidth(300);
 
             imagePane.getChildren().add(imageView);
+
         } catch (Exception e){
             System.out.println("Error loading image: " + imagePath);
             e.printStackTrace();
