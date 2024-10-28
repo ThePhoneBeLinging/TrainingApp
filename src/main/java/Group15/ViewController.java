@@ -19,6 +19,8 @@ public class ViewController
     public static void init(Stage stage)
     {
         ViewController.stage = stage;
+        ViewController.stage.setHeight(800);
+        ViewController.stage.setWidth(1000);
         ViewController.stage.setScene(HomeScreenView.createScene());
         ViewController.stage.show();
     }
