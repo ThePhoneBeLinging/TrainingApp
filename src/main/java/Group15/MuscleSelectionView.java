@@ -20,11 +20,13 @@ import java.util.Objects;
 public class MuscleSelectionView {
 
     public static Scene createMuscleSelectorScene() {
-        VBox vBox = new VBox();
+        VBox mainVBox = new VBox();
         HBox inputAndEquipBox = new HBox();
         HBox imageAndTextButtons;
 
-        List<String> selectedBodyparts = new ArrayList<>();
+        List<String> selectedBodyParts = new ArrayList<>();
+        List<String> dislikedBodyParts = new ArrayList<>();
+        List<String> selectedEquipment = new ArrayList<>();
 
         ComboBox equipmentSelector = new ComboBox<>();
         equipmentSelector.getItems().addAll(
@@ -36,14 +38,13 @@ public class MuscleSelectionView {
         );
         equipmentSelector.setMinSize(200,50);
         equipmentSelector.setPromptText("Select Equipment...");
-        String selectedEquipment = (String) equipmentSelector.getValue();
 
-        GridPane gridPane = new GridPane();
-        gridPane.setHgap(20);
-        gridPane.setVgap(20);
-        gridPane.setAlignment(Pos.CENTER);
+        GridPane bodyPartsGridPane = new GridPane();
+        bodyPartsGridPane.setHgap(20);
+        bodyPartsGridPane.setVgap(20);
+        bodyPartsGridPane.setAlignment(Pos.CENTER);
 
-        List<ToggleButton> toggleButtons = new ArrayList<>();
+        List<ToggleButton> bodyPartToggleButtons = new ArrayList<>();
 
         int col = 0;
         int row = 0;
@@ -62,12 +63,11 @@ public class MuscleSelectionView {
             imageAndTextButtons.setAlignment(Pos.CENTER);
             imageAndTextButtons.setSpacing(10);
 
-
-            ToggleButton toggleButton = new ToggleButton();
-            toggleButton.setGraphic(imageAndTextButtons);
-            toggleButton.setMinSize(200,50);
-            toggleButtons.add(toggleButton);
-            gridPane.add(toggleButton, col, row);
+            ToggleButton bodyPartToggleButton = new ToggleButton();
+            bodyPartToggleButton.setGraphic(imageAndTextButtons);
+            bodyPartToggleButton.setMinSize(200,50);
+            bodyPartToggleButtons.add(bodyPartToggleButton);
+            bodyPartsGridPane.add(bodyPartToggleButton, col, row);
 
             col++;
             if(col > 1) {
@@ -77,39 +77,39 @@ public class MuscleSelectionView {
         }
 
         Button submitButton = new Button("Submit");
-
         Button backButton = new Button("Back");
-        TextField inputField = new TextField();
+
+        TextField minutesInputField = new TextField();
 
         submitButton.setPrefSize(200,50);
         backButton.setPrefSize(200,50);
 
-        inputField.setPrefSize(200, 50);
-        inputField.setMaxSize(200, 50);
-        inputField.setPromptText("Input how many minutes to workout");
+        minutesInputField.setPrefSize(200, 50);
+        minutesInputField.setMaxSize(200, 50);
+        minutesInputField.setPromptText("Input how many minutes to workout");
 
         VBox.setMargin(submitButton, new Insets(50, 0, 0, 0));
 
-        inputAndEquipBox.getChildren().addAll(inputField,equipmentSelector);
+        inputAndEquipBox.getChildren().addAll(minutesInputField,equipmentSelector);
         inputAndEquipBox.setSpacing(20);
         inputAndEquipBox.setAlignment(Pos.CENTER);
 
-        vBox.getChildren().add(gridPane);
-        vBox.getChildren().add(inputAndEquipBox);
-        vBox.getChildren().add(submitButton);
-        vBox.getChildren().add(backButton);
+        mainVBox.getChildren().add(bodyPartsGridPane);
+        mainVBox.getChildren().add(inputAndEquipBox);
+        mainVBox.getChildren().add(submitButton);
+        mainVBox.getChildren().add(backButton);
 
 
         submitButton.setOnAction(_ -> {
-            if(inputField.getText() == null || inputField.getText().isEmpty() || !inputField.getText().matches("\\d+")) {
+            if(minutesInputField.getText() == null || minutesInputField.getText().isEmpty() || !minutesInputField.getText().matches("\\d+")) {
                 System.out.println("Invalid input");
                 return;
             }
-            int timeInSeconds = Integer.parseInt(inputField.getText());
-            for(ToggleButton toggleButton : toggleButtons) {
+            int timeInSeconds = Integer.parseInt(minutesInputField.getText());
+            for(ToggleButton toggleButton : bodyPartToggleButtons) {
                 if (toggleButton.isSelected()) {
-                    selectedBodyparts.add(toggleButton.getText());
-                    WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyparts, Collections.singletonList(""), Collections.singletonList(""), timeInSeconds);
+                    selectedBodyParts.add(toggleButton.getText());
+                    WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInSeconds);
                 }
             }
         });
@@ -118,9 +118,9 @@ public class MuscleSelectionView {
             ViewController.setScene(HomeScreenView.createScene());
         });
 
-        vBox.setSpacing(20);
-        vBox.setAlignment(Pos.CENTER);
+        mainVBox.setSpacing(20);
+        mainVBox.setAlignment(Pos.CENTER);
 
-        return new Scene(vBox, 1000,800);
+        return new Scene(mainVBox, 1000,800);
     }
 }
