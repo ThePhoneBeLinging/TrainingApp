@@ -99,7 +99,6 @@ public class MuscleSelectionView {
         vBox.getChildren().add(submitButton);
         vBox.getChildren().add(backButton);
 
-        WorkoutAlgorithm workoutAlgorithm = new WorkoutAlgorithm();
 
         submitButton.setOnAction(_ -> {
             if(inputField.getText() == null || inputField.getText().isEmpty() || !inputField.getText().matches("\\d+")) {
@@ -110,7 +109,7 @@ public class MuscleSelectionView {
             for(ToggleButton toggleButton : toggleButtons) {
                 if (toggleButton.isSelected()) {
                     selectedBodyparts.add(toggleButton.getText());
-                    workoutAlgorithm.createWorkoutFromExercises(selectedBodyparts, Collections.singletonList(""), Collections.singletonList(""), timeInSeconds);
+                    WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyparts, Collections.singletonList(""), Collections.singletonList(""), timeInSeconds);
                 }
             }
         });
