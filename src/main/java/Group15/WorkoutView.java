@@ -24,7 +24,7 @@ import java.io.FileOutputStream;
 
 
 public class WorkoutView {
-    private  static Workout testWorkout = new Workout();
+    private  static Workout workout = new Workout();
     private static String title = "Workout";
     private static String[] buttons = {"Back", "Edit Workout", "Save"};
     public static Scene createScene(){
@@ -35,13 +35,13 @@ public class WorkoutView {
         Pane titlePane = createTitlePane();
         layout.getChildren().add(titlePane);
 
-        Node WorkoutPane = createWorkoutPane(testWorkout);
+        Node WorkoutPane = createWorkoutPane(workout);
         layout.getChildren().add(WorkoutPane);
 
         Pane buttonPane = createButtonPane();
         layout.getChildren().add(buttonPane);
 
-        return new Scene(layout, 1000, 800);
+        return new Scene(layout);
     }
 
     private static Pane createTitlePane(){
@@ -122,11 +122,9 @@ public class WorkoutView {
                 switch (button){
                     case "Back" -> ViewController.setScene(HomeScreenView.createScene());
                     case "Edit Workout" -> {
-                        testWorkout.addExercise(new Exercise("benchPress", "Push-ups are a great upper body exercise.", "Strength", "Chest", "None", "Intermediate", "/images/benchPress.png"));
-                        testWorkout.addExercise(new Exercise("benchPress", "Squats are a fundamental lower body exercise.", "Strength", "Legs", "None", "Beginner", "/images/benchPress.png"));
-                        ViewController.setScene(WorkoutView.createScene());
                     }
-                    case "Save" -> System.out.println("Save Pressed");
+                    case "Save" -> {
+                    }
                 }
             });
 

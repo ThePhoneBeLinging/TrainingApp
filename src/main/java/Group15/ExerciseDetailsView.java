@@ -30,7 +30,7 @@ public class ExerciseDetailsView {
         Pane buttonPane = createButtonPane();
         layout.getChildren().add(buttonPane);
 
-        return new Scene(layout, 1000, 800);
+        return new Scene(layout);
     }
 
 
