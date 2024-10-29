@@ -1,11 +1,11 @@
 package Group15;
 
 import Group15.Api.ApiUtils;
-import Group15.Api.BodyPart;
 import Group15.Api.Exercise;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class WorkoutAlgorithm {
     public Workout createWorkoutFromExercises(List<String> bodyParts, String equipment, int timeInMinutes) {
@@ -15,6 +15,7 @@ public class WorkoutAlgorithm {
         Workout workout = new Workout();
 
         if (exercises != null) {
+            Collections.shuffle(exercises, new Random(exercises.size()));
             for (Exercise exercise : exercises) {
                 if (bodyParts.contains(exercise.bodyPart)) {
                     boolean equipmentMatch = equipment.equals("All") || exercise.equipment.equals(equipment);
