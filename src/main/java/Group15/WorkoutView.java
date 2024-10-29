@@ -4,7 +4,6 @@ import Group15.Api.Exercise;
 
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
-import javafx.stage.Stage;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.geometry.Insets;
@@ -19,8 +18,6 @@ import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javax.swing.text.Document;
-import java.io.FileOutputStream;
 
 
 public class WorkoutView {
