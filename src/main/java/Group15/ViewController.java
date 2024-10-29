@@ -2,13 +2,13 @@ package Group15;
 
 import Group15.Api.BodyPart;
 import Group15.Api.ApiUtils;
+import Group15.Api.Exercise;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,4 +61,5 @@ public class ViewController
 
         return new Scene(vBox, 600,600);
     }
+
 }
