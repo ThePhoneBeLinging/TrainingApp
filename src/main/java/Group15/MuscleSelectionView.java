@@ -115,9 +115,7 @@ public class MuscleSelectionView {
         });
 
         backButton.setOnAction(_ -> {
-            Scene homeScreen = HomeScreenView.createScene();
-            Stage thisStage = (Stage) backButton.getScene().getWindow();
-            thisStage.setScene(homeScreen);
+            ViewController.setScene(HomeScreenView.createScene());
         });
 
         vBox.setSpacing(20);
