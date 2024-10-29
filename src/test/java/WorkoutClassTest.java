@@ -19,7 +19,7 @@ public class WorkoutClassTest {
 
     @Test
     public void testAddExercise() {
-        Exercise pushup = new Exercise("Pushup", "Push your body up and down", "Strength", "Chest", "None", "Easy", "None");
+        Exercise pushup = new Exercise("Pushup", "Push your body up and down", "Strength", "Chest", "None", "Easy", "None", 3000);
         testWorkout.addExercise(pushup);
         Assert.assertEquals(1, testWorkout.getExercises().size());
         Assert.assertEquals("Pushup", testWorkout.getExercises().get(0).title);
@@ -32,7 +32,7 @@ public class WorkoutClassTest {
 
     @Test
     public void testRemoveExercise() {
-        Exercise situp = new Exercise("Situp", "Sit up and down", "Strength", "Abs", "None", "Easy", "None");
+        Exercise situp = new Exercise("Situp", "Sit up and down", "Strength", "Abs", "None", "Easy", "None", 3000);
         testAddExercise();
         testWorkout.addExercise(situp);
         Assert.assertTrue(testWorkout.getExercises().contains(situp));
@@ -46,10 +46,10 @@ public class WorkoutClassTest {
     public void testSwapExercise() {
         testRemoveExercise();
         Assert.assertEquals("Pushup", testWorkout.getExercises().get(0).title);
-        Exercise pullup = new Exercise("Pullup", "Pull your body up and down", "Strength", "Back", "Pullup bar", "Hard", "None");
+        Exercise pullup = new Exercise("Pullup", "Pull your body up and down", "Strength", "Back", "Pullup bar", "Hard", "None", 3000);
         testWorkout.swapExercise(testWorkout.getExercises().get(0), pullup);
         Assert.assertTrue(testWorkout.getExercises().contains(pullup));
-        Assert.assertFalse(testWorkout.getExercises().contains(new Exercise("Pushup", "Push your body up and down", "Strength", "Chest", "None", "Easy", "None")));
+        Assert.assertFalse(testWorkout.getExercises().contains(new Exercise("Pushup", "Push your body up and down", "Strength", "Chest", "None", "Easy", "None", 3000)));
 
     }
 

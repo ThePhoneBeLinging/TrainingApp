@@ -11,7 +11,7 @@ public class Exercise {
     public int timePerRep;
 
 
-    public Exercise(String title, String description, String type, String bodyPart, String equipment, String difficulty, String imagePath) {
+    public Exercise(String title, String description, String type, String bodyPart, String equipment, String difficulty, String imagePath, int timePerRep) {
         this.title = title;
         this.description = description;
         this.type = type;
@@ -19,6 +19,7 @@ public class Exercise {
         this.equipment = equipment;
         this.difficulty = difficulty;
         this.imagePath = imagePath;
+        this.timePerRep = timePerRep;
     }
 
     public Exercise(){
