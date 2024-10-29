@@ -10,10 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,8 +44,8 @@ public class MuscleSelectionView {
 
         List<ToggleButton> bodyPartToggleButtons = new ArrayList<>();
 
-        int col = 0;
-        int row = 0;
+        int columns = 0;
+        int rows = 0;
         for (BodyPart bodyPart : BodyPart.values()) {
             Image bodyPartImage = new Image(Objects.requireNonNull(MuscleSelectionView.class.getResourceAsStream("/bodyparts/" +bodyPart.toString()+ ".png")));
             ImageView bodyPartImageView = new ImageView(bodyPartImage);
@@ -67,12 +65,12 @@ public class MuscleSelectionView {
             bodyPartToggleButton.setGraphic(imageAndTextButtons);
             bodyPartToggleButton.setMinSize(200,50);
             bodyPartToggleButtons.add(bodyPartToggleButton);
-            bodyPartsGridPane.add(bodyPartToggleButton, col, row);
+            bodyPartsGridPane.add(bodyPartToggleButton, columns, rows);
 
-            col++;
-            if(col > 1) {
-                col = 0;
-                row++;
+            columns++;
+            if(columns > 1) {
+                columns = 0;
+                rows++;
             }
         }
 
