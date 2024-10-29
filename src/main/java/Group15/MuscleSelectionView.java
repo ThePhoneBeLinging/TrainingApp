@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -109,7 +110,7 @@ public class MuscleSelectionView {
             for(ToggleButton toggleButton : toggleButtons) {
                 if (toggleButton.isSelected()) {
                     selectedBodyparts.add(toggleButton.getText());
-                    workoutAlgorithm.createWorkoutFromExercises(selectedBodyparts, selectedEquipment, timeInSeconds);
+                    workoutAlgorithm.createWorkoutFromExercises(selectedBodyparts, Collections.singletonList(""), selectedEquipment, timeInSeconds);
                 }
             }
         });

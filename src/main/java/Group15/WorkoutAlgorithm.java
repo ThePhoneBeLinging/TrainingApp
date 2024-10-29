@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 public class WorkoutAlgorithm {
-    public Workout createWorkoutFromExercises(List<String> bodyParts, String equipment, int timeInMinutes) {
+    public Workout createWorkoutFromExercises(List<String> bodyParts, List<String> dislikedBodyParts, String equipment, int timeInMinutes) {
         List<Exercise> exercises = ApiUtils.getAllExercises();
 
         int timeInMilliseconds = timeInMinutes * 60000;
@@ -17,6 +17,9 @@ public class WorkoutAlgorithm {
         if (exercises != null) {
             Collections.shuffle(exercises, new Random(exercises.size()));
             for (Exercise exercise : exercises) {
+                if(dislikedBodyParts.contains(exercise.bodyPart)) {
+                    continue;
+                }
                 if (bodyParts.contains(exercise.bodyPart)) {
                     boolean equipmentMatch = equipment.equals("All") || exercise.equipment.equals(equipment);
                     if (equipmentMatch) {
