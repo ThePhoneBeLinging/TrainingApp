@@ -103,6 +103,7 @@ public class MuscleSelectionView {
         submitButton.setOnAction(_ -> {
             if(inputField.getText() == null || inputField.getText().isEmpty() || !inputField.getText().matches("\\d+")) {
                 System.out.println("Invalid input");
+                return;
             }
             int timeInSeconds = Integer.parseInt(inputField.getText());
             for(ToggleButton toggleButton : toggleButtons) {
