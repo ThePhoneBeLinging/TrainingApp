@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
@@ -26,16 +27,26 @@ public class MuscleSelectionView {
         List<String> dislikedBodyParts = new ArrayList<>();
         List<String> selectedEquipment = new ArrayList<>();
 
-        ComboBox equipmentSelector = new ComboBox<>();
-        equipmentSelector.getItems().addAll(
-                "All",
-                "Body weight",
-                "Barbell",
-                "Dumbbell",
-                "Machine"
-        );
-        equipmentSelector.setMinSize(200,50);
-        equipmentSelector.setPromptText("Select Equipment...");
+        TilePane equipmentSelectorPane = new TilePane();
+        equipmentSelectorPane.setHgap(10);
+        equipmentSelectorPane.setVgap(10);
+        Label selectEquipmentText = new Label("Select Equipment");
+        selectEquipmentText.setStyle("-fx-font-weight: bold");
+
+        String[] equipments = {"All", "Body weight", "Barbell", "Dumbbell", "Machine"};
+
+        equipmentSelectorPane.getChildren().add(selectEquipmentText);
+
+        for(int i = 0; i < equipments.length; i++) {
+            CheckBox equipmentCheckbox = new CheckBox(equipments[i]);
+            equipmentSelectorPane.getChildren().add(equipmentCheckbox);
+
+            if(equipmentCheckbox.isSelected()) {
+                if(equipmentCheckbox.getText().equals("All")) {
+                    equipmentCheckbox.setSelected(false);
+                }
+            }
+        }
 
         GridPane bodyPartsGridPane = new GridPane();
         bodyPartsGridPane.setHgap(20);
@@ -88,7 +99,7 @@ public class MuscleSelectionView {
 
         VBox.setMargin(submitButton, new Insets(50, 0, 0, 0));
 
-        inputAndEquipBox.getChildren().addAll(minutesInputField,equipmentSelector);
+        inputAndEquipBox.getChildren().addAll(minutesInputField,equipmentSelectorPane);
         inputAndEquipBox.setSpacing(20);
         inputAndEquipBox.setAlignment(Pos.CENTER);
 
