@@ -75,6 +75,7 @@ public class HomeScreenView {
                         break;
                     case "My Workouts":
                         System.out.println("My Workouts pressed");
+                        break;
                     case "Exit":
                         System.exit(0);
                 }
