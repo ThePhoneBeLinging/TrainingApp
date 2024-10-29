@@ -12,8 +12,6 @@ public class WorkoutAlgorithm {
         int timeInMilliseconds = timeInMinutes * 60000;
         Workout workout = new Workout();
 
-        System.out.println("Workout");
-
         if (exercises != null) {
             for (Exercise exercise : exercises) {
                 if (exercise.bodyPart.equals(bodyPart)) {
@@ -32,12 +30,6 @@ public class WorkoutAlgorithm {
                         timeInMilliseconds -= timeUsed;
 
                         workout.addExercise(exercise);
-
-                        System.out.println("Exercise name: " + exercise.title);
-                        System.out.println("Description: " + exercise.description);
-                        System.out.println("Equipment: " + exercise.equipment);
-                        System.out.println("Sets: " + sets);
-                        System.out.println("Rep Range: 5-10");
 
                         if (timeInMilliseconds <= 0) {
                             break;
