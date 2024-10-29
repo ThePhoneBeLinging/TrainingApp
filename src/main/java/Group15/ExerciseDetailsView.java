@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 public class ExerciseDetailsView {
 
-    public static Scene createScene(Exercise exercise, Stage stage, Scene previousScene) {
+    public static Scene createScene(Exercise exercise) {
         System.out.println("Creating ExerciseDetailsView for: " + exercise.title);
 
         VBox layout = new VBox();
@@ -27,7 +27,7 @@ public class ExerciseDetailsView {
         Pane exerciseInfoPane = createExerciseInfoPane(exercise);
         layout.getChildren().add(exerciseInfoPane);
 
-        Pane buttonPane = createButtonPane(stage, previousScene);
+        Pane buttonPane = createButtonPane();
         layout.getChildren().add(buttonPane);
 
         return new Scene(layout, 1000, 800);
@@ -88,7 +88,7 @@ public class ExerciseDetailsView {
         return infoPane;
     }
 
-    private static Pane createButtonPane(Stage stage, Scene previousScene) {
+    private static Pane createButtonPane() {
         HBox buttonPane = new HBox();
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setSpacing(20);
@@ -102,7 +102,7 @@ public class ExerciseDetailsView {
         Button backButton = new Button("Back");
         backButton.setPrefSize(200, 50);
         backButton.setOnAction(e -> {
-            stage.setScene(previousScene);
+            ViewController.setScene(WorkoutView.createScene());
         });
 
         buttonPane.getChildren().addAll(favoriteButton, backButton);

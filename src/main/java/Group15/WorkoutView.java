@@ -19,13 +19,15 @@ import javafx.scene.layout.Background;
 import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javax.swing.text.Document;
+import java.io.FileOutputStream;
 
 
 public class WorkoutView {
     private  static Workout testWorkout = new Workout();
     private static String title = "Workout";
     private static String[] buttons = {"Back", "Edit Workout", "Save"};
-    public static Scene createScene(Stage stage){
+    public static Scene createScene(){
         VBox layout = new VBox();
         layout.setSpacing(20);
         layout.setAlignment(Pos.CENTER);
@@ -33,7 +35,7 @@ public class WorkoutView {
         Pane titlePane = createTitlePane();
         layout.getChildren().add(titlePane);
 
-        Node WorkoutPane = createWorkoutPane(testWorkout, stage);
+        Node WorkoutPane = createWorkoutPane(testWorkout);
         layout.getChildren().add(WorkoutPane);
 
         Pane buttonPane = createButtonPane();
@@ -52,7 +54,7 @@ public class WorkoutView {
         return titlePane;
     }
 
-    private static Node createWorkoutPane(Workout workout, Stage stage){
+    private static Node createWorkoutPane(Workout workout){
         VBox workoutPane = new VBox();
         workoutPane.setAlignment(Pos.CENTER);
         workoutPane.setSpacing(20);
@@ -79,9 +81,9 @@ public class WorkoutView {
 
             EventHandler<MouseEvent> clickAction = event -> {
                 System.out.println("Image or title clicked for exercise: " + exercise.title);
-                Scene currentScene = stage.getScene();
-                Scene exerciseDetailsScene = ExerciseDetailsView.createScene(exercise, stage, currentScene);
-                stage.setScene(exerciseDetailsScene);
+                Scene currentScene = ViewController.getScene();
+                Scene exerciseDetailsScene = ExerciseDetailsView.createScene(exercise);
+                ViewController.setScene(exerciseDetailsScene);
             };
 
             imageView.setOnMouseClicked(clickAction);
@@ -122,7 +124,7 @@ public class WorkoutView {
                     case "Edit Workout" -> {
                         testWorkout.addExercise(new Exercise("benchPress", "Push-ups are a great upper body exercise.", "Strength", "Chest", "None", "Intermediate", "/images/benchPress.png"));
                         testWorkout.addExercise(new Exercise("benchPress", "Squats are a fundamental lower body exercise.", "Strength", "Legs", "None", "Beginner", "/images/benchPress.png"));
-                        ViewController.setScene(WorkoutView.createScene(ViewController.getStage()));
+                        ViewController.setScene(WorkoutView.createScene());
                     }
                     case "Save" -> System.out.println("Save Pressed");
                 }

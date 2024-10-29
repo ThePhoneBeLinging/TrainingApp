@@ -70,7 +70,7 @@ public class HomeScreenView {
             newButton.setPrefSize(200, 50);
             newButton.setOnAction(_ -> {
                 switch (button) {
-                    case "New Workout" -> ViewController.setScene(WorkoutView.createScene(ViewController.getStage()));
+                    case "New Workout" -> ViewController.setScene(WorkoutView.createScene());
                     case "My Workouts" -> System.out.println("My Workouts pressed");
                     case "Exit" -> System.exit(0);
                 }

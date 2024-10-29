@@ -33,10 +33,6 @@ public class ViewController
         ViewController.stage.setScene(scene);
     }
 
-    public static Stage getStage(){
-        return stage;
-    }
-
     public static Scene createMuscleSelectorScene() {
         VBox vBox = new VBox();
         List<ToggleButton> toggleButtons = new ArrayList<>();
