@@ -1,4 +1,3 @@
-
 import Group15.Api.Exercise;
 import Group15.WorkoutAlgorithm;
 import Group15.Workout;
@@ -12,12 +11,10 @@ import java.util.List;
 
 public class WorkoutAlgorithmTest {
 
-    private WorkoutAlgorithm workoutAlgorithm;
     private List<Exercise> mockExercises;
 
     @Before
     public void setUp() {
-        workoutAlgorithm = new WorkoutAlgorithm();
         mockExercises = new ArrayList<>();
 
         Exercise pushUp = new Exercise();
@@ -60,7 +57,13 @@ public class WorkoutAlgorithmTest {
 
     @Test
     public void testCreateWorkoutWithValidInputs() {
-        Workout workout = workoutAlgorithm.createWorkoutFromExercises(Collections.singletonList("chest"), Collections.singletonList(""), "bodyweight", 10);
+        Workout workout = WorkoutAlgorithm.createWorkoutFromExercises(
+                Collections.singletonList("chest"),
+                Collections.singletonList(""),
+                Collections.singletonList("bodyweight"),
+                10
+        );
+
         assertNotNull(workout);
         assertFalse(workout.getExercises().isEmpty());
         workout.getExercises().forEach(exercise -> {
@@ -71,7 +74,13 @@ public class WorkoutAlgorithmTest {
 
     @Test
     public void testCreateWorkoutWithLimitedTime() {
-        Workout workout = workoutAlgorithm.createWorkoutFromExercises(Collections.singletonList("arms"), Collections.singletonList(""), "dumbbell", 2);
+        Workout workout = WorkoutAlgorithm.createWorkoutFromExercises(
+                Collections.singletonList("arms"),
+                Collections.singletonList(""),
+                Collections.singletonList("dumbbell"),
+                2
+        );
+
         assertNotNull(workout);
         assertTrue(workout.getExercises().size() <= 1);
         workout.getExercises().forEach(exercise -> {
@@ -82,7 +91,13 @@ public class WorkoutAlgorithmTest {
 
     @Test
     public void testCreateWorkoutWithDifferentBodyPart() {
-        Workout workout = workoutAlgorithm.createWorkoutFromExercises(Collections.singletonList("legs"), Collections.singletonList(""), "bodyweight", 5);
+        Workout workout = WorkoutAlgorithm.createWorkoutFromExercises(
+                Collections.singletonList("legs"),
+                Collections.singletonList(""),
+                Collections.singletonList("bodyweight"),
+                5
+        );
+
         assertNotNull(workout);
         workout.getExercises().forEach(exercise -> {
             assertEquals("legs", exercise.bodyPart);
@@ -92,10 +107,15 @@ public class WorkoutAlgorithmTest {
 
     @Test
     public void testCreateWorkoutWithAllEquipment() {
-        Workout workout = workoutAlgorithm.createWorkoutFromExercises(Collections.singletonList("chest"), Collections.singletonList(""), "All", 15);
+        Workout workout = WorkoutAlgorithm.createWorkoutFromExercises(
+                Collections.singletonList("chest"),
+                Collections.singletonList(""),
+                Collections.singletonList("All"),
+                15
+        );
+
         assertNotNull(workout);
         assertFalse(workout.getExercises().isEmpty());
-
         workout.getExercises().forEach(exercise -> {
             assertEquals("chest", exercise.bodyPart);
             assertTrue(exercise.equipment.equals("bodyweight") || exercise.equipment.equals("barbell"));
@@ -106,11 +126,16 @@ public class WorkoutAlgorithmTest {
     public void testCreateWorkoutWithMultipleBodyParts() {
         List<String> bodyParts = List.of("chest", "legs", "arms");
         List<String> dislikedBodyParts = Collections.singletonList("");
-        Workout workout = workoutAlgorithm.createWorkoutFromExercises(bodyParts, dislikedBodyParts, "All", 20);
+
+        Workout workout = WorkoutAlgorithm.createWorkoutFromExercises(
+                bodyParts,
+                dislikedBodyParts,
+                Collections.singletonList("All"),
+                20
+        );
 
         assertNotNull(workout);
         assertFalse(workout.getExercises().isEmpty());
-
         workout.getExercises().forEach(exercise -> {
             assertTrue(bodyParts.contains(exercise.bodyPart));
             assertTrue(exercise.equipment.equals("bodyweight") || exercise.equipment.equals("barbell") || exercise.equipment.equals("dumbbell"));

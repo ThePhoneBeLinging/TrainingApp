@@ -110,7 +110,7 @@ public class MuscleSelectionView {
             for(ToggleButton toggleButton : toggleButtons) {
                 if (toggleButton.isSelected()) {
                     selectedBodyparts.add(toggleButton.getText());
-                    workoutAlgorithm.createWorkoutFromExercises(selectedBodyparts, Collections.singletonList(""), selectedEquipment, timeInSeconds);
+                    workoutAlgorithm.createWorkoutFromExercises(selectedBodyparts, Collections.singletonList(""), Collections.singletonList(""), timeInSeconds);
                 }
             }
         });

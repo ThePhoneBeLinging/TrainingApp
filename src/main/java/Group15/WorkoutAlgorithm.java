@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 public class WorkoutAlgorithm {
-    public Workout createWorkoutFromExercises(List<String> bodyParts, List<String> dislikedBodyParts, List<String> equipment, int timeInMinutes) {
+    public static Workout createWorkoutFromExercises(List<String> bodyParts, List<String> dislikedBodyParts, List<String> equipment, int timeInMinutes) {
         List<Exercise> exercises = ApiUtils.getAllExercises();
 
         int timeInMilliseconds = timeInMinutes * 60000;
