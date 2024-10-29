@@ -71,9 +71,7 @@ public class HomeScreenView {
             newButton.setOnAction(_ -> {
                 switch (button) {
                     case "New Workout":
-                        Scene createWorkoutScene = MuscleSelectionView.createMuscleSelectorScene();
-                        Stage thisStage = (Stage) newButton.getScene().getWindow();
-                        thisStage.setScene(createWorkoutScene);
+                        ViewController.setScene(MuscleSelectionView.createMuscleSelectorScene());
                         break;
                     case "My Workouts":
                         System.out.println("My Workouts pressed");
