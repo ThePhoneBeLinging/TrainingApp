@@ -1,12 +1,14 @@
 package Group15;
 
 import Group15.Api.ApiUtils;
+import Group15.Api.BodyPart;
 import Group15.Api.Exercise;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WorkoutAlgorithm {
-    public Workout createWorkoutFromExercises(String bodyPart, String equipment, int timeInMinutes) {
+    public Workout createWorkoutFromExercises(List<String> bodyParts, String equipment, int timeInMinutes) {
         List<Exercise> exercises = ApiUtils.getAllExercises();
 
         int timeInMilliseconds = timeInMinutes * 60000;
@@ -14,7 +16,7 @@ public class WorkoutAlgorithm {
 
         if (exercises != null) {
             for (Exercise exercise : exercises) {
-                if (exercise.bodyPart.equals(bodyPart)) {
+                if (bodyParts.contains(exercise.bodyPart)) {
                     boolean equipmentMatch = equipment.equals("All") || exercise.equipment.equals(equipment);
                     if (equipmentMatch) {
                         int timePerRep = exercise.timePerRep;

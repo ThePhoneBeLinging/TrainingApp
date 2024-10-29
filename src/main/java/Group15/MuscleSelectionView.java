@@ -23,6 +23,8 @@ public class MuscleSelectionView {
         HBox inputAndEquipBox = new HBox();
         HBox imageAndTextButtons;
 
+        List<String> selectedBodyparts = new ArrayList<>();
+
         ComboBox equipmentSelector = new ComboBox<>();
         equipmentSelector.getItems().addAll(
                 "All",
@@ -105,7 +107,8 @@ public class MuscleSelectionView {
             int timeInSeconds = Integer.parseInt(inputField.getText());
             for(ToggleButton toggleButton : toggleButtons) {
                 if (toggleButton.isSelected()) {
-                    workoutAlgorithm.createWorkoutFromExercises(toggleButton.getText(), selectedEquipment, timeInSeconds);
+                    selectedBodyparts.add(toggleButton.getText());
+                    workoutAlgorithm.createWorkoutFromExercises(selectedBodyparts, selectedEquipment, timeInSeconds);
                 }
             }
         });

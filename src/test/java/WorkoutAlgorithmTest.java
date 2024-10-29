@@ -7,6 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class WorkoutAlgorithmTest {
@@ -59,7 +60,7 @@ public class WorkoutAlgorithmTest {
 
     @Test
     public void testCreateWorkoutWithValidInputs() {
-        Workout workout = workoutAlgorithm.createWorkoutFromExercises("chest", "bodyweight", 10);
+        Workout workout = workoutAlgorithm.createWorkoutFromExercises(Collections.singletonList("chest"), "bodyweight", 10);
         assertNotNull(workout);
         assertFalse(workout.getExercises().isEmpty());
         workout.getExercises().forEach(exercise -> {
@@ -70,7 +71,7 @@ public class WorkoutAlgorithmTest {
 
     @Test
     public void testCreateWorkoutWithLimitedTime() {
-        Workout workout = workoutAlgorithm.createWorkoutFromExercises("arms", "dumbbell", 2);
+        Workout workout = workoutAlgorithm.createWorkoutFromExercises(Collections.singletonList("arms"), "dumbbell", 2);
         assertNotNull(workout);
         assertTrue(workout.getExercises().size() <= 1);
         workout.getExercises().forEach(exercise -> {
@@ -81,7 +82,7 @@ public class WorkoutAlgorithmTest {
 
     @Test
     public void testCreateWorkoutWithDifferentBodyPart() {
-        Workout workout = workoutAlgorithm.createWorkoutFromExercises("legs", "bodyweight", 5);
+        Workout workout = workoutAlgorithm.createWorkoutFromExercises(Collections.singletonList("legs"), "bodyweight", 5);
         assertNotNull(workout);
         workout.getExercises().forEach(exercise -> {
             assertEquals("legs", exercise.bodyPart);
@@ -91,7 +92,7 @@ public class WorkoutAlgorithmTest {
 
     @Test
     public void testCreateWorkoutWithAllEquipment() {
-        Workout workout = workoutAlgorithm.createWorkoutFromExercises("chest", "All", 15);
+        Workout workout = workoutAlgorithm.createWorkoutFromExercises(Collections.singletonList("chest"), "All", 15);
         assertNotNull(workout);
         assertFalse(workout.getExercises().isEmpty());
 
