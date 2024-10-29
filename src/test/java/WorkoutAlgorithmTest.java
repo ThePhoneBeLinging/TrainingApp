@@ -101,4 +101,19 @@ public class WorkoutAlgorithmTest {
             assertTrue(exercise.equipment.equals("bodyweight") || exercise.equipment.equals("barbell"));
         });
     }
+
+    @Test
+    public void testCreateWorkoutWithMultipleBodyParts() {
+        List<String> bodyParts = List.of("chest", "legs", "arms");
+        List<String> dislikedBodyParts = Collections.singletonList("");
+        Workout workout = workoutAlgorithm.createWorkoutFromExercises(bodyParts, dislikedBodyParts, "All", 20);
+
+        assertNotNull(workout);
+        assertFalse(workout.getExercises().isEmpty());
+
+        workout.getExercises().forEach(exercise -> {
+            assertTrue(bodyParts.contains(exercise.bodyPart));
+            assertTrue(exercise.equipment.equals("bodyweight") || exercise.equipment.equals("barbell") || exercise.equipment.equals("dumbbell"));
+        });
+    }
 }
