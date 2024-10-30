@@ -13,6 +13,8 @@ public class ViewController
     {
         ApiUtils.getAllExercises();
         ViewController.stage = stage;
+        ViewController.stage.setHeight(800);
+        ViewController.stage.setWidth(1000);
         ViewController.stage.setScene(HomeScreenView.createScene());
         ViewController.stage.show();
     }
@@ -26,5 +28,4 @@ public class ViewController
     {
         ViewController.stage.setScene(scene);
     }
-
 }

@@ -10,10 +10,13 @@ import javafx.scene.layout.*;
 import javafx.geometry.Pos;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
 
 public class ExerciseDetailsView {
 
     public static Scene createScene(Exercise exercise) {
+        System.out.println("Creating ExerciseDetailsView for: " + exercise.title);
+
         VBox layout = new VBox();
         layout.setSpacing(20);
         layout.setAlignment(Pos.CENTER);
@@ -27,20 +30,31 @@ public class ExerciseDetailsView {
         Pane buttonPane = createButtonPane();
         layout.getChildren().add(buttonPane);
 
-        return new Scene(layout, 1000, 800);
+        return new Scene(layout);
     }
+
 
     private static Pane createExerciseImagePane(String imagePath) {
         VBox imagePane = new VBox();
         imagePane.setAlignment(Pos.CENTER);
         imagePane.setPrefSize(640, 400);
 
-        Image exerciseImage = new Image(imagePath);
-        ImageView imageView = new ImageView(exerciseImage);
-        imageView.setFitHeight(300);
-        imageView.setFitWidth(300);
+        try {
+            String fullImagePath = WorkoutView.class.getResource(imagePath).toExternalForm();
+            System.out.println("Loading image from: " + fullImagePath);
 
-        imagePane.getChildren().add(imageView);
+            Image exerciseImage = new Image(fullImagePath);
+            ImageView imageView = new ImageView(exerciseImage);
+            imageView.setFitHeight(300);
+            imageView.setFitWidth(300);
+
+            imagePane.getChildren().add(imageView);
+
+        } catch (Exception e){
+            System.out.println("Error loading image: " + imagePath);
+            e.printStackTrace();
+        }
+
         return imagePane;
     }
 
@@ -88,7 +102,7 @@ public class ExerciseDetailsView {
         Button backButton = new Button("Back");
         backButton.setPrefSize(200, 50);
         backButton.setOnAction(e -> {
-            //TODO: add functionality to go back to previous screen, eg. ExerciseListView or WorkoutView
+            ViewController.setScene(WorkoutView.createScene());
         });
 
         buttonPane.getChildren().addAll(favoriteButton, backButton);
