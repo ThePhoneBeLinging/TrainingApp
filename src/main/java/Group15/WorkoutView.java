@@ -1,6 +1,7 @@
 package Group15;
 
 import Group15.Api.Exercise;
+import Group15.WorkoutPdfGenerator;
 
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
@@ -19,9 +20,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.io.FileNotFoundException;
+
 
 public class WorkoutView {
-    private  static Workout workout = new Workout();
+    private  static Workout customWorkout = new Workout();
     private static String title = "Workout";
     private static String[] buttons = {"Back", "Edit Workout", "Save"};
     public static Scene createScene(){
@@ -32,7 +35,7 @@ public class WorkoutView {
         Pane titlePane = createTitlePane();
         layout.getChildren().add(titlePane);
 
-        Node WorkoutPane = createWorkoutPane(workout);
+        Node WorkoutPane = createWorkoutPane(customWorkout);
         layout.getChildren().add(WorkoutPane);
 
         Pane buttonPane = createButtonPane();
@@ -119,8 +122,18 @@ public class WorkoutView {
                 switch (button){
                     case "Back" -> ViewController.setScene(HomeScreenView.createScene());
                     case "Edit Workout" -> {
+                        customWorkout.getExercises().clear();
+                        customWorkout.addExercise(new Exercise("benchPress", "Great for upper body strength", "Strength", "Chest", "None", "Intermediate", "main/resources/images/benchPress.png"));
+                        customWorkout.addExercise(new Exercise("benchPress", "Essential lower body exercise", "Strength", "Legs", "None", "Beginner", "main/resources/images/benchPress.png"));
+                        ViewController.setScene(WorkoutView.createScene());
                     }
                     case "Save" -> {
+                        try {
+                            WorkoutPdfGenerator.saveWorkoutAsPdf(customWorkout, "workout.pdf");
+                            System.out.println("Workout saved as PDF successfully.");
+                        } catch (FileNotFoundException e) {
+                            System.err.println("Failed to save workout as PDF: " + e.getMessage());
+                        }
                     }
                 }
             });
