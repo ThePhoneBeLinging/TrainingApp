@@ -20,8 +20,8 @@ public class JSONParserTest
     {
         exercises = new ArrayList<>();
 
-        Exercise pushup = new Exercise("Pushup", "Push your body up and down", "Strength", "Chest", "None", "Easy", "None");
-        Exercise situp = new Exercise("Situp", "Sit up and down", "Strength", "Abs", "None", "Easy", "None");
+        Exercise pushup = new Exercise("Pushup", "Push your body up and down", "Strength", "Chest", "None", "Easy", "None", 3000);
+        Exercise situp = new Exercise("Situp", "Sit up and down", "Strength", "Abs", "None", "Easy", "None", 3000);
         exercises.add(pushup);
         exercises.add(situp);
     }
