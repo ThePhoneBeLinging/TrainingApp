@@ -1,17 +1,19 @@
 package Group15.Api;
 
+import java.util.List;
+
 public class Exercise
 {
     public String title;
     public String description;
     public String type;
-    public String bodyPart;
-    public String equipment;
+    public List<BodyPart> bodyPart;
+    public List<Equipment> equipment;
     public String difficulty;
     public String imagePath;
     public int timePerRep;
 
-    public Exercise(String title, String description, String type, String bodyPart, String equipment, String difficulty, String imagePath, int timePerRep) {
+    public Exercise(String title, String description, String type, List<BodyPart> bodyPart, List<Equipment> equipment, String difficulty, String imagePath, int timePerRep) {
         this.title = title;
         this.description = description;
         this.type = type;

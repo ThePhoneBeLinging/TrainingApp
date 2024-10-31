@@ -1,6 +1,7 @@
 package Group15;
 
 import Group15.Api.BodyPart;
+import Group15.Api.Equipment;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -24,9 +25,9 @@ public class MuscleSelectionView {
         HBox inputAndEquipBox = new HBox(20);
         inputAndEquipBox.setAlignment(Pos.CENTER);
 
-        List<String> selectedBodyParts = new ArrayList<>();
-        List<String> dislikedBodyParts = new ArrayList<>();
-        List<String> selectedEquipment = new ArrayList<>();
+        List<BodyPart> selectedBodyParts = new ArrayList<>();
+        List<BodyPart> dislikedBodyParts = new ArrayList<>();
+        List<Equipment> selectedEquipment = new ArrayList<>();
 
         TextField minutesInputField = new TextField();
         minutesInputField.setPrefSize(200, 50);
@@ -52,7 +53,7 @@ public class MuscleSelectionView {
         return new Scene(mainVBox);
     }
 
-    private static GridPane createEquipmentSelectorGridPane(List<String> selectedEquipment) {
+    private static GridPane createEquipmentSelectorGridPane(List<Equipment> selectedEquipment) {
         GridPane equipmentSelectorGridPane = new GridPane();
         equipmentSelectorGridPane.setVgap(10);
         equipmentSelectorGridPane.setAlignment(Pos.CENTER);
@@ -80,11 +81,11 @@ public class MuscleSelectionView {
         return equipmentSelectorGridPane;
     }
 
-    private static void createEquipmentCheckboxFunctionality(CheckBox allCheckbox, List<CheckBox> equipmentCheckBoxes, List<String> selectedEquipment) {
+    private static void createEquipmentCheckboxFunctionality(CheckBox allCheckbox, List<CheckBox> equipmentCheckBoxes, List<Equipment> selectedEquipment) {
         allCheckbox.setOnAction(_ -> {
             if (allCheckbox.isSelected()) {
                 selectedEquipment.clear();
-                selectedEquipment.add("All");
+                //selectedEquipment.add("All");
                 for (CheckBox checkbox : equipmentCheckBoxes) {
                     if (checkbox != allCheckbox) checkbox.setSelected(false);
                 }
@@ -97,7 +98,7 @@ public class MuscleSelectionView {
                     if (checkbox.isSelected()) {
                         allCheckbox.setSelected(false);
                         selectedEquipment.remove("All");
-                        if (!selectedEquipment.contains(checkbox.getText())) selectedEquipment.add(checkbox.getText());
+                        if (!selectedEquipment.contains(checkbox.getText())) selectedEquipment.add(Equipment.valueOf(checkbox.getText()));
                     } else {
                         selectedEquipment.remove(checkbox.getText());
                     }
@@ -106,7 +107,7 @@ public class MuscleSelectionView {
         }
     }
 
-    private static GridPane createBodyPartsSelectorGridPane(List<String> selectedBodyParts) {
+    private static GridPane createBodyPartsSelectorGridPane(List<BodyPart> selectedBodyParts) {
         GridPane bodyPartsGridPane = new GridPane();
         bodyPartsGridPane.setHgap(20);
         bodyPartsGridPane.setVgap(20);
@@ -129,8 +130,8 @@ public class MuscleSelectionView {
         }
 
         bodyPartToggleButtons.forEach(toggleButton -> {
-            toggleButton.setOnAction(e -> {
-                if (toggleButton.isSelected()) selectedBodyParts.add(toggleButton.getText());
+            toggleButton.setOnAction(_ -> {
+                if (toggleButton.isSelected()) selectedBodyParts.add(BodyPart.valueOf(toggleButton.getText()));
                 else selectedBodyParts.remove(toggleButton.getText());
             });
         });
@@ -159,7 +160,7 @@ public class MuscleSelectionView {
         return bodyPartToggleButton;
     }
 
-    private static void createSubmitButtonFunctionality(List<String> selectedBodyParts, List<String> dislikedBodyParts, List<String> selectedEquipment, TextField minutesInputField) {
+    private static void createSubmitButtonFunctionality(List<BodyPart> selectedBodyParts, List<BodyPart> dislikedBodyParts, List<Equipment> selectedEquipment, TextField minutesInputField) {
         if (minutesInputField.getText() == null || minutesInputField.getText().isEmpty() || !minutesInputField.getText().matches("\\d+")) {
             System.out.println("Invalid input");
             return;

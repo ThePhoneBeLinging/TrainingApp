@@ -1,6 +1,8 @@
 package Group15;
 
 import Group15.Api.ApiUtils;
+import Group15.Api.BodyPart;
+import Group15.Api.Equipment;
 import Group15.Api.Exercise;
 
 import java.util.Collections;
@@ -8,7 +10,12 @@ import java.util.List;
 import java.util.Random;
 
 public class WorkoutAlgorithm {
-    public static Workout createWorkoutFromExercises(List<String> bodyParts, List<String> dislikedBodyParts, List<String> equipment, int timeInMinutes) {
+    public static Workout createWorkoutFromExercises(
+            List<BodyPart> bodyParts,
+            List<BodyPart> dislikedBodyParts,
+            List<Equipment> equipment,
+            int timeInMinutes){
+
         List<Exercise> exercises = ApiUtils.getAllExercises();
 
         int timeInMilliseconds = timeInMinutes * 60000;
@@ -17,11 +24,11 @@ public class WorkoutAlgorithm {
         if (exercises != null) {
             Collections.shuffle(exercises, new Random(exercises.size()));
             for (Exercise exercise : exercises) {
-                if(dislikedBodyParts.contains(exercise.bodyPart)) {
+                if(dislikedBodyParts == exercise.bodyPart) {
                     continue;
                 }
-                if (bodyParts.contains(exercise.bodyPart)) {
-                    boolean equipmentMatch = equipment.contains("All") || equipment.contains(exercise.equipment);
+                if (bodyParts == exercise.bodyPart) {
+                    boolean equipmentMatch = equipment == exercise.equipment;
                     if (equipmentMatch) {
                         int timePerRep = exercise.timePerRep;
                         int maxPossibleReps = timeInMilliseconds / timePerRep;
