@@ -49,10 +49,19 @@ public class WorkoutAlgorithmTest {
         bicepCurl.difficulty = "beginner";
         bicepCurl.timePerRep = 1500;
 
+        Exercise legExtension = new Exercise();
+        legExtension.title = "Leg Extension";
+        legExtension.description = "Leg extension exercise";
+        legExtension.bodyPart = "quads, legs";
+        legExtension.equipment = "machine, weights";
+        legExtension.difficulty = "beginner";
+        legExtension.timePerRep = 3000;
+
         mockExercises.add(pushUp);
         mockExercises.add(benchPress);
         mockExercises.add(squat);
         mockExercises.add(bicepCurl);
+        mockExercises.add(legExtension);
     }
 
     @Test
@@ -159,6 +168,27 @@ public class WorkoutAlgorithmTest {
 
         workout.getExercises().forEach(exercise -> {
             assertFalse("legs".equals(exercise.bodyPart));
+        });
+    }
+
+    @Test
+    public void testMultipleBodyPartsAndEquipment() {
+        List<String> bodyParts = List.of("quads, legs", "chest, triceps");
+        List<String> equipments = List.of("machine, body", "weights, machine");
+
+        Workout workout = WorkoutAlgorithm.createWorkoutFromExercises(
+                bodyParts,
+                Collections.singletonList(""),
+                equipments,
+                10
+        );
+
+        assertNotNull(workout);
+        assertFalse(workout.getExercises().isEmpty());
+
+        workout.getExercises().forEach(exercise -> {
+            assertFalse("machine, weights".contains(exercise.equipment));
+            assertFalse("legs, quads".contains(exercise.bodyPart));
         });
     }
 }
