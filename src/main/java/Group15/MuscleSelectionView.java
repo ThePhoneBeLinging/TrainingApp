@@ -49,7 +49,7 @@ public class MuscleSelectionView {
         mainVBox.getChildren().addAll(bodyPartsGridPane, inputAndEquipBox, submitButton, backButton);
         VBox.setMargin(submitButton, new Insets(50, 0, 0, 0));
 
-        return new Scene(mainVBox, 1000, 800);
+        return new Scene(mainVBox);
     }
 
     private static GridPane createEquipmentSelectorGridPane(List<String> selectedEquipment) {
