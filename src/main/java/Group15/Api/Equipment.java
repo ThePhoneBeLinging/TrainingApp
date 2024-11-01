@@ -6,5 +6,4 @@ public enum Equipment {
     Barbell,
     Dumbbell,
     Cable,
-    ;
 }

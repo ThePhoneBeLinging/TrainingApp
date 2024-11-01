@@ -13,11 +13,9 @@ import java.util.List;
 
 public class WorkoutAlgorithmTest {
 
-    private List<Exercise> mockExercises;
-
     @Before
     public void setUp() {
-        mockExercises = new ArrayList<>();
+        List<Exercise> mockExercises = new ArrayList<>();
 
         Exercise pushUp = new Exercise();
         pushUp.title = "Push Up";
@@ -146,7 +144,7 @@ public class WorkoutAlgorithmTest {
         assertNotNull(workout);
         assertFalse(workout.getExercises().isEmpty());
         workout.getExercises().forEach(exercise -> {
-            assertTrue(bodyParts.contains(exercise.bodyPart.get(0)));
+            assertTrue(bodyParts.contains(exercise.bodyPart.getFirst()));
             assertTrue(exercise.equipment.contains(Equipment.Bodyweight) || exercise.equipment.contains(Equipment.Barbell) || exercise.equipment.contains(Equipment.Dumbbell));
         });
     }
@@ -165,9 +163,7 @@ public class WorkoutAlgorithmTest {
 
         assertNotNull(workout);
         assertFalse(workout.getExercises().isEmpty());
-        workout.getExercises().forEach(exercise -> {
-            assertFalse(dislikedBodyParts.contains(exercise.bodyPart.get(0)));
-        });
+        workout.getExercises().forEach(exercise -> assertFalse(dislikedBodyParts.contains(exercise.bodyPart.getFirst())));
     }
 
     @Test
@@ -185,8 +181,8 @@ public class WorkoutAlgorithmTest {
         assertNotNull(workout);
         assertFalse(workout.getExercises().isEmpty());
         workout.getExercises().forEach(exercise -> {
-            assertTrue(equipments.contains(exercise.equipment.get(0)));
-            assertTrue(bodyParts.contains(exercise.bodyPart.get(0)));
+            assertTrue(equipments.contains(exercise.equipment.getFirst()));
+            assertTrue(bodyParts.contains(exercise.bodyPart.getFirst()));
         });
     }
 }

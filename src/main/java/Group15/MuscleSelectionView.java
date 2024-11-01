@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -91,16 +92,15 @@ public class MuscleSelectionView {
                 }
             }
         });
-
         for (CheckBox checkbox : equipmentCheckBoxes) {
             if (checkbox != allCheckbox) {
                 checkbox.setOnAction(_ -> {
                     if (checkbox.isSelected()) {
                         allCheckbox.setSelected(false);
-                        selectedEquipment.remove("All");
-                        if (!selectedEquipment.contains(checkbox.getText())) selectedEquipment.add(Equipment.valueOf(checkbox.getText()));
+                        selectedEquipment.remove(Equipment.valueOf(checkbox.getText()));
+                        if (!selectedEquipment.contains(Equipment.valueOf(checkbox.getText()))) selectedEquipment.add(Equipment.valueOf(checkbox.getText()));
                     } else {
-                        selectedEquipment.remove(checkbox.getText());
+                        selectedEquipment.remove(Equipment.valueOf(checkbox.getText()));
                     }
                 });
             }
@@ -132,7 +132,7 @@ public class MuscleSelectionView {
         bodyPartToggleButtons.forEach(toggleButton -> {
             toggleButton.setOnAction(_ -> {
                 if (toggleButton.isSelected()) selectedBodyParts.add(BodyPart.valueOf(toggleButton.getText()));
-                else selectedBodyParts.remove(toggleButton.getText());
+                else selectedBodyParts.remove(BodyPart.valueOf(toggleButton.getText()));
             });
         });
 
