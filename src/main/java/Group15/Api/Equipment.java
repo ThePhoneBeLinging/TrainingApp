@@ -1,9 +1,13 @@
 package Group15.Api;
 
-public enum Equipment {
+public enum Equipment
+{
     Bodyweight,
     Machine,
     Barbell,
     Dumbbell,
     Cable,
+    NeutralGripHandle,
+    Kettlebell,
+    Landmine
 }
