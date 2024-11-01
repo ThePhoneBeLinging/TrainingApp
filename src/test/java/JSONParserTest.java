@@ -1,6 +1,6 @@
-import Group15.Api.Exercise;
-import Group15.JSONParser;
-import Group15.Workout;
+import Group15.Model.Exercise;
+import Group15.Model.Workout;
+import Group15.Util.JSONParser;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
