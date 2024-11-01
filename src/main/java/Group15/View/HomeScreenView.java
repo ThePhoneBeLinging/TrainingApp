@@ -1,22 +1,22 @@
-package Group15;
+package Group15.View;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.geometry.Pos;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.layout.Background;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
-public class HomeScreenView {
+public class HomeScreenView
+{
 
-    private static String title = "Workout App";
-    private static String[] buttons = {"New Workout", "My Workouts", "Exit"};
+    private static final String title = "Workout App";
+    private static final String[] buttons = {"New Workout", "My Workouts", "Exit"};
 
-    public static Scene createScene() {
+    public static Scene createScene()
+    {
         VBox layout = new VBox();
         layout.setSpacing(20);
         layout.setAlignment(Pos.CENTER);
@@ -33,7 +33,8 @@ public class HomeScreenView {
         return new Scene(layout);
     }
 
-    private static Pane createTitlePane() {
+    private static Pane createTitlePane()
+    {
         HBox titlePane = new HBox();
         titlePane.setAlignment(Pos.TOP_CENTER);
         Label titleLabel = new Label(title);
@@ -44,7 +45,8 @@ public class HomeScreenView {
     }
 
     // Here we can display some sort of list of workout, maybe predefined, saved, random or idk
-    private static Pane quickWorkoutPane() {
+    private static Pane quickWorkoutPane()
+    {
         VBox quickWorkoutPane = new VBox();
         quickWorkoutPane.setSpacing(20);
         quickWorkoutPane.setAlignment(Pos.CENTER);
@@ -61,20 +63,24 @@ public class HomeScreenView {
         return quickWorkoutPane;
     }
 
-    private static Pane createButtonPane() {
+    private static Pane createButtonPane()
+    {
         HBox buttonPane = new HBox();
         buttonPane.setAlignment(Pos.CENTER);
 
-        for (String button : buttons) {
+        for (String button : buttons)
+        {
             Button newButton = new Button(button);
             newButton.setPrefSize(200, 50);
-            newButton.setOnAction(_ -> {
-                switch (button) {
+            newButton.setOnAction(_ ->
+                {
+                switch (button)
+                {
                     case "New Workout" -> ViewController.setScene(WorkoutView.createScene());
                     case "My Workouts" -> System.out.println("My Workouts pressed");
                     case "Exit" -> System.exit(0);
                 }
-            });
+                });
 
             buttonPane.getChildren().add(newButton);
             buttonPane.setSpacing(20);

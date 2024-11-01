@@ -1,24 +1,28 @@
-import Group15.Api.Exercise;
-import Group15.Workout;
+import Group15.Model.Exercise;
+import Group15.Model.Workout;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class WorkoutClassTest {
+public class WorkoutClassTest
+{
     Workout testWorkout;
 
     @Before
-    public void setup() {
+    public void setup()
+    {
         testWorkout = new Workout();
     }
 
     @Test
-    public void testInit() {
+    public void testInit()
+    {
         Assert.assertEquals(0, testWorkout.getExercises().size());
     }
 
     @Test
-    public void testAddExercise() {
+    public void testAddExercise()
+    {
         Exercise pushup = new Exercise("Pushup", "Push your body up and down", "Strength", "Chest", "None", "Easy", "None");
         testWorkout.addExercise(pushup);
         Assert.assertEquals(1, testWorkout.getExercises().size());
@@ -31,7 +35,8 @@ public class WorkoutClassTest {
     }
 
     @Test
-    public void testRemoveExercise() {
+    public void testRemoveExercise()
+    {
         Exercise situp = new Exercise("Situp", "Sit up and down", "Strength", "Abs", "None", "Easy", "None");
         testAddExercise();
         testWorkout.addExercise(situp);
@@ -43,7 +48,8 @@ public class WorkoutClassTest {
     }
 
     @Test
-    public void testSwapExercise() {
+    public void testSwapExercise()
+    {
         testRemoveExercise();
         Assert.assertEquals("Pushup", testWorkout.getExercises().get(0).title);
         Exercise pullup = new Exercise("Pullup", "Pull your body up and down", "Strength", "Back", "Pullup bar", "Hard", "None");

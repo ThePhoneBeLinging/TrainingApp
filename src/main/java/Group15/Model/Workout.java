@@ -1,6 +1,4 @@
-package Group15;
-
-import Group15.Api.Exercise;
+package Group15.Model;
 
 import java.util.ArrayList;
 import java.util.List;

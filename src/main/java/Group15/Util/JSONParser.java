@@ -1,4 +1,4 @@
-package Group15;
+package Group15.Util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -20,6 +20,7 @@ public class JSONParser
             throw new RuntimeException(e);
         }
     }
+
     public static <T> T[] loadObjectsFromJSON(String filePath, Class<T[]> objectType)
     {
         ObjectMapper jsonMapper = new ObjectMapper();
