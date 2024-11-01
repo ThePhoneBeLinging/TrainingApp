@@ -30,14 +30,15 @@ public class MuscleSelectionView {
         List<Equipment> selectedEquipment = new ArrayList<>();
 
         TextField minutesInputField = new TextField();
-        minutesInputField.setPrefSize(200, 50);
+        minutesInputField.setPrefSize(210, 40);
+        minutesInputField.setMinSize(210,40);
+        minutesInputField.setMaxSize(210,40);
         minutesInputField.setPromptText("Input how many minutes to workout");
 
-        GridPane equipmentSelectorGridPane = createEquipmentSelectorGridPane(selectedEquipment);
+        ScrollPane equipmentSelectorScrollPane = createEquipmentSelectorScrollPane(selectedEquipment);
+        inputAndEquipBox.getChildren().addAll(minutesInputField, equipmentSelectorScrollPane);
 
-        inputAndEquipBox.getChildren().addAll(minutesInputField, equipmentSelectorGridPane);
-
-        GridPane bodyPartsGridPane = createBodyPartsSelectorGridPane(selectedBodyParts);
+        ScrollPane bodyPartsScrollPane = createBodyPartsSelectorScrollPane(selectedBodyParts);
 
         Button submitButton = new Button("Submit");
         submitButton.setPrefSize(200, 50);
@@ -47,13 +48,13 @@ public class MuscleSelectionView {
         backButton.setPrefSize(200, 50);
         backButton.setOnAction(_ -> ViewController.setScene(HomeScreenView.createScene()));
 
-        mainVBox.getChildren().addAll(bodyPartsGridPane, inputAndEquipBox, submitButton, backButton);
-        VBox.setMargin(submitButton, new Insets(50, 0, 0, 0));
+        mainVBox.getChildren().addAll(bodyPartsScrollPane, inputAndEquipBox, submitButton, backButton);
+        VBox.setMargin(submitButton, new Insets(20, 0, 0, 0));
 
         return new Scene(mainVBox);
     }
 
-    private static GridPane createEquipmentSelectorGridPane(List<Equipment> selectedEquipment) {
+    private static ScrollPane createEquipmentSelectorScrollPane(List<Equipment> selectedEquipment) {
         GridPane equipmentSelectorGridPane = new GridPane();
         equipmentSelectorGridPane.setVgap(10);
         equipmentSelectorGridPane.setAlignment(Pos.CENTER);
@@ -78,14 +79,18 @@ public class MuscleSelectionView {
 
         createEquipmentCheckboxFunctionality(allCheckbox, equipmentCheckBoxes, selectedEquipment);
 
-        return equipmentSelectorGridPane;
+        ScrollPane equipmentSelectorScrollPane = new ScrollPane(equipmentSelectorGridPane);
+        equipmentSelectorScrollPane.setFitToWidth(true);
+        equipmentSelectorScrollPane.setPrefSize(200,100);
+        equipmentSelectorScrollPane.setMinHeight(100);
+        equipmentSelectorScrollPane.setMaxHeight(100);
+        return equipmentSelectorScrollPane;
     }
 
     private static void createEquipmentCheckboxFunctionality(CheckBox allCheckbox, List<CheckBox> equipmentCheckBoxes, List<Equipment> selectedEquipment) {
         allCheckbox.setOnAction(_ -> {
             if (allCheckbox.isSelected()) {
                 selectedEquipment.clear();
-                //selectedEquipment.add("All");
                 for (CheckBox checkbox : equipmentCheckBoxes) {
                     if (checkbox != allCheckbox) checkbox.setSelected(false);
                 }
@@ -106,7 +111,7 @@ public class MuscleSelectionView {
         }
     }
 
-    private static GridPane createBodyPartsSelectorGridPane(List<BodyPart> selectedBodyParts) {
+    private static ScrollPane createBodyPartsSelectorScrollPane(List<BodyPart> selectedBodyParts) {
         GridPane bodyPartsGridPane = new GridPane();
         bodyPartsGridPane.setHgap(20);
         bodyPartsGridPane.setVgap(20);
@@ -122,7 +127,7 @@ public class MuscleSelectionView {
             bodyPartsGridPane.add(bodyPartToggleButton, columns, rows);
 
             columns++;
-            if (columns > 1) {
+            if (columns > 2) {
                 columns = 0;
                 rows++;
             }
@@ -133,7 +138,9 @@ public class MuscleSelectionView {
             else selectedBodyParts.remove(BodyPart.valueOf(toggleButton.getText()));
         }));
 
-        return bodyPartsGridPane;
+        ScrollPane bodyPartsScrollPane = new ScrollPane(bodyPartsGridPane);
+        bodyPartsScrollPane.setFitToWidth(true);
+        return bodyPartsScrollPane;
     }
 
     private static ToggleButton createBodyPartToggleButton(BodyPart bodyPart) {
@@ -149,7 +156,7 @@ public class MuscleSelectionView {
         bodyPartImageView.setPreserveRatio(true);
 
         Label bodyPartName = new Label(bodyPart.toString());
-        bodyPartName.setMinWidth(67);
+        bodyPartName.setMinWidth(80);
         bodyPartName.setAlignment(Pos.CENTER);
 
         HBox imageAndTextButtons = new HBox(10, bodyPartImageView, bodyPartName);
@@ -157,7 +164,8 @@ public class MuscleSelectionView {
 
         ToggleButton bodyPartToggleButton = new ToggleButton();
         bodyPartToggleButton.setGraphic(imageAndTextButtons);
-        bodyPartToggleButton.setMinSize(200, 50);
+        bodyPartToggleButton.setMinSize(120, 70);
+        bodyPartToggleButton.setMaxSize(120, 70);
 
         return bodyPartToggleButton;
     }
