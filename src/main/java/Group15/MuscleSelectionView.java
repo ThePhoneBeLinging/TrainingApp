@@ -137,7 +137,12 @@ public class MuscleSelectionView {
     }
 
     private static ToggleButton createBodyPartToggleButton(BodyPart bodyPart) {
-        Image bodyPartImage = new Image(Objects.requireNonNull(MuscleSelectionView.class.getResourceAsStream("/bodyparts/" + bodyPart.toString() + ".png")));
+        Image bodyPartImage;
+        try {
+            bodyPartImage = new Image(Objects.requireNonNull(MuscleSelectionView.class.getResourceAsStream("/bodyparts/" + bodyPart.toString() + ".png")));
+        }catch (Exception _) {
+            bodyPartImage = new Image(Objects.requireNonNull(MuscleSelectionView.class.getResourceAsStream("/bodyparts/empty.png")));
+        }
         ImageView bodyPartImageView = new ImageView(bodyPartImage);
         bodyPartImageView.setFitHeight(60);
         bodyPartImageView.setFitWidth(100);
