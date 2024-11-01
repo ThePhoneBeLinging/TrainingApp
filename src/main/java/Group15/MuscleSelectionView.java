@@ -13,7 +13,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -129,12 +128,10 @@ public class MuscleSelectionView {
             }
         }
 
-        bodyPartToggleButtons.forEach(toggleButton -> {
-            toggleButton.setOnAction(_ -> {
-                if (toggleButton.isSelected()) selectedBodyParts.add(BodyPart.valueOf(toggleButton.getText()));
-                else selectedBodyParts.remove(BodyPart.valueOf(toggleButton.getText()));
-            });
-        });
+        bodyPartToggleButtons.forEach(toggleButton -> toggleButton.setOnAction(_ -> {
+            if (toggleButton.isSelected()) selectedBodyParts.add(BodyPart.valueOf(toggleButton.getText()));
+            else selectedBodyParts.remove(BodyPart.valueOf(toggleButton.getText()));
+        }));
 
         return bodyPartsGridPane;
     }
