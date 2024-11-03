@@ -80,20 +80,15 @@ public class EditWorkoutView
             Label exerciseLabel1 = new Label(exercise.title + ": ");
             exerciseLabel1.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 
-            Label exerciseLabel2 = new Label(exercise.description);
-            exerciseLabel2.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
-
             EventHandler<MouseEvent> clickAction = event ->
                 {
                 System.out.println("Image or title clicked for exercise: " + exercise.title);
                 ViewController.setScene(ExerciseDetailsView.createScene(exercise));
                 };
 
-            imageView.setOnMouseClicked(clickAction);
-            exerciseLabel1.setOnMouseClicked(clickAction);
-
 
             HBox exerciseBox = new HBox();
+            exerciseBox.setOnMouseClicked(clickAction);
             exerciseBox.setSpacing(10);
             exerciseBox.setAlignment(Pos.CENTER_LEFT);
             exerciseBox.setBackground(Background.fill(Color.LIGHTGRAY));
@@ -118,7 +113,7 @@ public class EditWorkoutView
             //
             //
             //
-            exerciseBox.getChildren().addAll(imageView, exerciseLabel1, exerciseLabel2,swapExerciseButton,deleteExerciseButton);
+            exerciseBox.getChildren().addAll(imageView, exerciseLabel1,swapExerciseButton,deleteExerciseButton);
 
             workoutPane.getChildren().add(exerciseBox);
         }

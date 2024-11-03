@@ -81,9 +81,6 @@ public class WorkoutView
             Label exerciseLabel1 = new Label(exercise.title + ": ");
             exerciseLabel1.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 
-            Label exerciseLabel2 = new Label(exercise.description);
-            exerciseLabel2.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
-
             EventHandler<MouseEvent> clickAction = event ->
                 {
                 System.out.println("Image or title clicked for exercise: " + exercise.title);
@@ -102,7 +99,7 @@ public class WorkoutView
             exerciseBox.setBackground(Background.fill(Color.LIGHTGRAY));
             exerciseBox.setPadding(new Insets(10));
 
-            exerciseBox.getChildren().addAll(imageView, exerciseLabel1, exerciseLabel2);
+            exerciseBox.getChildren().addAll(imageView, exerciseLabel1);
 
             workoutPane.getChildren().add(exerciseBox);
         }

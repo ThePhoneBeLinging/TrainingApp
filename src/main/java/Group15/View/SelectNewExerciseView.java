@@ -30,6 +30,9 @@ public class SelectNewExerciseView
     {
         exerciseToSwap = exercise;
         VBox vBox = new VBox();
+        vBox.setPrefSize(640,400);
+        vBox.setMaxWidth(vBox.getPrefWidth());
+        vBox.setMaxHeight(vBox.getPrefHeight());
         vBox.getChildren().add(createWorkoutPane(workout));
         vBox.setAlignment(Pos.CENTER);
         return new Scene(vBox);
@@ -61,22 +64,15 @@ public class SelectNewExerciseView
             Label exerciseLabel1 = new Label(exercise.title + ": ");
             exerciseLabel1.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 
-            Label exerciseLabel2 = new Label(exercise.description);
-            exerciseLabel2.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
-
             EventHandler<MouseEvent> clickAction = event ->
                 {
                 System.out.println("Image or title clicked for exercise: " + exercise.title);
                 ViewController.setScene(ExerciseDetailsView.createScene(exercise));
                 };
-
-            imageView.setOnMouseClicked(clickAction);
-            exerciseLabel1.setOnMouseClicked(clickAction);
-
-
             HBox exerciseBox = new HBox();
+            exerciseBox.setOnMouseClicked(clickAction);
             exerciseBox.setSpacing(10);
-            exerciseBox.setAlignment(Pos.CENTER_LEFT);
+            exerciseBox.setAlignment(Pos.CENTER);
             exerciseBox.setBackground(Background.fill(Color.LIGHTGRAY));
             exerciseBox.setPadding(new Insets(10));
             Button chooseExerciseButton = new Button("Choose Exercise");
@@ -94,7 +90,7 @@ public class SelectNewExerciseView
                 ViewController.setScene(EditWorkoutView.createScene(workout));
                 });
 
-            exerciseBox.getChildren().addAll(imageView, exerciseLabel1, exerciseLabel2, chooseExerciseButton);
+            exerciseBox.getChildren().addAll(imageView, exerciseLabel1, chooseExerciseButton);
             workoutPane.getChildren().add(exerciseBox);
         }
         return new ScrollPane(workoutPane);
