@@ -98,6 +98,11 @@ public class EditWorkoutView
             exerciseBox.setAlignment(Pos.CENTER_LEFT);
             exerciseBox.setBackground(Background.fill(Color.LIGHTGRAY));
             exerciseBox.setPadding(new Insets(10));
+
+
+            //
+            // THE FOLLOWING SHOULD NOT BE UPDATED CASUALLY
+            //
             Button deleteExerciseButton = new Button("Delete Exercise");
             Button swapExerciseButton = new Button("Swap Exercise");
 
@@ -106,7 +111,13 @@ public class EditWorkoutView
                     workout.removeExercise(exercise);
                     ViewController.setScene(EditWorkoutView.createScene(workout));
                 });
-
+            swapExerciseButton.setOnAction(e ->
+                {
+                   ViewController.setScene(SelectNewExerciseView.createScene(exercise,workout));
+                });
+            //
+            //
+            //
             exerciseBox.getChildren().addAll(imageView, exerciseLabel1, exerciseLabel2,swapExerciseButton,deleteExerciseButton);
 
             workoutPane.getChildren().add(exerciseBox);
@@ -142,8 +153,7 @@ public class EditWorkoutView
                     }
                     case "Add Exercise":
                     {
-                        workout.addExercise(new Exercise());
-                        ViewController.setScene(EditWorkoutView.createScene(workout));
+                        ViewController.setScene(SelectNewExerciseView.createScene(null,workout));
                         break;
                     }
                     case "Apply Changes":
