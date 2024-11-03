@@ -1,6 +1,7 @@
 package Group15.View;
 
 import Group15.Model.Exercise;
+import Group15.Util.ExerciseUtils;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,6 +17,8 @@ import javafx.scene.text.FontWeight;
 public class ExerciseDetailsView
 {
 
+    private static final String FAVORITES_FILE = "favorites.dat";
+
     public static Scene createScene(Exercise exercise)
     {
         System.out.println("Creating ExerciseDetailsView for: " + exercise.title);
@@ -30,7 +33,7 @@ public class ExerciseDetailsView
         Pane exerciseInfoPane = createExerciseInfoPane(exercise);
         layout.getChildren().add(exerciseInfoPane);
 
-        Pane buttonPane = createButtonPane();
+        Pane buttonPane = createButtonPane(exercise);
         layout.getChildren().add(buttonPane);
 
         return new Scene(layout);
@@ -96,7 +99,7 @@ public class ExerciseDetailsView
         return infoPane;
     }
 
-    private static Pane createButtonPane()
+    private static Pane createButtonPane(Exercise exercise)
     {
         HBox buttonPane = new HBox();
         buttonPane.setAlignment(Pos.CENTER);
@@ -104,10 +107,9 @@ public class ExerciseDetailsView
 
         Button likeButton = new Button("Like");
         likeButton.setPrefSize(200, 50);
-        likeButton.setOnAction(_ ->
-            {
-            //TODO: Add functionality to add exercise to liked
-            });
+        likeButton.setOnAction(_ -> {
+            ExerciseUtils.addExerciseToFile(exercise, FAVORITES_FILE);
+        });
 
         Button dislikeButton = new Button("Dislike");
         dislikeButton.setPrefSize(200, 50);
