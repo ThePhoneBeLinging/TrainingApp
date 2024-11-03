@@ -1,3 +1,5 @@
+import Group15.Model.BodyPart;
+import Group15.Model.Equipment;
 import Group15.Model.Exercise;
 import Group15.Model.Workout;
 import Group15.Util.JSONParser;
@@ -6,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class JSONParserTest
@@ -20,8 +23,8 @@ public class JSONParserTest
     {
         exercises = new ArrayList<>();
 
-        Exercise pushup = new Exercise("Pushup", "Push your body up and down", "Strength", "Chest", "None", "Easy", "None");
-        Exercise situp = new Exercise("Situp", "Sit up and down", "Strength", "Abs", "None", "Easy", "None");
+        Exercise pushup = new Exercise("Pushup", "Push your body up and down", "Strength", Collections.singletonList(BodyPart.Chest), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000);
+        Exercise situp = new Exercise("Situp", "Sit up and down", "Strength", Collections.singletonList(BodyPart.Abdominals), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000);
         exercises.add(pushup);
         exercises.add(situp);
     }

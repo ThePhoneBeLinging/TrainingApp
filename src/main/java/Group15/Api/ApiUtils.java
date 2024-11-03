@@ -1,4 +1,4 @@
-package Group15.Util;
+package Group15.Api;
 
 import Group15.Model.Exercise;
 import org.springframework.core.ParameterizedTypeReference;
@@ -8,13 +8,23 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-public class Api
+public class ApiUtils
 {
-    public static List<Exercise> getExercisesFromBodypart(String bodyPart, int exerciseAmount)
-    {
-        String upperCaseBodyPart = bodyPart.substring(0, 1).toUpperCase() + bodyPart.substring(1);
+    private static final String URL = "https://158.179.205.63/api/v3/get/exercise/all";
 
-        String URL = "https://158.179.205.63/api/v3/get/exercise/byBodyPart?bodyPart=" + upperCaseBodyPart + "&amountOfExercises=" + exerciseAmount;
+    private static List<Exercise> exercises;
+
+    public static List<Exercise> getAllExercises()
+    {
+        if (exercises == null)
+        {
+            exercises = getExercisesFromAPI();
+        }
+        return exercises;
+    }
+
+    private static List<Exercise> getExercisesFromAPI()
+    {
         try
         {
             RestTemplate restTemplate = new RestTemplate();
@@ -22,9 +32,7 @@ public class Api
                     new ParameterizedTypeReference<List<Exercise>>()
                     {
                     });
-            List<Exercise> exercises = response.getBody();
-            System.out.println(exercises);
-            return exercises;
+            return response.getBody();
         }
         catch (Exception e)
         {
