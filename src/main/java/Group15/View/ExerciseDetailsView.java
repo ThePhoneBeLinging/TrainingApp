@@ -102,18 +102,25 @@ public class ExerciseDetailsView
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setSpacing(20);
 
-        Button favoriteButton = new Button("Favorite");
-        favoriteButton.setPrefSize(200, 50);
-        favoriteButton.setOnAction(_ ->
+        Button likeButton = new Button("Favorite");
+        likeButton.setPrefSize(200, 50);
+        likeButton.setOnAction(_ ->
             {
             //TODO: Add functionality to add exercise to favorites
+            });
+
+        Button dislikeButton = new Button("Dislike");
+        dislikeButton.setPrefSize(200, 50);
+        dislikeButton.setOnAction(_ ->
+            {
+                //TODO: add functionality to add exercise to disliked
             });
 
         Button backButton = new Button("Back");
         backButton.setPrefSize(200, 50);
         backButton.setOnAction(_ -> ViewController.setScene(WorkoutView.createScene()));
 
-        buttonPane.getChildren().addAll(favoriteButton, backButton);
+        buttonPane.getChildren().addAll(likeButton, dislikeButton, backButton);
 
         return buttonPane;
     }
