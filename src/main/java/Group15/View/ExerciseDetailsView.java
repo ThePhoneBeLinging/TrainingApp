@@ -18,6 +18,7 @@ public class ExerciseDetailsView
 {
 
     private static final String FAVORITES_FILE = "favorites.dat";
+    private static final String DISLIKED_FILE = "disliked.dat";
 
     public static Scene createScene(Exercise exercise)
     {
@@ -113,10 +114,10 @@ public class ExerciseDetailsView
 
         Button dislikeButton = new Button("Dislike");
         dislikeButton.setPrefSize(200, 50);
-        dislikeButton.setOnAction(_ ->
-            {
-                //TODO: add functionality to add exercise to disliked
-            });
+        dislikeButton.setOnAction(_ -> {
+            ExerciseUtils.removeExerciseFromFile(exercise, FAVORITES_FILE);
+            ExerciseUtils.addExerciseToFile(exercise, DISLIKED_FILE);
+        });
 
         Button backButton = new Button("Back");
         backButton.setPrefSize(200, 50);

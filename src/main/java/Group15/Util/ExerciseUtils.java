@@ -7,9 +7,6 @@ import java.util.List;
 
 public class ExerciseUtils {
 
-    private static final String LIKED_FILE = "liked.dat";
-    private static final String DISLIKED_FILE = "disliked.dat";
-
     public static void saveExercises(List<Exercise> exercises, String fileName) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
             oos.writeObject(exercises);
