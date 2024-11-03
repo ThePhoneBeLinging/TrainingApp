@@ -1,6 +1,4 @@
-package Group15;
-
-import Group15.Api.Exercise;
+package Group15.Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +6,27 @@ import java.util.List;
 public class Workout
 {
     private final List<Exercise> exercises = new ArrayList<>();
+    private String name;
+    private String description;
 
     public Workout()
     {
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void addExercise(Exercise exercise)
