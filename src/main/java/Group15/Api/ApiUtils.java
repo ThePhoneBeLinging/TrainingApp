@@ -1,5 +1,6 @@
 package Group15.Api;
 
+import Group15.Model.Exercise;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;

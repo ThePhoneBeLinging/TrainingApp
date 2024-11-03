@@ -1,9 +1,10 @@
-package Group15;
+package Group15.Util;
 
 import Group15.Api.ApiUtils;
-import Group15.Api.BodyPart;
-import Group15.Api.Equipment;
-import Group15.Api.Exercise;
+import Group15.Model.BodyPart;
+import Group15.Model.Equipment;
+import Group15.Model.Exercise;
+import Group15.Model.Workout;
 
 import java.util.Collections;
 import java.util.List;

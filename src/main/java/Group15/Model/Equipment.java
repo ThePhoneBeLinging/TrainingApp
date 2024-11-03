@@ -1,4 +1,4 @@
-package Group15.Api;
+package Group15.Model;
 
 public enum Equipment
 {

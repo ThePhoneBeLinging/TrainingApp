@@ -1,20 +1,18 @@
-package Group15;
+package Group15.View;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.geometry.Pos;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.layout.Background;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 public class HomeScreenView {
 
-    private static String title = "Workout App";
-    private static String[] buttons = {"New Workout", "My Workouts", "Exit"};
+    private static final String title = "Workout App";
+    private static final String[] buttons = {"New Workout", "My Workouts", "Exit"};
 
     public static Scene createScene() {
         VBox layout = new VBox();

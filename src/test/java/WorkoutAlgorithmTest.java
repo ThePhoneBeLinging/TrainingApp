@@ -1,8 +1,8 @@
-import Group15.Api.BodyPart;
-import Group15.Api.Equipment;
-import Group15.Api.Exercise;
-import Group15.WorkoutAlgorithm;
-import Group15.Workout;
+import Group15.Model.BodyPart;
+import Group15.Model.Equipment;
+import Group15.Model.Exercise;
+import Group15.Util.WorkoutAlgorithm;
+import Group15.Model.Workout;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;

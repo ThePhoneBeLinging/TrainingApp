@@ -1,7 +1,8 @@
-package Group15;
+package Group15.View;
 
-import Group15.Api.BodyPart;
-import Group15.Api.Equipment;
+import Group15.Model.BodyPart;
+import Group15.Model.Equipment;
+import Group15.Util.WorkoutAlgorithm;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

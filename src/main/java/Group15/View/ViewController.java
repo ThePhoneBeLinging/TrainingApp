@@ -1,4 +1,4 @@
-package Group15;
+package Group15.View;
 
 import Group15.Api.ApiUtils;
 
