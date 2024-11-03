@@ -1,13 +1,9 @@
 package Group15.Model;
 
-import Group15.Util.JSONParser;
-
-import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Workout implements Serializable
+public class Workout
 {
     private final List<Exercise> exercises = new ArrayList<>();
     private String name;
@@ -76,22 +72,5 @@ public class Workout implements Serializable
         }
 
         return result;
-    }
-
-    public void saveWorkout()
-    {
-        // TODO: add a filepath that we agree on
-        String stdFilePath = "";
-        String filePath = stdFilePath + ".json";
-        File file = new File(filePath);
-        int counter = 1;
-
-        while (file.exists()) {
-            filePath = stdFilePath + "_" + counter + ".json";
-            file = new File(filePath);
-            counter++;
-        }
-
-        JSONParser.saveObjectsAsJSON(filePath, new Workout[]{this});
     }
 }
