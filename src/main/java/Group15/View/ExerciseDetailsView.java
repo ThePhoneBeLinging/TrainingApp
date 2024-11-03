@@ -16,7 +16,7 @@ import javafx.scene.text.FontWeight;
 
 public class ExerciseDetailsView
 {
-
+    //TODO: Add a proper placement of these files
     private static final String FAVORITES_FILE = "favorites.dat";
     private static final String DISLIKED_FILE = "disliked.dat";
 
@@ -100,23 +100,31 @@ public class ExerciseDetailsView
         return infoPane;
     }
 
-    private static Pane createButtonPane(Exercise exercise)
-    {
+    private static Pane createButtonPane(Exercise exercise) {
         HBox buttonPane = new HBox();
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setSpacing(20);
 
         Button likeButton = new Button("Like");
         likeButton.setPrefSize(200, 50);
+        if (ExerciseUtils.isExerciseInFile(exercise, FAVORITES_FILE)) {
+            likeButton.setStyle("-fx-background-color: #00ff00;");
+        }
         likeButton.setOnAction(_ -> {
             ExerciseUtils.addExerciseToFile(exercise, FAVORITES_FILE);
+            ExerciseUtils.removeExerciseFromFile(exercise, DISLIKED_FILE);
+            likeButton.setStyle("-fx-background-color: #00ff00;");
         });
 
         Button dislikeButton = new Button("Dislike");
         dislikeButton.setPrefSize(200, 50);
+        if (ExerciseUtils.isExerciseInFile(exercise, DISLIKED_FILE)) {
+            dislikeButton.setStyle("-fx-background-color: #ff0000;");
+        }
         dislikeButton.setOnAction(_ -> {
             ExerciseUtils.removeExerciseFromFile(exercise, FAVORITES_FILE);
             ExerciseUtils.addExerciseToFile(exercise, DISLIKED_FILE);
+            dislikeButton.setStyle("-fx-background-color: #ff0000;");
         });
 
         Button backButton = new Button("Back");

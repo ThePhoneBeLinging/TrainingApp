@@ -36,4 +36,9 @@ public class ExerciseUtils {
         exercises.remove(exercise);
         saveExercises(exercises, fileName);
     }
+
+    public static boolean isExerciseInFile(Exercise exercise, String fileName) {
+        List<Exercise> exercises = loadExercises(fileName);
+        return exercises.contains(exercise);
+    }
 }
