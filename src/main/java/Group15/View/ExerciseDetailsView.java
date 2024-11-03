@@ -102,11 +102,11 @@ public class ExerciseDetailsView
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setSpacing(20);
 
-        Button likeButton = new Button("Favorite");
+        Button likeButton = new Button("Like");
         likeButton.setPrefSize(200, 50);
         likeButton.setOnAction(_ ->
             {
-            //TODO: Add functionality to add exercise to favorites
+            //TODO: Add functionality to add exercise to liked
             });
 
         Button dislikeButton = new Button("Dislike");
