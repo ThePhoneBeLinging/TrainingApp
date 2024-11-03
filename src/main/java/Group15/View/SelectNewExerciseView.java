@@ -15,10 +15,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -30,12 +27,24 @@ public class SelectNewExerciseView
     {
         exerciseToSwap = exercise;
         VBox vBox = new VBox();
+        vBox.getChildren().add(createTitlePane());
         vBox.setPrefSize(640,400);
         vBox.setMaxWidth(vBox.getPrefWidth());
         vBox.setMaxHeight(vBox.getPrefHeight());
-        vBox.getChildren().add(createWorkoutPane(workout));
         vBox.setAlignment(Pos.CENTER);
+        vBox.getChildren().add(createWorkoutPane(workout));
         return new Scene(vBox);
+    }
+
+    private static Pane createTitlePane()
+    {
+        HBox titlePane = new HBox();
+        titlePane.setAlignment(Pos.TOP_CENTER);
+        Label titleLabel = new Label("Select Exercise");
+        titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 40));
+        titlePane.getChildren().add(titleLabel);
+
+        return titlePane;
     }
 
     private static Node createWorkoutPane(Workout workout)
@@ -93,6 +102,11 @@ public class SelectNewExerciseView
             exerciseBox.getChildren().addAll(imageView, exerciseLabel1, chooseExerciseButton);
             workoutPane.getChildren().add(exerciseBox);
         }
-        return new ScrollPane(workoutPane);
+        ScrollPane scrollPane = new ScrollPane(workoutPane);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setPrefViewportHeight(400);
+        scrollPane.setMaxWidth(Region.USE_PREF_SIZE);
+        scrollPane.setPadding(new Insets(10));
+        return scrollPane;
     }
 }
