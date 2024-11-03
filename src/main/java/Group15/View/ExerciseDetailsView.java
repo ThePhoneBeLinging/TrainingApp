@@ -107,6 +107,10 @@ public class ExerciseDetailsView
 
         Button likeButton = new Button("Like");
         likeButton.setPrefSize(200, 50);
+
+        Button dislikeButton = new Button("Dislike");
+        dislikeButton.setPrefSize(200, 50);
+
         if (ExerciseUtils.isExerciseInFile(exercise, FAVORITES_FILE)) {
             likeButton.setStyle("-fx-background-color: #00ff00;");
         }
@@ -114,10 +118,9 @@ public class ExerciseDetailsView
             ExerciseUtils.addExerciseToFile(exercise, FAVORITES_FILE);
             ExerciseUtils.removeExerciseFromFile(exercise, DISLIKED_FILE);
             likeButton.setStyle("-fx-background-color: #00ff00;");
+            dislikeButton.setStyle(""); // Remove highlight
         });
 
-        Button dislikeButton = new Button("Dislike");
-        dislikeButton.setPrefSize(200, 50);
         if (ExerciseUtils.isExerciseInFile(exercise, DISLIKED_FILE)) {
             dislikeButton.setStyle("-fx-background-color: #ff0000;");
         }
@@ -125,6 +128,7 @@ public class ExerciseDetailsView
             ExerciseUtils.removeExerciseFromFile(exercise, FAVORITES_FILE);
             ExerciseUtils.addExerciseToFile(exercise, DISLIKED_FILE);
             dislikeButton.setStyle("-fx-background-color: #ff0000;");
+            likeButton.setStyle(""); // Remove highlight
         });
 
         Button backButton = new Button("Back");
