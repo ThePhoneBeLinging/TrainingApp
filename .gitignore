@@ -8,6 +8,7 @@ target/
 *.iws
 *.iml
 *.ipr
+exercises.json
 
 ### Eclipse ###
 .apt_generated

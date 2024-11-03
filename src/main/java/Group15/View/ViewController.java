@@ -1,16 +1,9 @@
 package Group15.View;
 
-import Group15.Model.BodyPart;
-import Group15.Util.Api;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import Group15.Api.ApiUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public class ViewController
 {
@@ -18,6 +11,7 @@ public class ViewController
 
     public static void init(Stage stage)
     {
+        ApiUtils.getAllExercises();
         ViewController.stage = stage;
         ViewController.stage.setHeight(800);
         ViewController.stage.setWidth(1000);
@@ -34,37 +28,4 @@ public class ViewController
     {
         ViewController.stage.setScene(scene);
     }
-
-    public static Scene createMuscleSelectorScene()
-    {
-        VBox vBox = new VBox();
-        List<ToggleButton> toggleButtons = new ArrayList<>();
-
-        for (BodyPart bodyPart : BodyPart.values())
-        {
-            ToggleButton toggleButton = new ToggleButton(bodyPart.toString());
-            toggleButtons.add(toggleButton);
-            vBox.getChildren().add(toggleButton);
-        }
-
-        Button submitButton = new Button("Submit");
-        VBox.setMargin(submitButton, new Insets(50, 0, 0, 0));
-        vBox.getChildren().add(submitButton);
-
-        submitButton.setOnAction(e ->
-            {
-            List<String> selectedButtonNames = new ArrayList<>();
-            for (ToggleButton toggleButton : toggleButtons)
-            {
-                if (toggleButton.isSelected())
-                {
-                    Api.getExercisesFromBodypart(toggleButton.getText(), 1);
-                }
-            }
-            System.out.println("Selected buttons: " + String.join(", ", selectedButtonNames));
-            });
-
-        return new Scene(vBox, 600, 600);
-    }
-
 }

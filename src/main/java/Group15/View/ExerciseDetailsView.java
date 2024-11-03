@@ -104,17 +104,14 @@ public class ExerciseDetailsView
 
         Button favoriteButton = new Button("Favorite");
         favoriteButton.setPrefSize(200, 50);
-        favoriteButton.setOnAction(e ->
+        favoriteButton.setOnAction(_ ->
             {
             //TODO: Add functionality to add exercise to favorites
             });
 
         Button backButton = new Button("Back");
         backButton.setPrefSize(200, 50);
-        backButton.setOnAction(e ->
-            {
-            ViewController.setScene(WorkoutView.createScene());
-            });
+        backButton.setOnAction(_ -> ViewController.setScene(WorkoutView.createScene()));
 
         buttonPane.getChildren().addAll(favoriteButton, backButton);
 

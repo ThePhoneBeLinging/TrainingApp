@@ -11,10 +11,20 @@ public enum BodyPart
     Forearms,
     LowerBack,
     MiddleBack,
+    UpperBack,
+    Back,
     Traps,
     Quadriceps,
     Shoulders,
     Triceps,
+    Glutes,
+    Hamstrings,
+    RearDeltoids,
+    Quads,
+    Core,
+    Legs,
+    Arms,
+    Lats,
     ;
 
     @Override
