@@ -112,6 +112,7 @@ public class HomeScreenView
             workoutItem.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
 
             Label titleWorkout = new Label(workout.getName());
+            titleWorkout.setFont(Font.font("Arial", FontWeight.BOLD, 14));
             Label descriptionWorkout = new Label(workout.getDescription());
             workoutItem.getChildren().addAll(titleWorkout, descriptionWorkout);
 
