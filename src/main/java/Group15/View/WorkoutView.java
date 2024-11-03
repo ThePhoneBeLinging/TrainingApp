@@ -88,12 +88,8 @@ public class WorkoutView
                 Scene exerciseDetailsScene = ExerciseDetailsView.createScene(exercise);
                 ViewController.setScene(exerciseDetailsScene);
                 };
-
-            imageView.setOnMouseClicked(clickAction);
-            exerciseLabel1.setOnMouseClicked(clickAction);
-
-
             HBox exerciseBox = new HBox();
+            exerciseBox.setOnMouseClicked(clickAction);
             exerciseBox.setSpacing(10);
             exerciseBox.setAlignment(Pos.CENTER_LEFT);
             exerciseBox.setBackground(Background.fill(Color.LIGHTGRAY));
