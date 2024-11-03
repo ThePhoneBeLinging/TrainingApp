@@ -1,6 +1,7 @@
 package Group15.View;
 
 import Group15.Model.Exercise;
+import Group15.Model.Workout;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -111,7 +112,8 @@ public class ExerciseDetailsView
 
         Button backButton = new Button("Back");
         backButton.setPrefSize(200, 50);
-        backButton.setOnAction(_ -> ViewController.setScene(WorkoutView.createScene()));
+        //TODO BACK BUTTON!!
+        backButton.setOnAction(_ -> ViewController.setScene(WorkoutView.createScene(new Workout())));
 
         buttonPane.getChildren().addAll(favoriteButton, backButton);
 

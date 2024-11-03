@@ -21,10 +21,9 @@ import javafx.scene.text.FontWeight;
 import javax.swing.text.View;
 
 
-public class WorkoutView
+public class EditWorkoutView
 {
-    private static final String title = "Workout";
-    private static final String[] buttons = {"Back", "Edit Workout", "Save"};
+    private static final String[] buttons = {"Cancel", "Add Exercise", "Apply Changes"};
 
     public static Scene createScene(Workout workout)
     {
@@ -35,8 +34,8 @@ public class WorkoutView
         Pane titlePane = createTitlePane();
         layout.getChildren().add(titlePane);
 
-        Node WorkoutPane = createWorkoutPane(workout);
-        layout.getChildren().add(WorkoutPane);
+        Node workoutPane = createWorkoutPane(workout);
+        layout.getChildren().add(workoutPane);
 
         Pane buttonPane = createButtonPane(workout);
         layout.getChildren().add(buttonPane);
@@ -48,7 +47,7 @@ public class WorkoutView
     {
         HBox titlePane = new HBox();
         titlePane.setAlignment(Pos.TOP_CENTER);
-        Label titleLabel = new Label(title);
+        Label titleLabel = new Label("Edit Workout");
         titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 40));
         titlePane.getChildren().add(titleLabel);
 
@@ -87,9 +86,7 @@ public class WorkoutView
             EventHandler<MouseEvent> clickAction = event ->
                 {
                 System.out.println("Image or title clicked for exercise: " + exercise.title);
-                Scene currentScene = ViewController.getScene();
-                Scene exerciseDetailsScene = ExerciseDetailsView.createScene(exercise);
-                ViewController.setScene(exerciseDetailsScene);
+                ViewController.setScene(ExerciseDetailsView.createScene(exercise));
                 };
 
             imageView.setOnMouseClicked(clickAction);
@@ -101,8 +98,16 @@ public class WorkoutView
             exerciseBox.setAlignment(Pos.CENTER_LEFT);
             exerciseBox.setBackground(Background.fill(Color.LIGHTGRAY));
             exerciseBox.setPadding(new Insets(10));
+            Button deleteExerciseButton = new Button("Delete Exercise");
+            Button swapExerciseButton = new Button("Swap Exercise");
 
-            exerciseBox.getChildren().addAll(imageView, exerciseLabel1, exerciseLabel2);
+            deleteExerciseButton.setOnAction(e ->
+                {
+                    workout.removeExercise(exercise);
+                    ViewController.setScene(EditWorkoutView.createScene(workout));
+                });
+
+            exerciseBox.getChildren().addAll(imageView, exerciseLabel1, exerciseLabel2,swapExerciseButton,deleteExerciseButton);
 
             workoutPane.getChildren().add(exerciseBox);
         }
@@ -129,13 +134,22 @@ public class WorkoutView
                 {
                 switch (button)
                 {
-                    case "Back" -> ViewController.setScene(HomeScreenView.createScene());
-                    case "Edit Workout" ->
+                    //TODO This should either be a copy of the workout object, or use more advanced navigation :)
+                    case "Cancel":
                     {
-                        ViewController.setScene(EditWorkoutView.createScene(workout));
+                        ViewController.setScene(WorkoutView.createScene(workout));
+                        break;
                     }
-                    case "Save" ->
+                    case "Add Exercise":
                     {
+                        workout.addExercise(new Exercise());
+                        ViewController.setScene(EditWorkoutView.createScene(workout));
+                        break;
+                    }
+                    case "Apply Changes":
+                    {
+                        ViewController.setScene(WorkoutView.createScene(workout));
+                        break;
                     }
                 }
                 });
