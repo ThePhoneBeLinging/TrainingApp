@@ -181,7 +181,6 @@ public class MuscleSelectionView {
             return;
         }
         int timeInMinutes = Integer.parseInt(minutesInputField.getText());
-        System.out.println(selectedBodyParts);
         ViewController.setScene(WorkoutView.createScene(WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes)));
     }
 }
