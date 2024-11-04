@@ -1,4 +1,4 @@
-package Group15.Api;
+package Group15.Util;
 
 import Group15.Model.Exercise;
 import org.springframework.core.ParameterizedTypeReference;
@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-public class ApiUtils
+public class Api
 {
     private static final String URL = "https://158.179.205.63/api/v3/get/exercise/all";
 
