@@ -7,8 +7,11 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.io.source.ByteArrayOutputStream;
 
 import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.net.URL;
 
 public class WorkoutPdfGenerator {
     public static void saveWorkoutAsPdf(Workout workout, String filePath) throws FileNotFoundException {
@@ -25,11 +28,17 @@ public class WorkoutPdfGenerator {
             document.add(new Paragraph("Equipment: " + exercise.equipment + " | Difficulty: " + exercise.difficulty).setFontSize(12));
 
             try {
-                String imagePath = WorkoutView.class.getResource(exercise.imagePath).toExternalForm();
-                Image img = new Image(ImageDataFactory.create(imagePath)).setWidth(100).setHeight(100);
-                document.add(img);
+                URL imageUrl = WorkoutView.class.getResource(exercise.imagePath);
+                if (imageUrl != null) {
+                    System.out.println("Loading image from: " + imageUrl.toExternalForm());
+                    Image img = new Image(ImageDataFactory.create(imageUrl)).setWidth(100).setHeight(100);
+                    document.add(img);
+                } else {
+                    System.out.println("Image not found for exercise: " + exercise.title);
+                }
             } catch (Exception e) {
                 System.out.println("Could not load image for exercise: " + exercise.title);
+                e.printStackTrace();
             }
 
             document.add(new Paragraph("\n"));
