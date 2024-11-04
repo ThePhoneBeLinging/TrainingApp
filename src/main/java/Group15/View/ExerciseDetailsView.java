@@ -14,14 +14,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class ExerciseDetailsView
-{
-    //TODO: Add a proper placement of these files
-    private static final String FAVORITES_FILE = "favorites.dat";
-    private static final String DISLIKED_FILE = "disliked.dat";
+public class ExerciseDetailsView {
 
-    public static Scene createScene(Exercise exercise)
-    {
+    public static Scene createScene(Exercise exercise) {
         System.out.println("Creating ExerciseDetailsView for: " + exercise.title);
 
         VBox layout = new VBox();
@@ -40,15 +35,12 @@ public class ExerciseDetailsView
         return new Scene(layout);
     }
 
-
-    private static Pane createExerciseImagePane(String imagePath)
-    {
+    private static Pane createExerciseImagePane(String imagePath) {
         VBox imagePane = new VBox();
         imagePane.setAlignment(Pos.CENTER);
         imagePane.setPrefSize(640, 400);
 
-        try
-        {
+        try {
             String fullImagePath = WorkoutView.class.getResource(imagePath).toExternalForm();
             System.out.println("Loading image from: " + fullImagePath);
 
@@ -59,9 +51,7 @@ public class ExerciseDetailsView
 
             imagePane.getChildren().add(imageView);
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println("Error loading image: " + imagePath);
             e.printStackTrace();
         }
@@ -69,8 +59,7 @@ public class ExerciseDetailsView
         return imagePane;
     }
 
-    private static Pane createExerciseInfoPane(Exercise exercise)
-    {
+    private static Pane createExerciseInfoPane(Exercise exercise) {
         VBox infoPane = new VBox();
         infoPane.setSpacing(10);
         infoPane.setAlignment(Pos.CENTER);
@@ -111,24 +100,16 @@ public class ExerciseDetailsView
         Button dislikeButton = new Button("Dislike");
         dislikeButton.setPrefSize(200, 50);
 
-        if (ExerciseUtils.isExerciseInFile(exercise, FAVORITES_FILE)) {
-            likeButton.setStyle("-fx-background-color: #00ff00;");
-        }
+        updateButtonStyles(exercise, likeButton, dislikeButton);
+
         likeButton.setOnAction(_ -> {
-            ExerciseUtils.addExerciseToFile(exercise, FAVORITES_FILE);
-            ExerciseUtils.removeExerciseFromFile(exercise, DISLIKED_FILE);
-            likeButton.setStyle("-fx-background-color: #00ff00;");
-            dislikeButton.setStyle(""); // Remove highlight
+            ExerciseUtils.likeExercisePressed(exercise);
+            updateButtonStyles(exercise, likeButton, dislikeButton);
         });
 
-        if (ExerciseUtils.isExerciseInFile(exercise, DISLIKED_FILE)) {
-            dislikeButton.setStyle("-fx-background-color: #ff0000;");
-        }
         dislikeButton.setOnAction(_ -> {
-            ExerciseUtils.removeExerciseFromFile(exercise, FAVORITES_FILE);
-            ExerciseUtils.addExerciseToFile(exercise, DISLIKED_FILE);
-            dislikeButton.setStyle("-fx-background-color: #ff0000;");
-            likeButton.setStyle(""); // Remove highlight
+            ExerciseUtils.dislikeExercisePressed(exercise);
+            updateButtonStyles(exercise, likeButton, dislikeButton);
         });
 
         Button backButton = new Button("Back");
@@ -138,5 +119,19 @@ public class ExerciseDetailsView
         buttonPane.getChildren().addAll(likeButton, dislikeButton, backButton);
 
         return buttonPane;
+    }
+
+    private static void updateButtonStyles(Exercise exercise, Button likeButton, Button dislikeButton) {
+        if (ExerciseUtils.getLikedExercises().contains(exercise)) {
+            likeButton.setStyle("-fx-background-color: #00ff00;");
+        } else {
+            likeButton.setStyle("");
+        }
+
+        if (ExerciseUtils.getDislikedExercises().contains(exercise)) {
+            dislikeButton.setStyle("-fx-background-color: #ff0000;");
+        } else {
+            dislikeButton.setStyle("");
+        }
     }
 }
