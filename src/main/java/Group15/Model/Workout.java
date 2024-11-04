@@ -80,17 +80,8 @@ public class Workout implements Serializable
 
     public void saveWorkout()
     {
-        // TODO: add a filepath that we agree on
-        String stdFilePath = "";
-        String filePath = stdFilePath + ".json";
+        String filePath = "src/main/resources/userData/savedWorkouts.json";
         File file = new File(filePath);
-        int counter = 1;
-
-        while (file.exists()) {
-            filePath = stdFilePath + "_" + counter + ".json";
-            file = new File(filePath);
-            counter++;
-        }
 
         JSONParser.saveObjectsAsJSON(filePath, new Workout[]{this});
     }
