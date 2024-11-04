@@ -5,16 +5,15 @@ import Group15.Util.JSONParser;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class Workout implements Serializable
-{
+public class Workout implements Serializable {
     private final List<Exercise> exercises = new ArrayList<>();
     private String name;
     private String description;
 
-    public Workout()
-    {
+    public Workout() {
     }
 
     public void setName(String name) {
@@ -33,15 +32,12 @@ public class Workout implements Serializable
         return description;
     }
 
-    public void addExercise(Exercise exercise)
-    {
+    public void addExercise(Exercise exercise) {
         exercises.add(exercise);
     }
 
-    public void swapExercise(Exercise toRemove, Exercise toAdd)
-    {
-        if (exercises.contains(toRemove))
-        {
+    public void swapExercise(Exercise toRemove, Exercise toAdd) {
+        if (exercises.contains(toRemove)) {
             removeExercise(toRemove);
             addExercise(toAdd);
             return;
@@ -51,38 +47,42 @@ public class Workout implements Serializable
 
     }
 
-    public void removeExercise(Exercise exercise)
-    {
+    public void removeExercise(Exercise exercise) {
         exercises.remove(exercise);
     }
 
-    public List<Exercise> getExercises()
-    {
+    public List<Exercise> getExercises() {
         return exercises;
     }
 
     @Override
-    public boolean equals(Object obj)
-    {
-        if (!(obj instanceof Workout))
-        {
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Workout)) {
             return false;
         }
         boolean result = true;
 
-        for (int i = 0; i < exercises.size(); i++)
-        {
+        for (int i = 0; i < exercises.size(); i++) {
             result &= exercises.get(i).equals(((Workout) obj).exercises.get(i));
         }
 
         return result;
     }
 
-    public void saveWorkout()
-    {
+    public void saveWorkout() {
         String filePath = "src/main/resources/userData/savedWorkouts.json";
         File file = new File(filePath);
 
-        JSONParser.saveObjectsAsJSON(filePath, new Workout[]{this});
+        List<Workout> workouts = new ArrayList<>();
+        if (file.exists() && file.length() > 0) {
+            Workout[] existingWorkouts = JSONParser.loadObjectsFromJSON(filePath, Workout[].class);
+            if (existingWorkouts != null) {
+                Collections.addAll(workouts, existingWorkouts);
+            }
+        }
+
+        workouts.add(this);
+
+        JSONParser.saveObjectsAsJSON(filePath, workouts.toArray(new Workout[0]));
     }
 }
