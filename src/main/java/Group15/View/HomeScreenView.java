@@ -114,10 +114,10 @@ public class HomeScreenView
             Label descriptionWorkout = new Label(workout.getDescription());
             workoutItem.getChildren().addAll(titleWorkout, descriptionWorkout);
 
-            // TODO: we need to change the workoutView to take a workout
+
             // In addition to that we should not navigate to the workoutView on the new workout button.
             // We can change this when mr. Musti finally merges his branch
-            workoutItem.onMouseClickedProperty().set(_ -> ViewController.setScene(WorkoutView.createScene()));
+            workoutItem.onMouseClickedProperty().set(_ -> ViewController.setScene(WorkoutView.createScene(new Workout())));
             workoutsPane.getChildren().add(workoutItem);
         }
 

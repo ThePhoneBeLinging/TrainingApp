@@ -1,6 +1,7 @@
 package Group15.Model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Exercise
 {
@@ -37,12 +38,15 @@ public class Exercise
             return false;
         }
         boolean result = true;
-        result &= this.title.equals(((Exercise) obj).title);
-        result &= this.description.equals(((Exercise) obj).description);
-        result &= this.type.equals(((Exercise) obj).type);
-        result &= this.bodyPart.equals(((Exercise) obj).bodyPart);
-        result &= this.equipment.equals(((Exercise) obj).equipment);
-        result &= this.difficulty.equals(((Exercise) obj).difficulty);
+
+        result &= Objects.equals(this.title,((Exercise) obj).title);
+        result &= Objects.equals(this.description,((Exercise) obj).description);
+        result &= Objects.equals(this.type,((Exercise) obj).type);
+        result &= Objects.equals(this.bodyPart,((Exercise) obj).bodyPart);
+        result &= Objects.equals(this.equipment,((Exercise) obj).equipment);
+        result &= Objects.equals(this.difficulty,((Exercise) obj).difficulty);
+        result &= Objects.equals(this.timePerRep,((Exercise) obj).timePerRep);
+
 
 
         return result;
