@@ -1,6 +1,5 @@
 package Group15.Util;
 
-import Group15.Api.ApiUtils;
 import Group15.Model.BodyPart;
 import Group15.Model.Equipment;
 import Group15.Model.Exercise;
@@ -17,7 +16,7 @@ public class WorkoutAlgorithm {
             List<Equipment> equipment,
             int timeInMinutes){
 
-        List<Exercise> exercises = ApiUtils.getAllExercises();
+        List<Exercise> exercises = Api.getAllExercises();
 
         int timeInMilliseconds = timeInMinutes * 60000;
         Workout workout = new Workout();

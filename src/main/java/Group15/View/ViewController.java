@@ -1,7 +1,6 @@
 package Group15.View;
 
-import Group15.Api.ApiUtils;
-
+import Group15.Util.Api;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -11,7 +10,7 @@ public class ViewController
 
     public static void init(Stage stage)
     {
-        ApiUtils.getAllExercises();
+        Api.getAllExercises();
         ViewController.stage = stage;
         ViewController.stage.setHeight(800);
         ViewController.stage.setWidth(1000);

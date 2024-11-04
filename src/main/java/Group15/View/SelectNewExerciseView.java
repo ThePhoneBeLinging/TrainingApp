@@ -1,12 +1,11 @@
 package Group15.View;
 
-import Group15.Api.ApiUtils;
 import Group15.Model.Exercise;
 import Group15.Model.Workout;
+import Group15.Util.Api;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -55,7 +54,7 @@ public class SelectNewExerciseView
         workoutPane.setPrefSize(640, 600);
         workoutPane.setMaxWidth(Region.USE_PREF_SIZE);
 
-        for (Exercise exercise : ApiUtils.getAllExercises())
+        for (Exercise exercise : Api.getAllExercises())
         {
             ImageView imageView = null;
 

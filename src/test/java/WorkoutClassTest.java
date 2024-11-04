@@ -23,7 +23,7 @@ public class WorkoutClassTest {
 
     @Test
     public void testAddExercise() {
-        Exercise pushup = new Exercise("Pushup", "Push your body up and down", "Strength", Collections.singletonList(BodyPart.Chest), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000);
+        Exercise pushup = new Exercise("Pushup", "Push your body up and down", Collections.singletonList(BodyPart.Chest), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000);
         testWorkout.addExercise(pushup);
         Assert.assertEquals(1, testWorkout.getExercises().size());
         Assert.assertEquals("Pushup", testWorkout.getExercises().getFirst().title);
@@ -36,7 +36,7 @@ public class WorkoutClassTest {
 
     @Test
     public void testRemoveExercise() {
-        Exercise situp = new Exercise("Situp", "Sit up and down", "Strength", Collections.singletonList(BodyPart.Abdominals), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000);
+        Exercise situp = new Exercise("Situp", "Sit up and down", Collections.singletonList(BodyPart.Abdominals), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000);
         testAddExercise();
         testWorkout.addExercise(situp);
         Assert.assertTrue(testWorkout.getExercises().contains(situp));
@@ -50,10 +50,10 @@ public class WorkoutClassTest {
     public void testSwapExercise() {
         testRemoveExercise();
         Assert.assertEquals("Pushup", testWorkout.getExercises().getFirst().title);
-        Exercise pullup = new Exercise("Pullup", "Pull your body up and down", "Strength", Collections.singletonList(BodyPart.Back), Collections.singletonList(Equipment.Bodyweight), "Hard", "None", 3000);
+        Exercise pullup = new Exercise("Pullup", "Pull your body up and down", Collections.singletonList(BodyPart.Back), Collections.singletonList(Equipment.Bodyweight), "Hard", "None", 3000);
         testWorkout.swapExercise(testWorkout.getExercises().getFirst(), pullup);
         Assert.assertTrue(testWorkout.getExercises().contains(pullup));
-        Assert.assertFalse(testWorkout.getExercises().contains(new Exercise("Pushup", "Push your body up and down", "Strength", Collections.singletonList(BodyPart.Chest), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000)));
+        Assert.assertFalse(testWorkout.getExercises().contains(new Exercise("Pushup", "Push your body up and down", Collections.singletonList(BodyPart.Chest), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000)));
 
     }
 
