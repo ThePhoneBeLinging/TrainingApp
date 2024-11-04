@@ -1,4 +1,4 @@
-package Group15;
+/*package Group15;
 
 import Group15.Model.Exercise;
 import Group15.Model.Workout;
@@ -41,3 +41,4 @@ public class WorkoutPdfGenerator {
     }
 }
 
+*/

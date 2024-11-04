@@ -35,3 +35,4 @@ build/
 ### Mac OS ###
 .DS_Store
 keystore.jks
+/src/main/resources/userData/savedWorkouts.json

@@ -85,4 +85,17 @@ public class Workout implements Serializable {
 
         JSONParser.saveObjectsAsJSON(filePath, workouts.toArray(new Workout[0]));
     }
+
+    public static List<Workout> getSavedWorkouts() {
+        String filePath = "src/main/resources/userData/savedWorkouts.json";
+        File file = new File(filePath);
+
+        if (file.exists() && file.length() > 0) {
+            Workout[] existingWorkouts = JSONParser.loadObjectsFromJSON(filePath, Workout[].class);
+            if (existingWorkouts != null) {
+                return List.of(existingWorkouts);
+            }
+        }
+        return new ArrayList<>();
+    }
 }
