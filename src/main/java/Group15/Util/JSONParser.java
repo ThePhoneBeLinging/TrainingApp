@@ -3,6 +3,7 @@ package Group15.Util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class JSONParser
@@ -13,7 +14,8 @@ public class JSONParser
         ObjectMapper jsonMapper = new ObjectMapper();
         try
         {
-            jsonMapper.writeValue(new File(filePath), objectsToSave);
+            File file = new File(filePath);
+            jsonMapper.writeValue(file, objectsToSave);
         }
         catch (IOException e)
         {
@@ -26,9 +28,15 @@ public class JSONParser
         ObjectMapper jsonMapper = new ObjectMapper();
         try
         {
+            File file = new File(filePath);
+            if (file.createNewFile())
+            {
+                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                fileOutputStream.write("[{}]".getBytes());
+            }
             return jsonMapper.readValue(new File(filePath), objectType);
         }
-        catch (IOException e)
+        catch (Exception e)
         {
             throw new RuntimeException(e);
         }
