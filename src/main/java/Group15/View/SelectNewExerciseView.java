@@ -95,7 +95,7 @@ public class SelectNewExerciseView
                     {
                         workout.swapExercise(exerciseToSwap,exercise);
                     }
-                ViewController.setScene(EditWorkoutView.createScene(workout));
+                ViewController.applyChanges(EditWorkoutView.createScene(workout));
                 });
 
             exerciseBox.getChildren().addAll(imageView, exerciseLabel1, chooseExerciseButton);

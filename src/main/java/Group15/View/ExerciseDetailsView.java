@@ -109,8 +109,7 @@ public class ExerciseDetailsView
 
         Button backButton = new Button("Back");
         backButton.setPrefSize(200, 50);
-        //TODO BACK BUTTON!!
-        backButton.setOnAction(_ -> ViewController.setScene(WorkoutView.createScene(new Workout())));
+        backButton.setOnAction(_ -> ViewController.goBack());
 
         buttonPane.getChildren().addAll(favoriteButton, backButton);
 

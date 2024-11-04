@@ -18,8 +18,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import javax.swing.text.View;
-
 
 public class WorkoutView
 {
@@ -122,7 +120,7 @@ public class WorkoutView
                 {
                 switch (button)
                 {
-                    case "Back" -> ViewController.setScene(HomeScreenView.createScene());
+                    case "Back" -> ViewController.goBack();
                     case "Edit Workout" ->
                     {
                         ViewController.setScene(EditWorkoutView.createScene(workout));
