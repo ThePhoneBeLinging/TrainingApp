@@ -18,8 +18,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import javax.swing.text.View;
-
 
 public class EditWorkoutView
 {
@@ -143,7 +141,7 @@ public class EditWorkoutView
                     //TODO This should either be a copy of the workout object, or use more advanced navigation :)
                     case "Cancel":
                     {
-                        ViewController.setScene(WorkoutView.createScene(workout));
+                        ViewController.goBack();
                         break;
                     }
                     case "Add Exercise":
@@ -153,7 +151,7 @@ public class EditWorkoutView
                     }
                     case "Apply Changes":
                     {
-                        ViewController.setScene(WorkoutView.createScene(workout));
+                        ViewController.applyChanges(WorkoutView.createScene(workout));
                         break;
                     }
                 }

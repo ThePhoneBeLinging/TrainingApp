@@ -6,7 +6,6 @@ import Group15.Model.Workout;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -96,7 +95,7 @@ public class SelectNewExerciseView
                     {
                         workout.swapExercise(exerciseToSwap,exercise);
                     }
-                ViewController.setScene(EditWorkoutView.createScene(workout));
+                ViewController.applyChanges(EditWorkoutView.createScene(workout));
                 });
 
             exerciseBox.getChildren().addAll(imageView, exerciseLabel1, chooseExerciseButton);

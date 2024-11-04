@@ -47,7 +47,7 @@ public class MuscleSelectionView {
 
         Button backButton = new Button("Back");
         backButton.setPrefSize(200, 50);
-        backButton.setOnAction(_ -> ViewController.setScene(HomeScreenView.createScene()));
+        backButton.setOnAction(_ -> ViewController.goBack());
 
         mainVBox.getChildren().addAll(bodyPartsScrollPane, inputAndEquipBox, submitButton, backButton);
         VBox.setMargin(submitButton, new Insets(20, 0, 0, 0));
