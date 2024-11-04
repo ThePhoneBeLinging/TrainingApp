@@ -3,6 +3,7 @@ package Group15.View;
 import Group15.Model.BodyPart;
 import Group15.Model.Equipment;
 import Group15.Util.WorkoutAlgorithm;
+import ch.qos.logback.core.net.SyslogOutputStream;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -126,6 +127,14 @@ public class MuscleSelectionView {
             ToggleButton bodyPartToggleButton = createBodyPartToggleButton(bodyPart);
             bodyPartToggleButtons.add(bodyPartToggleButton);
             bodyPartsGridPane.add(bodyPartToggleButton, columns, rows);
+            bodyPartToggleButton.setOnAction(_ -> {
+                if (bodyPartToggleButton.isSelected()) {
+                    selectedBodyParts.add(bodyPart);
+                }
+                else {
+                    selectedBodyParts.remove(bodyPart);
+                }
+            });
 
             columns++;
             if (columns > 2) {
@@ -133,11 +142,6 @@ public class MuscleSelectionView {
                 rows++;
             }
         }
-
-        bodyPartToggleButtons.forEach(toggleButton -> toggleButton.setOnAction(_ -> {
-            if (toggleButton.isSelected()) selectedBodyParts.add(BodyPart.valueOf(toggleButton.getText()));
-            else selectedBodyParts.remove(BodyPart.valueOf(toggleButton.getText()));
-        }));
 
         ScrollPane bodyPartsScrollPane = new ScrollPane(bodyPartsGridPane);
         bodyPartsScrollPane.setFitToWidth(true);
@@ -177,6 +181,7 @@ public class MuscleSelectionView {
             return;
         }
         int timeInMinutes = Integer.parseInt(minutesInputField.getText());
-        WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes);
+        System.out.println(selectedBodyParts);
+        ViewController.setScene(WorkoutView.createScene(WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes)));
     }
 }
