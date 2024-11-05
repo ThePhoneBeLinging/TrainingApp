@@ -1,6 +1,7 @@
 package Group15;
 
 import Group15.Api.Exercise;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,18 +18,19 @@ public class ExerciseDetailsView {
     public static Scene createScene(Exercise exercise) {
         System.out.println("Creating ExerciseDetailsView for: " + exercise.title);
 
-        VBox layout = new VBox();
-        layout.setSpacing(20);
-        layout.setAlignment(Pos.CENTER);
+        BorderPane layout = new BorderPane();
+        layout.setPadding(new Insets(20));
 
         Pane exerciseImagePane = createExerciseImagePane(exercise.imagePath);
-        layout.getChildren().add(exerciseImagePane);
+        exerciseImagePane.setPadding(new Insets(10));
+        layout.setTop(exerciseImagePane);
 
         Pane exerciseInfoPane = createExerciseInfoPane(exercise);
-        layout.getChildren().add(exerciseInfoPane);
+        layout.setCenter(exerciseInfoPane);
 
         Pane buttonPane = createButtonPane();
-        layout.getChildren().add(buttonPane);
+        buttonPane.setPadding(new Insets(20, 0, 0, 0));
+        layout.setBottom(buttonPane);
 
         return new Scene(layout);
     }
