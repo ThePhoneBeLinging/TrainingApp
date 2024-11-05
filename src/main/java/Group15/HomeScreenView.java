@@ -1,5 +1,6 @@
 package Group15;
 
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,18 +18,20 @@ public class HomeScreenView {
     private static String[] buttons = {"New Workout", "My Workouts", "Exit"};
 
     public static Scene createScene() {
-        VBox layout = new VBox();
-        layout.setSpacing(20);
-        layout.setAlignment(Pos.CENTER);
+        BorderPane layout = new BorderPane();
+        layout.setPadding(new Insets(20));
 
         Pane titlePane = createTitlePane();
-        layout.getChildren().add(titlePane);
+        titlePane.setPadding(new Insets(10, 0, 10, 0));
+        layout.setTop(titlePane);
 
         Pane quickWorkoutPane = quickWorkoutPane();
-        layout.getChildren().add(quickWorkoutPane);
+        layout.setCenter(quickWorkoutPane);
+        quickWorkoutPane.setPadding(new Insets(10));
 
         Pane buttonPane = createButtonPane();
-        layout.getChildren().add(buttonPane);
+        buttonPane.setPadding(new Insets(20, 0, 0, 0));
+        layout.setBottom(buttonPane);
 
         return new Scene(layout);
     }
@@ -77,7 +80,6 @@ public class HomeScreenView {
             });
 
             buttonPane.getChildren().add(newButton);
-            buttonPane.setSpacing(20);
         }
 
         return buttonPane;

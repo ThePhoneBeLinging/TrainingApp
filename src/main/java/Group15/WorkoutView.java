@@ -28,18 +28,19 @@ public class WorkoutView {
     private static String title = "Workout";
     private static String[] buttons = {"Back", "Edit Workout", "Save"};
     public static Scene createScene(){
-        VBox layout = new VBox();
-        layout.setSpacing(20);
-        layout.setAlignment(Pos.CENTER);
+        BorderPane layout = new BorderPane();
+        layout.setPadding(new Insets(20));
 
         Pane titlePane = createTitlePane();
-        layout.getChildren().add(titlePane);
+        titlePane.setPadding(new Insets(10));
+        layout.setTop(titlePane);
 
         Node WorkoutPane = createWorkoutPane(workout);
-        layout.getChildren().add(WorkoutPane);
+        layout.setCenter(WorkoutPane);
 
         Pane buttonPane = createButtonPane();
-        layout.getChildren().add(buttonPane);
+        buttonPane.setPadding(new Insets(20, 0, 0, 0));
+        layout.setBottom(buttonPane);
 
         return new Scene(layout);
     }
@@ -129,7 +130,6 @@ public class WorkoutView {
             });
 
             buttonPane.getChildren().add(newButton);
-            buttonPane.setSpacing(20);
         }
 
         return buttonPane;
