@@ -127,6 +127,7 @@ public class WorkoutView
                     }
                     case "Save" ->
                     {
+                        workout.saveWorkout();
                     }
                 }
                 });
