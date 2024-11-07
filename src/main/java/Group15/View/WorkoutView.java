@@ -18,7 +18,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-
 public class WorkoutView
 {
     private static final String title = "Workout";
@@ -26,18 +25,19 @@ public class WorkoutView
 
     public static Scene createScene(Workout workout)
     {
-        VBox layout = new VBox();
-        layout.setSpacing(20);
-        layout.setAlignment(Pos.CENTER);
+        BorderPane layout = new BorderPane();
+        layout.setPadding(new Insets(20));
 
         Pane titlePane = createTitlePane();
-        layout.getChildren().add(titlePane);
+        titlePane.setPadding(new Insets(10));
+        layout.setTop(titlePane);
 
         Node WorkoutPane = createWorkoutPane(workout);
-        layout.getChildren().add(WorkoutPane);
+        layout.setCenter(WorkoutPane);
 
         Pane buttonPane = createButtonPane(workout);
-        layout.getChildren().add(buttonPane);
+        buttonPane.setPadding(new Insets(20, 0, 0, 0));
+        layout.setBottom(buttonPane);
 
         return new Scene(layout);
     }
@@ -133,7 +133,6 @@ public class WorkoutView
                 });
 
             buttonPane.getChildren().add(newButton);
-            buttonPane.setSpacing(20);
         }
 
         return buttonPane;
