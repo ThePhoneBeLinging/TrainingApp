@@ -2,6 +2,7 @@ package Group15.View;
 
 import Group15.MockData.MockWorkouts;
 import Group15.Model.Workout;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,18 +21,19 @@ public class HomeScreenView
     private static final String[] buttons = {"New Workout", "My Workouts", "Exit"};
 
     public static Scene createScene() {
-        VBox layout = new VBox();
-        layout.setSpacing(20);
-        layout.setAlignment(Pos.CENTER);
+        BorderPane layout = new BorderPane();
+        layout.setPadding(new Insets(20));
 
         Pane titlePane = createTitlePane();
-        layout.getChildren().add(titlePane);
+        titlePane.setPadding(new Insets(10));
+        layout.setTop(titlePane);
 
         Pane quickWorkoutPane = quickWorkoutPane();
-        layout.getChildren().add(quickWorkoutPane);
+        layout.setCenter(quickWorkoutPane);
 
         Pane buttonPane = createButtonPane();
-        layout.getChildren().add(buttonPane);
+        buttonPane.setPadding(new Insets(20, 0, 0, 0));
+        layout.setBottom(buttonPane);
 
         return new Scene(layout);
     }
