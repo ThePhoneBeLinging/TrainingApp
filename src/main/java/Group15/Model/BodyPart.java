@@ -1,6 +1,7 @@
-package Group15.Api;
+package Group15.Model;
 
-public enum BodyPart {
+public enum BodyPart
+{
     Abdominals,
     Adductors,
     Abductors,
@@ -10,18 +11,31 @@ public enum BodyPart {
     Forearms,
     LowerBack,
     MiddleBack,
+    UpperBack,
+    Back,
     Traps,
     Quadriceps,
     Shoulders,
     Triceps,
+    Glutes,
+    Hamstrings,
+    RearDeltoids,
+    Quads,
+    Core,
+    Legs,
+    Arms,
+    Lats,
     ;
 
     @Override
-    public String toString() {
-        if(this == LowerBack) {
+    public String toString()
+    {
+        if (this == LowerBack)
+        {
             return "Lower Back";
         }
-        if(this == MiddleBack) {
+        if (this == MiddleBack)
+        {
             return "Middle Back";
         }
         return super.toString();

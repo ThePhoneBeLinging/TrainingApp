@@ -1,5 +1,8 @@
 package Group15;
 
+import Group15.Model.Workout;
+import Group15.View.ViewController;
+import Group15.View.WorkoutView;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -73,7 +76,7 @@ public class HomeScreenView {
             newButton.setPrefSize(200, 50);
             newButton.setOnAction(_ -> {
                 switch (button) {
-                    case "New Workout" -> ViewController.setScene(WorkoutView.createScene());
+                    case "New Workout" -> ViewController.setScene(WorkoutView.createScene(new Workout()));
                     case "My Workouts" -> System.out.println("My Workouts pressed");
                     case "Exit" -> System.exit(0);
                 }
