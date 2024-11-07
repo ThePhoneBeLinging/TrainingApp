@@ -52,7 +52,7 @@ public class ExerciseUtils {
     }
 
     private static void writeToFile() {
-        JSONParser.saveObjectsAsJSON(USER_DATA_PATH + "likedExercises.json", likedExercises.toArray(new Exercise[0]));
-        JSONParser.saveObjectsAsJSON(USER_DATA_PATH + "dislikedExercises.json", dislikedExercises.toArray(new Exercise[0]));
+        JSONParser.saveObjectsAsJSON(USER_DATA_PATH + "likedExercises.json", likedExercises.toArray());
+        JSONParser.saveObjectsAsJSON(USER_DATA_PATH + "dislikedExercises.json", dislikedExercises.toArray());
     }
 }
