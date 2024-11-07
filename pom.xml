@@ -31,12 +31,6 @@
             <version>3.3.4</version> <!-- Adjust version to the latest stable release -->
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>kernel</artifactId>
             <version>7.1.13</version>
@@ -45,6 +39,12 @@
             <groupId>com.itextpdf</groupId>
             <artifactId>layout</artifactId>
             <version>7.1.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
