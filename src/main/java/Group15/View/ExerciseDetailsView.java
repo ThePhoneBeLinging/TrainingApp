@@ -75,7 +75,7 @@ public class ExerciseDetailsView {
         Label typeLabel = new Label("Type: " + exercise.type);
         typeLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
-        Label bodyPartLabel = new Label("Body Part: " + exercise.bodyPart);
+        Label bodyPartLabel = new Label("Body Part: " + exercise.bodyParts);
         bodyPartLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
         Label equipmentLabel = new Label("Equipment needed: " + exercise.equipment);

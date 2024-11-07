@@ -25,10 +25,10 @@ public class WorkoutAlgorithm {
         if (exercises != null) {
             Collections.shuffle(exercises, new Random(exercises.size()));
             for (Exercise exercise : exercises) {
-                if(dislikedBodyParts == exercise.bodyPart) {
+                if(dislikedBodyParts == exercise.bodyParts) {
                     continue;
                 }
-                if (bodyParts == exercise.bodyPart) {
+                if (bodyParts == exercise.bodyParts) {
                     boolean equipmentMatch = equipment == exercise.equipment;
                     if (equipmentMatch) {
                         int timePerRep = exercise.timePerRep;

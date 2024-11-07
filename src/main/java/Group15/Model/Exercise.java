@@ -7,7 +7,7 @@ public class Exercise
     public String title;
     public String description;
     public String type;
-    public List<BodyPart> bodyPart;
+    public List<BodyPart> bodyParts;
     public List<Equipment> equipment;
     public String difficulty;
     public String imagePath;
@@ -17,7 +17,7 @@ public class Exercise
         this.title = title;
         this.description = description;
         this.type = type;
-        this.bodyPart = bodyPart;
+        this.bodyParts = bodyPart;
         this.equipment = equipment;
         this.difficulty = difficulty;
         this.imagePath = imagePath;
@@ -40,7 +40,7 @@ public class Exercise
         result &= this.title.equals(((Exercise) obj).title);
         result &= this.description.equals(((Exercise) obj).description);
         result &= this.type.equals(((Exercise) obj).type);
-        result &= this.bodyPart.equals(((Exercise) obj).bodyPart);
+        result &= this.bodyParts.equals(((Exercise) obj).bodyParts);
         result &= this.equipment.equals(((Exercise) obj).equipment);
         result &= this.difficulty.equals(((Exercise) obj).difficulty);
 
