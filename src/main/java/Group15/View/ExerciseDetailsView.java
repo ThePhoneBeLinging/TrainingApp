@@ -1,45 +1,54 @@
-package Group15;
+package Group15.View;
 
-import Group15.Api.Exercise;
+import javafx.geometry.Insets;
+import Group15.Model.Exercise;
+import Group15.Model.Workout;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
-import javafx.geometry.Pos;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
 
-public class ExerciseDetailsView {
+public class ExerciseDetailsView
+{
 
-    public static Scene createScene(Exercise exercise) {
+    public static Scene createScene(Exercise exercise)
+    {
         System.out.println("Creating ExerciseDetailsView for: " + exercise.title);
 
-        VBox layout = new VBox();
-        layout.setSpacing(20);
-        layout.setAlignment(Pos.CENTER);
+        BorderPane layout = new BorderPane();
+        layout.setPadding(new Insets(20));
 
         Pane exerciseImagePane = createExerciseImagePane(exercise.imagePath);
-        layout.getChildren().add(exerciseImagePane);
+        exerciseImagePane.setPadding(new Insets(10));
+        layout.setTop(exerciseImagePane);
 
         Pane exerciseInfoPane = createExerciseInfoPane(exercise);
-        layout.getChildren().add(exerciseInfoPane);
+        layout.setCenter(exerciseInfoPane);
 
         Pane buttonPane = createButtonPane();
-        layout.getChildren().add(buttonPane);
+        buttonPane.setPadding(new Insets(20, 0, 0, 0));
+        layout.setBottom(buttonPane);
 
         return new Scene(layout);
     }
 
 
-    private static Pane createExerciseImagePane(String imagePath) {
+    private static Pane createExerciseImagePane(String imagePath)
+    {
         VBox imagePane = new VBox();
         imagePane.setAlignment(Pos.CENTER);
         imagePane.setPrefSize(640, 400);
 
-        try {
+        try
+        {
             String fullImagePath = WorkoutView.class.getResource(imagePath).toExternalForm();
             System.out.println("Loading image from: " + fullImagePath);
 
@@ -50,7 +59,9 @@ public class ExerciseDetailsView {
 
             imagePane.getChildren().add(imageView);
 
-        } catch (Exception e){
+        }
+        catch (Exception e)
+        {
             System.out.println("Error loading image: " + imagePath);
             e.printStackTrace();
         }
@@ -58,7 +69,8 @@ public class ExerciseDetailsView {
         return imagePane;
     }
 
-    private static Pane createExerciseInfoPane(Exercise exercise) {
+    private static Pane createExerciseInfoPane(Exercise exercise)
+    {
         VBox infoPane = new VBox();
         infoPane.setSpacing(10);
         infoPane.setAlignment(Pos.CENTER);
@@ -71,9 +83,6 @@ public class ExerciseDetailsView {
         descriptionLabel.setWrapText(true);
         descriptionLabel.setMaxWidth(600);
 
-        Label typeLabel = new Label("Type: " + exercise.type);
-        typeLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
-
         Label bodyPartLabel = new Label("Body Part: " + exercise.bodyPart);
         bodyPartLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
@@ -83,27 +92,27 @@ public class ExerciseDetailsView {
         Label difficultyLabel = new Label("Difficulty: " + exercise.difficulty);
         difficultyLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
-        infoPane.getChildren().addAll(nameLabel, descriptionLabel, typeLabel, bodyPartLabel, equipmentLabel, difficultyLabel);
+        infoPane.getChildren().addAll(nameLabel, descriptionLabel, bodyPartLabel, equipmentLabel, difficultyLabel);
 
         return infoPane;
     }
 
-    private static Pane createButtonPane() {
+    private static Pane createButtonPane()
+    {
         HBox buttonPane = new HBox();
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setSpacing(20);
 
         Button favoriteButton = new Button("Favorite");
         favoriteButton.setPrefSize(200, 50);
-        favoriteButton.setOnAction(e -> {
+        favoriteButton.setOnAction(_ ->
+            {
             //TODO: Add functionality to add exercise to favorites
-        });
+            });
 
         Button backButton = new Button("Back");
         backButton.setPrefSize(200, 50);
-        backButton.setOnAction(e -> {
-            ViewController.setScene(WorkoutView.createScene());
-        });
+        backButton.setOnAction(_ -> ViewController.goBack());
 
         buttonPane.getChildren().addAll(favoriteButton, backButton);
 

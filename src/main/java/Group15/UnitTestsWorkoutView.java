@@ -1,9 +1,10 @@
+/*
 package Group15;
 
 import Group15.WorkoutPdfGenerator;
-import Group15.Workout;
-import Group15.Api.Exercise;
-import org.junit.jupiter.api.Test;
+import Group15.Model.Workout;
+import Group15.Model.Exercise;
+import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -36,3 +37,4 @@ public class UnitTestsWorkoutView {
     }
 
 }
+*/

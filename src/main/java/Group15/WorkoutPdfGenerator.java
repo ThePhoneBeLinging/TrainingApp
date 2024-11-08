@@ -1,6 +1,8 @@
 package Group15;
-import Group15.Api.Exercise;
 
+import Group15.Model.Exercise;
+import Group15.Model.Workout;
+import Group15.View.WorkoutView;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.layout.Document;
@@ -47,4 +49,3 @@ public class WorkoutPdfGenerator {
         document.close();
     }
 }
-
