@@ -2,9 +2,12 @@ package Group15.View;
 
 import Group15.Model.Exercise;
 import Group15.Model.Workout;
+
+import Group15.WorkoutPdfGenerator;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,10 +21,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class WorkoutView
-{
-    private static final String title = "Workout";
-    private static final String[] buttons = {"Back", "Edit Workout", "Save"};
+import java.io.FileNotFoundException;
+
+public class WorkoutView {
+    private  static Workout Workout = new Workout();
+    private static String title = "Workout";
+    private static String[] buttons = {"Back", "Edit Workout", "Save"};
 
     public static Scene createScene(Workout workout)
     {
@@ -107,35 +112,33 @@ public class WorkoutView
         return scrollPane;
     }
 
-    private static Pane createButtonPane(Workout workout)
-    {
+    private static Pane createButtonPane(Workout workout){
         HBox buttonPane = new HBox();
         buttonPane.setAlignment(Pos.CENTER);
 
-        for (String button : buttons)
-        {
+        for (String button : buttons){
             Button newButton = new Button(button);
             newButton.setPrefSize(200, 50);
-            newButton.setOnAction(_ ->
-                {
-                switch (button)
-                {
-                    case "Back" -> ViewController.goBack();
-                    case "Edit Workout" ->
-                    {
-                        ViewController.setScene(EditWorkoutView.createScene(workout));
+            newButton.setOnAction(_ -> {
+                switch (button){
+                    case "Back" -> ViewController.setScene(HomeScreenView.createScene());
+                    case "Edit Workout" -> {
                     }
-                    case "Save" ->
-                    {
-                        workout.saveWorkout();
+                    case "Save" -> {
+                        try {
+                            WorkoutPdfGenerator.saveWorkoutAsPdf(Workout, "workout.pdf");
+                            System.out.println("Workout saved as PDF successfully.");
+                        } catch (FileNotFoundException e) {
+                            System.err.println("Failed to save workout as PDF: " + e.getMessage());
+                        }
                     }
                 }
-                });
+            });
 
             buttonPane.getChildren().add(newButton);
+            buttonPane.setSpacing(20);
         }
 
         return buttonPane;
     }
-
 }

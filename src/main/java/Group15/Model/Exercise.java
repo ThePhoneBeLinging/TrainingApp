@@ -12,6 +12,7 @@ public class Exercise
     public String difficulty;
     public String imagePath;
     public int timePerRep;
+    public String type;
 
     public Exercise(String title, String description, List<BodyPart> bodyPart, List<Equipment> equipment, String difficulty, String imagePath, int timePerRep) {
         this.title = title;
