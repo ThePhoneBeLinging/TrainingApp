@@ -24,7 +24,7 @@ import java.io.FileNotFoundException;
 
 
 public class WorkoutView {
-    private  static Workout customWorkout = new Workout();
+    private  static Workout Workout = new Workout();
     private static String title = "Workout";
     private static String[] buttons = {"Back", "Edit Workout", "Save"};
     public static Scene createScene(){
@@ -35,7 +35,7 @@ public class WorkoutView {
         Pane titlePane = createTitlePane();
         layout.getChildren().add(titlePane);
 
-        Node WorkoutPane = createWorkoutPane(customWorkout);
+        Node WorkoutPane = createWorkoutPane(Workout);
         layout.getChildren().add(WorkoutPane);
 
         Pane buttonPane = createButtonPane();
@@ -125,7 +125,7 @@ public class WorkoutView {
                     }
                     case "Save" -> {
                         try {
-                            WorkoutPdfGenerator.saveWorkoutAsPdf(customWorkout, "workout.pdf");
+                            WorkoutPdfGenerator.saveWorkoutAsPdf(Workout, "workout.pdf");
                             System.out.println("Workout saved as PDF successfully.");
                         } catch (FileNotFoundException e) {
                             System.err.println("Failed to save workout as PDF: " + e.getMessage());
