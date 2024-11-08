@@ -24,7 +24,7 @@ public class JSONParserTest
         exercises = new ArrayList<>();
 
         Exercise pushup = new Exercise("Pushup", "Push your body up and down", Collections.singletonList(BodyPart.Chest), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000);
-        Exercise situp = new Exercise("Situp", "Sit up and down", Collections.singletonList(BodyPart.Abdominals), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000);
+        Exercise situp = new Exercise("Situp", "Sit up and down", Collections.singletonList(BodyPart.Abdominal), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000);
         exercises.add(pushup);
         exercises.add(situp);
     }
