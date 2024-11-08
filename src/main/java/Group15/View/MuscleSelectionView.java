@@ -43,15 +43,20 @@ public class MuscleSelectionView {
         ScrollPane bodyPartsScrollPane = createBodyPartsSelectorScrollPane(selectedBodyParts);
 
         Button submitButton = new Button("Submit");
-        submitButton.setPrefSize(200, 50);
+        submitButton.setMinSize(200, 50);
         submitButton.setOnAction(_ -> createSubmitButtonFunctionality(selectedBodyParts, dislikedBodyParts, selectedEquipment, minutesInputField));
 
         Button backButton = new Button("Back");
-        backButton.setPrefSize(200, 50);
+        backButton.setMinSize(200, 50);
         backButton.setOnAction(_ -> ViewController.goBack());
 
-        mainVBox.getChildren().addAll(bodyPartsScrollPane, inputAndEquipBox, submitButton, backButton);
-        VBox.setMargin(submitButton, new Insets(20, 0, 0, 0));
+        HBox backAndSubmitButton = new HBox();
+        backAndSubmitButton.setSpacing(20);
+        backAndSubmitButton.setPadding(new Insets(0,0,20,0));
+        backAndSubmitButton.getChildren().addAll(backButton, submitButton);
+        backAndSubmitButton.setAlignment(Pos.CENTER);
+
+        mainVBox.getChildren().addAll(bodyPartsScrollPane, inputAndEquipBox, backAndSubmitButton);
 
         return new Scene(mainVBox);
     }
