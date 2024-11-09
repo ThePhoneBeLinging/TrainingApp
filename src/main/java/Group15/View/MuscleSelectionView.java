@@ -20,6 +20,10 @@ import java.util.Objects;
 
 public class MuscleSelectionView {
 
+    private static List<BodyPart> selectedBodyParts = new ArrayList<>();
+    private static List<BodyPart> dislikedBodyParts = new ArrayList<>();
+    private static List<Equipment> selectedEquipment = new ArrayList<>();
+
     public static Scene createMuscleSelectorScene() {
         VBox mainVBox = new VBox(20);
         mainVBox.setAlignment(Pos.CENTER);
@@ -27,9 +31,6 @@ public class MuscleSelectionView {
         HBox inputAndEquipBox = new HBox(20);
         inputAndEquipBox.setAlignment(Pos.CENTER);
 
-        List<BodyPart> selectedBodyParts = new ArrayList<>();
-        List<BodyPart> dislikedBodyParts = new ArrayList<>();
-        List<Equipment> selectedEquipment = new ArrayList<>();
 
         TextField minutesInputField = new TextField();
         minutesInputField.setMinSize(210,40);
@@ -159,10 +160,14 @@ public class MuscleSelectionView {
         return bodyPartsScrollPane;
     }
 
+    private enum BodyPartButtonStates {
+        DESELECT, SELECT, DISLIKE
+    }
+
     private static ToggleButton createBodyPartToggleButton(BodyPart bodyPart) {
         Image bodyPartImage;
         try {
-            bodyPartImage = new Image(Objects.requireNonNull(MuscleSelectionView.class.getResourceAsStream("/bodyparts/" + bodyPart.toString() + ".png")));
+            bodyPartImage = new Image(Objects.requireNonNull(MuscleSelectionView.class.getResourceAsStream("/bodyparts/" + bodyPart.name() + ".png")));
         }catch (Exception _) {
             bodyPartImage = new Image(Objects.requireNonNull(MuscleSelectionView.class.getResourceAsStream("/bodyparts/empty.png")));
         }
@@ -187,7 +192,47 @@ public class MuscleSelectionView {
         bodyPartToggleButton.setGraphic(imageAndTextButtons);
         bodyPartToggleButton.setMinSize(300, 150);
 
+        bodyPartToggleButton.setUserData(BodyPartButtonStates.DESELECT);
+
+        bodyPartToggleButton.setOnAction(_ -> {
+            BodyPartButtonStates currentState = (BodyPartButtonStates) bodyPartToggleButton.getUserData();
+
+            switch (currentState) {
+                case DESELECT:
+                    bodyPartToggleButton.setUserData(BodyPartButtonStates.DESELECT);
+                    bodyPartToggleButton.setStyle("-fx-background-color: green;");
+                    break;
+                case SELECT:
+                    bodyPartToggleButton.setUserData(BodyPartButtonStates.SELECT);
+                    bodyPartToggleButton.setStyle("-fx-background-color: blue;");
+                    break;
+                case DISLIKE:
+                    bodyPartToggleButton.setUserData(BodyPartButtonStates.DISLIKE);
+                    bodyPartToggleButton.setStyle("-fx-background-color: red;");
+                    break;
+            }
+            updateBodyPartLists(bodyPart, currentState);
+        });
+
         return bodyPartToggleButton;
+    }
+
+    private static void updateBodyPartLists(BodyPart bodyPart, BodyPartButtonStates currenState) {
+        if(currenState == BodyPartButtonStates.SELECT) {
+            if(!selectedBodyParts.contains(bodyPart)) {
+                selectedBodyParts.add(bodyPart);
+            }
+        } else if (currenState == BodyPartButtonStates.DESELECT) {
+            selectedBodyParts.remove(bodyPart);
+        }
+
+        if(currenState == BodyPartButtonStates.DISLIKE) {
+            if(!dislikedBodyParts.contains(bodyPart)) {
+                dislikedBodyParts.add(bodyPart);
+            }
+        } else if (currenState == BodyPartButtonStates.DESELECT) {
+            dislikedBodyParts.remove(bodyPart);
+        }
     }
 
     private static void createSubmitButtonFunctionality(List<BodyPart> selectedBodyParts, List<BodyPart> dislikedBodyParts, List<Equipment> selectedEquipment, TextField minutesInputField) {
