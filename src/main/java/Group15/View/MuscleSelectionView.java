@@ -148,7 +148,7 @@ public class MuscleSelectionView {
             });
 
             columns++;
-            if (columns > 2) {
+            if (columns > 1) {
                 columns = 0;
                 rows++;
             }
@@ -169,13 +169,14 @@ public class MuscleSelectionView {
 
 
         ImageView bodyPartImageView = new ImageView(bodyPartImage);
-        bodyPartImageView.setFitHeight(50);
-        bodyPartImageView.setFitWidth(50);
+        bodyPartImageView.setFitHeight(200);
+        bodyPartImageView.setFitWidth(200);
         bodyPartImageView.setPreserveRatio(true);
 
         Label bodyPartName = new Label(bodyPart.toString());
         bodyPartName.setMinWidth(60);
-        bodyPartName.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+        bodyPartName.setPadding(new Insets(0,0,0,30));
+        bodyPartName.setStyle("-fx-font-weight: bold; -fx-font-size: 20px;");
         bodyPartName.setAlignment(Pos.CENTER_LEFT);
 
         HBox imageAndTextButtons = new HBox(10, bodyPartImageView, bodyPartName);
@@ -184,7 +185,7 @@ public class MuscleSelectionView {
 
         ToggleButton bodyPartToggleButton = new ToggleButton();
         bodyPartToggleButton.setGraphic(imageAndTextButtons);
-        bodyPartToggleButton.setMinSize(200, 50);
+        bodyPartToggleButton.setMinSize(300, 150);
 
         return bodyPartToggleButton;
     }
