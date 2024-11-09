@@ -21,8 +21,8 @@ import java.util.Objects;
 public class MuscleSelectionView {
 
     private static List<BodyPart> selectedBodyParts = new ArrayList<>();
-    private static List<BodyPart> dislikedBodyParts = new ArrayList<>();
-    private static List<Equipment> selectedEquipment = new ArrayList<>();
+    private static final List<BodyPart> dislikedBodyParts = new ArrayList<>();
+    private static final List<Equipment> selectedEquipment = new ArrayList<>();
 
     public static Scene createMuscleSelectorScene() {
         VBox mainVBox = new VBox(20);
@@ -31,20 +31,19 @@ public class MuscleSelectionView {
         HBox inputAndEquipBox = new HBox(20);
         inputAndEquipBox.setAlignment(Pos.CENTER);
 
-
         TextField minutesInputField = new TextField();
         minutesInputField.setMinSize(210,40);
         minutesInputField.setMaxSize(210,40);
         minutesInputField.setPromptText("Input how many minutes to workout");
 
-        ScrollPane equipmentSelectorScrollPane = createEquipmentSelectorScrollPane(selectedEquipment);
+        ScrollPane equipmentSelectorScrollPane = createEquipmentSelectorScrollPane();
         inputAndEquipBox.getChildren().addAll(minutesInputField, equipmentSelectorScrollPane);
 
         ScrollPane bodyPartsScrollPane = createBodyPartsSelectorScrollPane(selectedBodyParts);
 
         Button submitButton = new Button("Submit");
         submitButton.setMinSize(200, 50);
-        submitButton.setOnAction(_ -> createSubmitButtonFunctionality(selectedBodyParts, dislikedBodyParts, selectedEquipment, minutesInputField));
+        submitButton.setOnAction(_ -> createSubmitButtonFunctionality(minutesInputField));
 
         Button backButton = new Button("Back");
         backButton.setMinSize(200, 50);
@@ -61,7 +60,7 @@ public class MuscleSelectionView {
         return new Scene(mainVBox);
     }
 
-    private static ScrollPane createEquipmentSelectorScrollPane(List<Equipment> selectedEquipment) {
+    private static ScrollPane createEquipmentSelectorScrollPane() {
         GridPane equipmentSelectorGridPane = new GridPane();
         equipmentSelectorGridPane.setHgap(16);
         equipmentSelectorGridPane.setVgap(10);
@@ -92,7 +91,7 @@ public class MuscleSelectionView {
             index++;
         }
 
-        createEquipmentCheckboxFunctionality(allCheckbox, equipmentCheckBoxes, selectedEquipment);
+        createEquipmentCheckboxFunctionality(allCheckbox, equipmentCheckBoxes);
 
         ScrollPane equipmentSelectorScrollPane = new ScrollPane(equipmentSelectorGridPane);
         equipmentSelectorScrollPane.setFitToWidth(true);
@@ -101,10 +100,10 @@ public class MuscleSelectionView {
         return equipmentSelectorScrollPane;
     }
 
-    private static void createEquipmentCheckboxFunctionality(CheckBox allCheckbox, List<CheckBox> equipmentCheckBoxes, List<Equipment> selectedEquipment) {
+    private static void createEquipmentCheckboxFunctionality(CheckBox allCheckbox, List<CheckBox> equipmentCheckBoxes) {
         allCheckbox.setOnAction(_ -> {
             if (allCheckbox.isSelected()) {
-                selectedEquipment.clear();
+                MuscleSelectionView.selectedEquipment.clear();
                 for (CheckBox checkbox : equipmentCheckBoxes) {
                     if (checkbox != allCheckbox) checkbox.setSelected(false);
                 }
@@ -115,10 +114,10 @@ public class MuscleSelectionView {
                 checkbox.setOnAction(_ -> {
                     if (checkbox.isSelected()) {
                         allCheckbox.setSelected(false);
-                        selectedEquipment.remove(Equipment.valueOf(checkbox.getText()));
-                        if (!selectedEquipment.contains(Equipment.valueOf(checkbox.getText()))) selectedEquipment.add(Equipment.valueOf(checkbox.getText()));
+                        MuscleSelectionView.selectedEquipment.remove(Equipment.valueOf(checkbox.getText()));
+                        if (!MuscleSelectionView.selectedEquipment.contains(Equipment.valueOf(checkbox.getText()))) MuscleSelectionView.selectedEquipment.add(Equipment.valueOf(checkbox.getText()));
                     } else {
-                        selectedEquipment.remove(Equipment.valueOf(checkbox.getText()));
+                        MuscleSelectionView.selectedEquipment.remove(Equipment.valueOf(checkbox.getText()));
                     }
                 });
             }
@@ -126,6 +125,7 @@ public class MuscleSelectionView {
     }
 
     private static ScrollPane createBodyPartsSelectorScrollPane(List<BodyPart> selectedBodyParts) {
+        MuscleSelectionView.selectedBodyParts = selectedBodyParts;
         GridPane bodyPartsGridPane = new GridPane();
         bodyPartsGridPane.setHgap(20);
         bodyPartsGridPane.setVgap(20);
@@ -228,12 +228,12 @@ public class MuscleSelectionView {
         }
     }
 
-    private static void createSubmitButtonFunctionality(List<BodyPart> selectedBodyParts, List<BodyPart> dislikedBodyParts, List<Equipment> selectedEquipment, TextField minutesInputField) {
+    private static void createSubmitButtonFunctionality(TextField minutesInputField) {
         if (minutesInputField.getText() == null || minutesInputField.getText().isEmpty() || !minutesInputField.getText().matches("\\d+")) {
             System.out.println("Invalid input");
             return;
         }
         int timeInMinutes = Integer.parseInt(minutesInputField.getText());
-        ViewController.setScene(WorkoutView.createScene(WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes)));
+        ViewController.setScene(WorkoutView.createScene(WorkoutAlgorithm.createWorkoutFromExercises(MuscleSelectionView.selectedBodyParts, MuscleSelectionView.dislikedBodyParts, MuscleSelectionView.selectedEquipment, timeInMinutes)));
     }
 }
