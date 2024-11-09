@@ -131,22 +131,14 @@ public class MuscleSelectionView {
         bodyPartsGridPane.setVgap(20);
         bodyPartsGridPane.setAlignment(Pos.CENTER);
 
-        List<ToggleButton> bodyPartToggleButtons = new ArrayList<>();
+        List<Button> bodyPartToggleButtons = new ArrayList<>();
         int columns = 0;
         int rows = 0;
 
         for (BodyPart bodyPart : BodyPart.values()) {
-            ToggleButton bodyPartToggleButton = createBodyPartToggleButton(bodyPart);
+            Button bodyPartToggleButton = createBodyPartToggleButton(bodyPart);
             bodyPartToggleButtons.add(bodyPartToggleButton);
             bodyPartsGridPane.add(bodyPartToggleButton, columns, rows);
-            bodyPartToggleButton.setOnAction(_ -> {
-                if (bodyPartToggleButton.isSelected()) {
-                    selectedBodyParts.add(bodyPart);
-                }
-                else {
-                    selectedBodyParts.remove(bodyPart);
-                }
-            });
 
             columns++;
             if (columns > 1) {
@@ -164,7 +156,7 @@ public class MuscleSelectionView {
         DESELECT, SELECT, DISLIKE
     }
 
-    private static ToggleButton createBodyPartToggleButton(BodyPart bodyPart) {
+    private static Button createBodyPartToggleButton(BodyPart bodyPart) {
         Image bodyPartImage;
         try {
             bodyPartImage = new Image(Objects.requireNonNull(MuscleSelectionView.class.getResourceAsStream("/bodyparts/" + bodyPart.name() + ".png")));
@@ -188,7 +180,7 @@ public class MuscleSelectionView {
         imageAndTextButtons.setPadding(new Insets(3,5,3,3));
         imageAndTextButtons.setAlignment(Pos.CENTER_LEFT);
 
-        ToggleButton bodyPartToggleButton = new ToggleButton();
+        Button bodyPartToggleButton = new Button();
         bodyPartToggleButton.setGraphic(imageAndTextButtons);
         bodyPartToggleButton.setMinSize(300, 150);
 
