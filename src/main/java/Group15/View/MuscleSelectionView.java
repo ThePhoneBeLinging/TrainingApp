@@ -32,7 +32,6 @@ public class MuscleSelectionView {
         List<Equipment> selectedEquipment = new ArrayList<>();
 
         TextField minutesInputField = new TextField();
-        minutesInputField.setPrefSize(210, 40);
         minutesInputField.setMinSize(210,40);
         minutesInputField.setMaxSize(210,40);
         minutesInputField.setPromptText("Input how many minutes to workout");
@@ -167,22 +166,25 @@ public class MuscleSelectionView {
         }catch (Exception _) {
             bodyPartImage = new Image(Objects.requireNonNull(MuscleSelectionView.class.getResourceAsStream("/bodyparts/empty.png")));
         }
+
+
         ImageView bodyPartImageView = new ImageView(bodyPartImage);
-        bodyPartImageView.setFitHeight(60);
-        bodyPartImageView.setFitWidth(100);
+        bodyPartImageView.setFitHeight(50);
+        bodyPartImageView.setFitWidth(50);
         bodyPartImageView.setPreserveRatio(true);
 
         Label bodyPartName = new Label(bodyPart.toString());
-        bodyPartName.setMinWidth(80);
+        bodyPartName.setMinWidth(60);
+        bodyPartName.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
         bodyPartName.setAlignment(Pos.CENTER);
 
         HBox imageAndTextButtons = new HBox(10, bodyPartImageView, bodyPartName);
+        imageAndTextButtons.setPadding(new Insets(3,3,3,3));
         imageAndTextButtons.setAlignment(Pos.CENTER);
 
         ToggleButton bodyPartToggleButton = new ToggleButton();
         bodyPartToggleButton.setGraphic(imageAndTextButtons);
-        bodyPartToggleButton.setMinSize(120, 70);
-        bodyPartToggleButton.setMaxSize(120, 70);
+        bodyPartToggleButton.setMinSize(200, 50);
 
         return bodyPartToggleButton;
     }
