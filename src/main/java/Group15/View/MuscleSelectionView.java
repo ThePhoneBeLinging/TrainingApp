@@ -193,25 +193,26 @@ public class MuscleSelectionView {
         bodyPartToggleButton.setMinSize(300, 150);
 
         bodyPartToggleButton.setUserData(BodyPartButtonStates.DESELECT);
+        bodyPartToggleButton.setStyle("-fx-background-color: gray");
 
         bodyPartToggleButton.setOnAction(_ -> {
             BodyPartButtonStates currentState = (BodyPartButtonStates) bodyPartToggleButton.getUserData();
 
-            switch (currentState) {
-                case DESELECT:
-                    bodyPartToggleButton.setUserData(BodyPartButtonStates.DESELECT);
-                    bodyPartToggleButton.setStyle("-fx-background-color: green;");
-                    break;
-                case SELECT:
-                    bodyPartToggleButton.setUserData(BodyPartButtonStates.SELECT);
-                    bodyPartToggleButton.setStyle("-fx-background-color: blue;");
-                    break;
-                case DISLIKE:
-                    bodyPartToggleButton.setUserData(BodyPartButtonStates.DISLIKE);
-                    bodyPartToggleButton.setStyle("-fx-background-color: red;");
-                    break;
+            System.out.println("Current state for " + bodyPart.name() + ": " + currentState);
+            if (currentState == BodyPartButtonStates.DESELECT) {
+                bodyPartToggleButton.setUserData(BodyPartButtonStates.SELECT);
+                bodyPartToggleButton.setStyle("-fx-background-color: blue;");
+                System.out.println("State changed to: SELECT");
+            } else if (currentState == BodyPartButtonStates.SELECT) {
+                bodyPartToggleButton.setUserData(BodyPartButtonStates.DISLIKE);
+                bodyPartToggleButton.setStyle("-fx-background-color: red;");
+                System.out.println("State changed to: DISLIKE");
+            } else {
+                bodyPartToggleButton.setUserData(BodyPartButtonStates.DESELECT);
+                bodyPartToggleButton.setStyle("-fx-background-color: gray;");
+                System.out.println("State changed to: DESELECT");
             }
-            updateBodyPartLists(bodyPart, currentState);
+            updateBodyPartLists(bodyPart, (BodyPartButtonStates) bodyPartToggleButton.getUserData());
         });
 
         return bodyPartToggleButton;
