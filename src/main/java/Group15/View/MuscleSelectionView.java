@@ -180,7 +180,41 @@ public class MuscleSelectionView {
             System.out.println("Invalid input");
             return;
         }
+
         int timeInMinutes = Integer.parseInt(minutesInputField.getText());
-        ViewController.setScene(WorkoutView.createScene(WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes)));
+
+        Dialog<String> workoutNameDialog = new Dialog<>();
+        workoutNameDialog.setTitle("!");
+
+        Label giveWorkoutNameLabel = new Label("Give your workout a name:");
+        giveWorkoutNameLabel.setStyle("-fx-font-weight: bold");
+        TextField workoutNameInputField = new TextField();
+        VBox dialogVBox = new VBox(10, giveWorkoutNameLabel, workoutNameInputField);
+        dialogVBox.setAlignment(Pos.CENTER);
+        dialogVBox.setPadding(new Insets(10));
+
+        workoutNameDialog.getDialogPane().setContent(dialogVBox);
+
+        ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        workoutNameDialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
+
+        workoutNameDialog.setResultConverter(dialogButton -> {
+            if (dialogButton == okButtonType) {
+                return workoutNameInputField.getText();
+            }
+            return null;
+        });
+
+        workoutNameDialog.showAndWait().ifPresent(workoutName -> {
+            if (!workoutName.trim().isEmpty()) {
+                ViewController.setScene(WorkoutView.createScene(
+                        //TODO: Workoutalgo should take in a name maybe
+                        WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes)
+                ));
+            } else {
+                System.out.println("Workout name cannot be empty.");
+            }
+        });
+
     }
 }
