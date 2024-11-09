@@ -176,6 +176,7 @@ public class MuscleSelectionView {
     }
 
     private static void createSubmitButtonFunctionality(List<BodyPart> selectedBodyParts, List<BodyPart> dislikedBodyParts, List<Equipment> selectedEquipment, TextField minutesInputField) {
+
         if (minutesInputField.getText() == null || minutesInputField.getText().isEmpty() || !minutesInputField.getText().matches("\\d+")) {
             System.out.println("Invalid input");
             return;
@@ -188,7 +189,10 @@ public class MuscleSelectionView {
 
         Label giveWorkoutNameLabel = new Label("Give your workout a name:");
         giveWorkoutNameLabel.setStyle("-fx-font-weight: bold");
+
         TextField workoutNameInputField = new TextField();
+        workoutNameInputField.setPromptText("Workout Name");
+
         VBox dialogVBox = new VBox(10, giveWorkoutNameLabel, workoutNameInputField);
         dialogVBox.setAlignment(Pos.CENTER);
         dialogVBox.setPadding(new Insets(10));
