@@ -3,7 +3,7 @@ package Group15.View;
 import Group15.Model.BodyPart;
 import Group15.Model.Equipment;
 import Group15.Util.WorkoutAlgorithm;
-import ch.qos.logback.core.net.SyslogOutputStream;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -63,34 +63,41 @@ public class MuscleSelectionView {
 
     private static ScrollPane createEquipmentSelectorScrollPane(List<Equipment> selectedEquipment) {
         GridPane equipmentSelectorGridPane = new GridPane();
+        equipmentSelectorGridPane.setHgap(16);
         equipmentSelectorGridPane.setVgap(10);
         equipmentSelectorGridPane.setAlignment(Pos.CENTER);
 
         Label selectEquipmentText = new Label("Select Equipment");
         selectEquipmentText.setStyle("-fx-font-weight: bold");
-        equipmentSelectorGridPane.add(selectEquipmentText, 0, 0, 2, 1);
+        equipmentSelectorGridPane.add(selectEquipmentText, 0, 0, 3, 1);
 
-        String[] equipments = {"Body weight", "Barbell", "Dumbbell", "Machine"};
         List<CheckBox> equipmentCheckBoxes = new ArrayList<>();
 
         CheckBox allCheckbox = new CheckBox("All");
         allCheckbox.setSelected(true);
         equipmentCheckBoxes.add(allCheckbox);
-        equipmentSelectorGridPane.add(allCheckbox, 0, 1, 2, 1);
+        equipmentSelectorGridPane.add(allCheckbox, 0, 1, 3, 1);
 
-        for (int i = 0; i < equipments.length; i++) {
-            CheckBox equipmentCheckbox = new CheckBox(equipments[i]);
+        int index = 0;
+        int columns = 3;
+        for (Equipment equipment : Equipment.values()) {
+            CheckBox equipmentCheckbox = new CheckBox(equipment.name());
             equipmentCheckBoxes.add(equipmentCheckbox);
-            equipmentSelectorGridPane.add(equipmentCheckbox, i % 2, 2 + (i / 2));
+
+            int column = index % columns;
+            int row = (index / columns) + 2;
+
+            equipmentSelectorGridPane.add(equipmentCheckbox, column, row);
+
+            index++;
         }
 
         createEquipmentCheckboxFunctionality(allCheckbox, equipmentCheckBoxes, selectedEquipment);
 
         ScrollPane equipmentSelectorScrollPane = new ScrollPane(equipmentSelectorGridPane);
         equipmentSelectorScrollPane.setFitToWidth(true);
-        equipmentSelectorScrollPane.setPrefSize(200,100);
-        equipmentSelectorScrollPane.setMinHeight(100);
-        equipmentSelectorScrollPane.setMaxHeight(100);
+        equipmentSelectorScrollPane.setMinSize(350, 100);
+
         return equipmentSelectorScrollPane;
     }
 
