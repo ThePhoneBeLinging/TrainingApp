@@ -175,12 +175,12 @@ public class MuscleSelectionView {
 
         Label bodyPartName = new Label(bodyPart.toString());
         bodyPartName.setMinWidth(60);
-        bodyPartName.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
-        bodyPartName.setAlignment(Pos.CENTER);
+        bodyPartName.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+        bodyPartName.setAlignment(Pos.CENTER_LEFT);
 
         HBox imageAndTextButtons = new HBox(10, bodyPartImageView, bodyPartName);
-        imageAndTextButtons.setPadding(new Insets(3,3,3,3));
-        imageAndTextButtons.setAlignment(Pos.CENTER);
+        imageAndTextButtons.setPadding(new Insets(3,5,3,3));
+        imageAndTextButtons.setAlignment(Pos.CENTER_LEFT);
 
         ToggleButton bodyPartToggleButton = new ToggleButton();
         bodyPartToggleButton.setGraphic(imageAndTextButtons);
