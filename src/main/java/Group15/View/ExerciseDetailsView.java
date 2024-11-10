@@ -3,6 +3,7 @@ package Group15.View;
 import javafx.geometry.Insets;
 import Group15.Model.Exercise;
 import Group15.Model.Workout;
+import Group15.Util.ExerciseUtils;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,6 +19,9 @@ import javafx.scene.text.FontWeight;
 
 public class ExerciseDetailsView
 {
+    //TODO: Add a proper placement of these files
+    private static final String FAVORITES_FILE = "favorites.dat";
+    private static final String DISLIKED_FILE = "disliked.dat";
 
     public static Scene createScene(Exercise exercise)
     {
@@ -33,9 +37,8 @@ public class ExerciseDetailsView
         Pane exerciseInfoPane = createExerciseInfoPane(exercise);
         layout.setCenter(exerciseInfoPane);
 
-        Pane buttonPane = createButtonPane();
-        buttonPane.setPadding(new Insets(20, 0, 0, 0));
-        layout.setBottom(buttonPane);
+        Pane buttonPane = createButtonPane(exercise);
+        layout.getChildren().add(buttonPane);
 
         return new Scene(layout);
     }
@@ -97,24 +100,42 @@ public class ExerciseDetailsView
         return infoPane;
     }
 
-    private static Pane createButtonPane()
-    {
+    private static Pane createButtonPane(Exercise exercise) {
         HBox buttonPane = new HBox();
         buttonPane.setAlignment(Pos.CENTER);
         buttonPane.setSpacing(20);
 
-        Button favoriteButton = new Button("Favorite");
-        favoriteButton.setPrefSize(200, 50);
-        favoriteButton.setOnAction(_ ->
-            {
-            //TODO: Add functionality to add exercise to favorites
-            });
+        Button likeButton = new Button("Like");
+        likeButton.setPrefSize(200, 50);
+
+        Button dislikeButton = new Button("Dislike");
+        dislikeButton.setPrefSize(200, 50);
+
+        if (ExerciseUtils.isExerciseInFile(exercise, FAVORITES_FILE)) {
+            likeButton.setStyle("-fx-background-color: #00ff00;");
+        }
+        likeButton.setOnAction(_ -> {
+            ExerciseUtils.addExerciseToFile(exercise, FAVORITES_FILE);
+            ExerciseUtils.removeExerciseFromFile(exercise, DISLIKED_FILE);
+            likeButton.setStyle("-fx-background-color: #00ff00;");
+            dislikeButton.setStyle(""); // Remove highlight
+        });
+
+        if (ExerciseUtils.isExerciseInFile(exercise, DISLIKED_FILE)) {
+            dislikeButton.setStyle("-fx-background-color: #ff0000;");
+        }
+        dislikeButton.setOnAction(_ -> {
+            ExerciseUtils.removeExerciseFromFile(exercise, FAVORITES_FILE);
+            ExerciseUtils.addExerciseToFile(exercise, DISLIKED_FILE);
+            dislikeButton.setStyle("-fx-background-color: #ff0000;");
+            likeButton.setStyle(""); // Remove highlight
+        });
 
         Button backButton = new Button("Back");
         backButton.setPrefSize(200, 50);
         backButton.setOnAction(_ -> ViewController.goBack());
 
-        buttonPane.getChildren().addAll(favoriteButton, backButton);
+        buttonPane.getChildren().addAll(likeButton, dislikeButton, backButton);
 
         return buttonPane;
     }
