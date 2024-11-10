@@ -2,9 +2,13 @@ package Group15.Util;
 
 import Group15.Model.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class WorkoutAlgorithm {
+
+    private static HashMap<String, Boolean> selectedExercises = new HashMap<>();
+
     public static Workout createWorkoutFromExercises(
             List<BodyPart> selectedBodyParts,
             List<BodyPart> bodyPartsToAvoid,
@@ -17,6 +21,13 @@ public class WorkoutAlgorithm {
         while (timeLeftInMilli > 0)
         {
             Exercise validExercise = getValidExercise(selectedBodyParts, bodyPartsToAvoid, equipment);
+
+            // If this happens, we have most likely gathered all exercises that fit the given parameters
+            if (validExercise == null)
+            {
+                return workout;
+            }
+
             WorkoutExercise workoutExercise = new WorkoutExercise();
             workoutExercise.setExercise(validExercise);
 
@@ -30,6 +41,7 @@ public class WorkoutAlgorithm {
                 workoutExercise.setSets(workoutExercise.getSets() + 1);
                 timeLeftInMilli -= 120;
             }
+            selectedExercises.put(validExercise.title,true);
             workout.addExercise(workoutExercise);
             // Check if time is spent, if so, we remove the last set or exercise if sets = 1
             if (timeLeftInMilli < 0)
@@ -52,7 +64,9 @@ public class WorkoutAlgorithm {
     private static Exercise getValidExercise(List<BodyPart> selectedBodyParts, List<BodyPart> bodyPartsToAvoid, List<Equipment> equipment)
     {
 
-        while (true)
+        int maxRuns = 1000;
+        int totalRuns = 0;
+        while (maxRuns > totalRuns)
         {
             Exercise exercise = getRandomExercise();
 
@@ -80,13 +94,15 @@ public class WorkoutAlgorithm {
             }
 
             exerciseValid |= equipment.containsAll(exercise.equipment);
+            exerciseValid |= !selectedExercises.containsKey(exercise.title);
 
             if (exerciseValid)
             {
                 return exercise;
             }
+            totalRuns++;
         }
-
+        return null;
     }
 
     private static Exercise getRandomExercise()
