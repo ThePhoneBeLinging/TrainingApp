@@ -1,44 +1,58 @@
 package Group15.Util;
 
 import Group15.Model.Exercise;
-import java.io.*;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ExerciseUtils {
 
-    public static void saveExercises(List<Exercise> exercises, String fileName) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
-            oos.writeObject(exercises);
-        } catch (IOException e) {
-            e.printStackTrace();
+    private static final String USER_DATA_PATH = "src/main/resources/userData/";
+
+    private static List<Exercise> likedExercises;
+    private static List<Exercise> dislikedExercises;
+
+    static {
+        init();
+    }
+
+    public static void init() {
+
+        likedExercises = new ArrayList<>(Arrays.asList(JSONParser.loadObjectsFromJSON(USER_DATA_PATH + "likedExercises.json", Exercise[].class)));
+        dislikedExercises = new ArrayList<>(Arrays.asList(JSONParser.loadObjectsFromJSON(USER_DATA_PATH + "dislikedExercises.json", Exercise[].class)));
+    }
+
+    public static void likeExercisePressed(Exercise exercise) {
+        if (likedExercises.contains(exercise)) {
+            likedExercises.remove(exercise);
+        } else {
+            likedExercises.add(exercise);
+            dislikedExercises.remove(exercise);
         }
+        writeToFile();
     }
 
-    public static List<Exercise> loadExercises(String fileName) {
-        List<Exercise> exercises = new ArrayList<>();
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
-            exercises = (List<Exercise>) ois.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+    public static void dislikeExercisePressed(Exercise exercise) {
+        if (dislikedExercises.contains(exercise)) {
+            dislikedExercises.remove(exercise);
+        } else {
+            dislikedExercises.add(exercise);
+            likedExercises.remove(exercise);
         }
-        return exercises;
+        writeToFile();
     }
 
-    public static void addExerciseToFile(Exercise exercise, String fileName) {
-        List<Exercise> exercises = loadExercises(fileName);
-        exercises.add(exercise);
-        saveExercises(exercises, fileName);
+    public static List<Exercise> getLikedExercises() {
+        return likedExercises;
     }
 
-    public static void removeExerciseFromFile(Exercise exercise, String fileName) {
-        List<Exercise> exercises = loadExercises(fileName);
-        exercises.remove(exercise);
-        saveExercises(exercises, fileName);
+    public static List<Exercise> getDislikedExercises() {
+        return dislikedExercises;
     }
 
-    public static boolean isExerciseInFile(Exercise exercise, String fileName) {
-        List<Exercise> exercises = loadExercises(fileName);
-        return exercises.contains(exercise);
+    private static void writeToFile() {
+        JSONParser.saveObjectsAsJSON(USER_DATA_PATH + "likedExercises.json", likedExercises.toArray());
+        JSONParser.saveObjectsAsJSON(USER_DATA_PATH + "dislikedExercises.json", dislikedExercises.toArray());
     }
 }
