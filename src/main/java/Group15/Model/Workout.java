@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Workout implements Serializable {
-    private final List<Exercise> exercises = new ArrayList<>();
+    private final List<WorkoutExercise> exercises = new ArrayList<>();
     private String name;
     private String description;
 
@@ -32,11 +32,11 @@ public class Workout implements Serializable {
         return description;
     }
 
-    public void addExercise(Exercise exercise) {
+    public void addExercise(WorkoutExercise exercise) {
         exercises.add(exercise);
     }
 
-    public void swapExercise(Exercise toRemove, Exercise toAdd) {
+    public void swapExercise(WorkoutExercise toRemove, WorkoutExercise toAdd) {
         if (exercises.contains(toRemove)) {
             removeExercise(toRemove);
             addExercise(toAdd);
@@ -47,11 +47,11 @@ public class Workout implements Serializable {
 
     }
 
-    public void removeExercise(Exercise exercise) {
+    public void removeExercise(WorkoutExercise exercise) {
         exercises.remove(exercise);
     }
 
-    public List<Exercise> getExercises() {
+    public List<WorkoutExercise> getExercises() {
         return exercises;
     }
 

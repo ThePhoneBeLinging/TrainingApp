@@ -80,8 +80,8 @@ public class WorkoutAlgorithmTest
         Assertions.assertFalse(workout.getExercises().isEmpty());
         workout.getExercises().forEach(exercise ->
             {
-            Assertions.assertEquals(Collections.singletonList(BodyPart.Chest), exercise.bodyPart);
-            Assertions.assertEquals(Collections.singletonList(Equipment.Bodyweight), exercise.equipment);
+            Assertions.assertEquals(Collections.singletonList(BodyPart.Chest), exercise.getExercise().bodyPart);
+            Assertions.assertEquals(Collections.singletonList(Equipment.Bodyweight), exercise.getExercise().equipment);
             });
     }
 
@@ -99,8 +99,8 @@ public class WorkoutAlgorithmTest
         Assertions.assertTrue(workout.getExercises().size() <= 1);
         workout.getExercises().forEach(exercise ->
             {
-            Assertions.assertEquals(Collections.singletonList(BodyPart.Biceps), exercise.bodyPart);
-            Assertions.assertEquals(Collections.singletonList(Equipment.Dumbbell), exercise.equipment);
+            Assertions.assertEquals(Collections.singletonList(BodyPart.Biceps), exercise.getExercise().bodyPart);
+            Assertions.assertEquals(Collections.singletonList(Equipment.Dumbbell), exercise.getExercise().equipment);
             });
     }
 
@@ -117,8 +117,8 @@ public class WorkoutAlgorithmTest
         Assertions.assertNotNull(workout);
         workout.getExercises().forEach(exercise ->
             {
-            Assertions.assertEquals(Collections.singletonList(BodyPart.Quadriceps), exercise.bodyPart);
-            Assertions.assertEquals(Collections.singletonList(Equipment.Bodyweight), exercise.equipment);
+            Assertions.assertEquals(Collections.singletonList(BodyPart.Quadriceps), exercise.getExercise().bodyPart);
+            Assertions.assertEquals(Collections.singletonList(Equipment.Bodyweight), exercise.getExercise().equipment);
             });
     }
 
@@ -136,8 +136,8 @@ public class WorkoutAlgorithmTest
         Assertions.assertFalse(workout.getExercises().isEmpty());
         workout.getExercises().forEach(exercise ->
             {
-            Assertions.assertEquals(Collections.singletonList(BodyPart.Chest), exercise.bodyPart);
-            Assertions.assertTrue(exercise.equipment.contains(Equipment.Bodyweight) || exercise.equipment.contains(Equipment.Barbell));
+            Assertions.assertEquals(Collections.singletonList(BodyPart.Chest), exercise.getExercise().bodyPart);
+            Assertions.assertTrue(exercise.getExercise().equipment.contains(Equipment.Bodyweight) || exercise.getExercise().equipment.contains(Equipment.Barbell));
             });
     }
 
@@ -156,8 +156,8 @@ public class WorkoutAlgorithmTest
         Assertions.assertFalse(workout.getExercises().isEmpty());
         workout.getExercises().forEach(exercise ->
             {
-            Assertions.assertTrue(bodyParts.contains(exercise.bodyPart.getFirst()));
-            Assertions.assertTrue(exercise.equipment.contains(Equipment.Bodyweight) || exercise.equipment.contains(Equipment.Barbell) || exercise.equipment.contains(Equipment.Dumbbell));
+            Assertions.assertTrue(bodyParts.contains(exercise.getExercise().bodyPart.getFirst()));
+            Assertions.assertTrue(exercise.getExercise().equipment.contains(Equipment.Bodyweight) || exercise.getExercise().equipment.contains(Equipment.Barbell) || exercise.getExercise().equipment.contains(Equipment.Dumbbell));
             });
     }
 
@@ -176,7 +176,7 @@ public class WorkoutAlgorithmTest
 
         Assertions.assertNotNull(workout);
         Assertions.assertFalse(workout.getExercises().isEmpty());
-        workout.getExercises().forEach(exercise -> Assertions.assertFalse(dislikedBodyParts.contains(exercise.bodyPart.getFirst())));
+        workout.getExercises().forEach(exercise -> Assertions.assertFalse(dislikedBodyParts.contains(exercise.getExercise().bodyPart.getFirst())));
     }
 
     @Test
@@ -196,8 +196,8 @@ public class WorkoutAlgorithmTest
         Assertions.assertFalse(workout.getExercises().isEmpty());
         workout.getExercises().forEach(exercise ->
             {
-            Assertions.assertTrue(equipments.contains(exercise.equipment.getFirst()));
-            Assertions.assertTrue(bodyParts.contains(exercise.bodyPart.getFirst()));
+            Assertions.assertTrue(equipments.contains(exercise.getExercise().equipment.getFirst()));
+            Assertions.assertTrue(bodyParts.contains(exercise.getExercise().bodyPart.getFirst()));
             });
     }
 }
