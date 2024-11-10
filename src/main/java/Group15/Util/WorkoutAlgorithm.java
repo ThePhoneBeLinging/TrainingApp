@@ -22,7 +22,6 @@ public class WorkoutAlgorithm {
         while (timeLeftInMilli > 0)
         {
             Exercise validExercise = getValidExercise(selectedBodyParts, bodyPartsToAvoid, equipment);
-
             // If this happens, we have most likely gathered all exercises that fit the given parameters
             if (validExercise == null)
             {
@@ -95,9 +94,9 @@ public class WorkoutAlgorithm {
                 }
             }
 
-            exerciseValid |= equipment.containsAll(exercise.equipment);
-            exerciseValid |= !selectedExercises.containsKey(exercise.title);
-            exerciseValid |= !ExerciseUtils.getDislikedExercises().contains(exercise);
+            exerciseValid &= equipment.containsAll(exercise.equipment);
+            exerciseValid &= !selectedExercises.containsKey(exercise.title);
+            exerciseValid &= !ExerciseUtils.getDislikedExercises().contains(exercise);
 
             if (exerciseValid)
             {
