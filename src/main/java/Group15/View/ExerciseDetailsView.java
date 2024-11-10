@@ -2,7 +2,6 @@ package Group15.View;
 
 import javafx.geometry.Insets;
 import Group15.Model.Exercise;
-import Group15.Model.Workout;
 import Group15.Util.ExerciseUtils;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -86,7 +85,7 @@ public class ExerciseDetailsView
         descriptionLabel.setWrapText(true);
         descriptionLabel.setMaxWidth(600);
 
-        Label bodyPartLabel = new Label("Body Part: " + exercise.bodyPart);
+        Label bodyPartLabel = new Label("Body Part: " + exercise.bodyParts);
         bodyPartLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
         Label equipmentLabel = new Label("Equipment needed: " + exercise.equipment);

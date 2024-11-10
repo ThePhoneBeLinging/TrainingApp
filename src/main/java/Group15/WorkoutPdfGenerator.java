@@ -1,6 +1,5 @@
 package Group15;
 
-import Group15.Model.Exercise;
 import Group15.Model.Workout;
 import Group15.Model.WorkoutExercise;
 import Group15.View.WorkoutView;
@@ -10,10 +9,8 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.io.source.ByteArrayOutputStream;
 
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.net.URL;
 
 public class WorkoutPdfGenerator {
@@ -27,7 +24,7 @@ public class WorkoutPdfGenerator {
         for (WorkoutExercise workoutExercise : workout.getExercises()) {
             document.add(new Paragraph("Exercise: " + workoutExercise.getExercise().title).setFontSize(16).setBold());
             document.add(new Paragraph("Description: " + workoutExercise.getExercise().description).setFontSize(12));
-            document.add(new Paragraph("Type: " + workoutExercise.getExercise().type + " | Body Part: " + workoutExercise.getExercise().bodyPart).setFontSize(12));
+            document.add(new Paragraph("Type: " + workoutExercise.getExercise().type + " | Body Part: " + workoutExercise.getExercise().bodyParts).setFontSize(12));
             document.add(new Paragraph("Equipment: " + workoutExercise.getExercise().equipment + " | Difficulty: " + workoutExercise.getExercise().difficulty).setFontSize(12));
 
             try {

@@ -7,7 +7,7 @@ public class Exercise
 {
     public String title;
     public String description;
-    public List<BodyPart> bodyPart;
+    public List<BodyPart> bodyParts;
     public List<Equipment> equipment;
     public String difficulty;
     public String imagePath;
@@ -17,7 +17,7 @@ public class Exercise
     public Exercise(String title, String description, List<BodyPart> bodyPart, List<Equipment> equipment, String difficulty, String imagePath, int timePerRep) {
         this.title = title;
         this.description = description;
-        this.bodyPart = bodyPart;
+        this.bodyParts = bodyPart;
         this.equipment = equipment;
         this.difficulty = difficulty;
         this.imagePath = imagePath;
@@ -40,7 +40,7 @@ public class Exercise
 
         result &= Objects.equals(this.title,((Exercise) obj).title);
         result &= Objects.equals(this.description,((Exercise) obj).description);
-        result &= Objects.equals(this.bodyPart,((Exercise) obj).bodyPart);
+        result &= Objects.equals(this.bodyParts,((Exercise) obj).bodyParts);
         result &= Objects.equals(this.equipment,((Exercise) obj).equipment);
         result &= Objects.equals(this.difficulty,((Exercise) obj).difficulty);
         result &= Objects.equals(this.timePerRep,((Exercise) obj).timePerRep);
