@@ -2,6 +2,7 @@ package Group15.Util;
 
 import Group15.Model.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -66,6 +67,7 @@ public class WorkoutAlgorithm {
 
         int maxRuns = 1000;
         int totalRuns = 0;
+        double chanceToAvoidNonLiked = 0.25;
         while (maxRuns > totalRuns)
         {
             Exercise exercise = getRandomExercise();
@@ -95,9 +97,20 @@ public class WorkoutAlgorithm {
 
             exerciseValid |= equipment.containsAll(exercise.equipment);
             exerciseValid |= !selectedExercises.containsKey(exercise.title);
+            exerciseValid |= !ExerciseUtils.getDislikedExercises().contains(exercise);
 
             if (exerciseValid)
             {
+
+                if (!ExerciseUtils.getLikedExercises().contains(exercise))
+                {
+                    if (Math.random() <= chanceToAvoidNonLiked)
+                    {
+                        continue;
+                    }
+                }
+
+
                 return exercise;
             }
             totalRuns++;
