@@ -121,9 +121,8 @@ public class WorkoutView {
             newButton.setPrefSize(200, 50);
             newButton.setOnAction(_ -> {
                 switch (button){
-                    case "Back" -> ViewController.setScene(HomeScreenView.createScene());
-                    case "Edit Workout" -> {
-                    }
+                    case "Back" -> ViewController.setScene(MuscleSelectionView.createMuscleSelectorScene());
+                    case "Edit Workout" -> ViewController.setScene(EditWorkoutView.createScene(Workout));
                     case "Save" -> {
                         try {
                             WorkoutPdfGenerator.saveWorkoutAsPdf(Workout, "workout.pdf");
