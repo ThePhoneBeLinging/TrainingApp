@@ -18,6 +18,7 @@ public class WorkoutAlgorithm {
 
         int timeLeftInMilli = timeInMinutes * 60000;
         Workout workout = new Workout();
+        int breakBetweenSets = 120000;
 
         while (timeLeftInMilli > 0)
         {
@@ -39,13 +40,19 @@ public class WorkoutAlgorithm {
             {
                 timeLeftInMilli -= timePerSet;
                 workoutExercise.setSets(workoutExercise.getSets() + 1);
-                timeLeftInMilli -= 120;
+                timeLeftInMilli -= breakBetweenSets;
             }
             selectedExercises.put(validExercise.title,true);
             workout.addExercise(workoutExercise);
             // Check if time is spent, if so, we remove the last set or exercise if sets = 1
             if (timeLeftInMilli < 0)
             {
+                // If we only went over time because of the break between sets, we can simply return the
+                // workout without removal
+                if (timeLeftInMilli < (breakBetweenSets*-1))
+                {
+                    return workout;
+                }
                 if (workoutExercise.getSets() == 1)
                 {
                     workout.removeExercise(workoutExercise);
