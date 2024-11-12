@@ -121,7 +121,7 @@ public class WorkoutView {
             newButton.setPrefSize(200, 50);
             newButton.setOnAction(_ -> {
                 switch (button){
-                    case "Back" -> ViewController.setScene(MuscleSelectionView.createMuscleSelectorScene());
+                    case "Back" -> ViewController.goBack();
                     case "Edit Workout" -> ViewController.setScene(EditWorkoutView.createScene(Workout));
                     case "Save" -> {
                         try {
