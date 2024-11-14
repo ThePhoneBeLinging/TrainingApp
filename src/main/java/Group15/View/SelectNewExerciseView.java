@@ -2,6 +2,7 @@ package Group15.View;
 
 import Group15.Model.Exercise;
 import Group15.Model.Workout;
+import Group15.Model.WorkoutExercise;
 import Group15.Util.Api;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -89,13 +90,19 @@ public class SelectNewExerciseView
                 {
                     if (exerciseToSwap == null)
                     {
-                        workout.addExercise(exercise);
+                        var workoutExercise = new WorkoutExercise();
+                        workoutExercise.setExercise(exercise);
+                        workout.addExercise(workoutExercise);
                     }
                     else
                     {
-                        workout.swapExercise(exerciseToSwap,exercise);
+                        var workoutExercise = new WorkoutExercise();
+                        workoutExercise.setExercise(exercise);
+                        var otherWorkOutExercise = new WorkoutExercise();
+                        otherWorkOutExercise.setExercise(exercise);
+                        workout.swapExercise(workoutExercise,otherWorkOutExercise);
                     }
-                ViewController.setScene(EditWorkoutView.createScene(workout));
+                ViewController.applyChanges(EditWorkoutView.createScene(workout));
                 });
 
             exerciseBox.getChildren().addAll(imageView, exerciseLabel1, chooseExerciseButton);

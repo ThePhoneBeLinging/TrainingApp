@@ -1,59 +1,68 @@
-import Group15.Model.BodyPart;
-import Group15.Model.Equipment;
-import Group15.Model.Exercise;
-import Group15.Model.Workout;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import Group15.Model.*;
+import org.junit.jupiter.api.*;
 
 import java.util.Collections;
 
-public class WorkoutClassTest {
-    Workout testWorkout;
+public class WorkoutClassTest
+{
+    static Workout testWorkout;
 
-    @Before
-    public void setup() {
+    @BeforeEach
+    public void setup()
+    {
         testWorkout = new Workout();
     }
 
     @Test
-    public void testInit() {
-        Assert.assertEquals(0, testWorkout.getExercises().size());
+    public void testInit()
+    {
+        Assertions.assertEquals(0, testWorkout.getExercises().size());
     }
 
     @Test
-    public void testAddExercise() {
+    public void testAddExercise()
+    {
         Exercise pushup = new Exercise("Pushup", "Push your body up and down", Collections.singletonList(BodyPart.Chest), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000);
-        testWorkout.addExercise(pushup);
-        Assert.assertEquals(1, testWorkout.getExercises().size());
-        Assert.assertEquals("Pushup", testWorkout.getExercises().getFirst().title);
-        testWorkout.addExercise(new Exercise());
-        Assert.assertNotEquals(1, testWorkout.getExercises().size());
-        testWorkout.addExercise(new Exercise());
-        Assert.assertEquals(3, testWorkout.getExercises().size());
-        Assert.assertNotEquals("Pushup", testWorkout.getExercises().get(1).title);
+        WorkoutExercise wPushUp = new WorkoutExercise();
+        wPushUp.setExercise(pushup);
+        testWorkout.addExercise(wPushUp);
+        Assertions.assertEquals(1, testWorkout.getExercises().size());
+        Assertions.assertEquals("Pushup", testWorkout.getExercises().getFirst().getExercise().title);
+        testWorkout.addExercise(new WorkoutExercise());
+        Assertions.assertNotEquals(1, testWorkout.getExercises().size());
+        testWorkout.addExercise(new WorkoutExercise());
+        Assertions.assertEquals(3, testWorkout.getExercises().size());
+        Assertions.assertNotEquals("Pushup", testWorkout.getExercises().get(1).getExercise().title);
     }
 
     @Test
-    public void testRemoveExercise() {
-        Exercise situp = new Exercise("Situp", "Sit up and down", Collections.singletonList(BodyPart.Abdominal), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000);
+    public void testRemoveExercise()
+    {
+        Exercise situp = new Exercise("Situp", "Sit up and down", Collections.singletonList(BodyPart.Abdominals), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000);
+        WorkoutExercise wSitup = new WorkoutExercise();
+        wSitup.setExercise(situp);
         testAddExercise();
-        testWorkout.addExercise(situp);
-        Assert.assertTrue(testWorkout.getExercises().contains(situp));
-        Assert.assertEquals(4, testWorkout.getExercises().size());
-        testWorkout.removeExercise(situp);
-        Assert.assertEquals(3, testWorkout.getExercises().size());
-        Assert.assertFalse(testWorkout.getExercises().contains(situp));
+        testWorkout.addExercise(wSitup);
+        Assertions.assertTrue(testWorkout.getExercises().contains(wSitup));
+        Assertions.assertEquals(4, testWorkout.getExercises().size());
+        testWorkout.removeExercise(wSitup);
+        Assertions.assertEquals(3, testWorkout.getExercises().size());
+        Assertions.assertFalse(testWorkout.getExercises().contains(wSitup));
     }
 
     @Test
-    public void testSwapExercise() {
+    public void testSwapExercise()
+    {
         testRemoveExercise();
-        Assert.assertEquals("Pushup", testWorkout.getExercises().getFirst().title);
-        Exercise pullup = new Exercise("Pullup", "Pull your body up and down", Collections.singletonList(BodyPart.UpperBack), Collections.singletonList(Equipment.Bodyweight), "Hard", "None", 3000);
-        testWorkout.swapExercise(testWorkout.getExercises().getFirst(), pullup);
-        Assert.assertTrue(testWorkout.getExercises().contains(pullup));
-        Assert.assertFalse(testWorkout.getExercises().contains(new Exercise("Pushup", "Push your body up and down", Collections.singletonList(BodyPart.Chest), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000)));
+        Assertions.assertEquals("Pushup", testWorkout.getExercises().getFirst().getExercise().title);
+        Exercise pullup = new Exercise("Pullup", "Pull your body up and down", Collections.singletonList(BodyPart.Back), Collections.singletonList(Equipment.Bodyweight), "Hard", "None", 3000);
+        WorkoutExercise wPullUp = new WorkoutExercise();
+        wPullUp.setExercise(pullup);
+        WorkoutExercise wPushUp = new WorkoutExercise();
+        wPushUp.setExercise(new Exercise("Pushup", "Push your body up and down", Collections.singletonList(BodyPart.Chest), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000));
+        testWorkout.swapExercise(testWorkout.getExercises().getFirst(), wPullUp);
+        Assertions.assertTrue(testWorkout.getExercises().contains(wPullUp));
+        Assertions.assertFalse(testWorkout.getExercises().contains(wPushUp));
 
     }
 
