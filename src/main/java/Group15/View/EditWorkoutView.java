@@ -2,6 +2,7 @@ package Group15.View;
 
 import Group15.Model.Exercise;
 import Group15.Model.Workout;
+import Group15.Model.WorkoutExercise;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -60,28 +61,28 @@ public class EditWorkoutView
         workoutPane.setPrefSize(640, 600);
         workoutPane.setMaxWidth(Region.USE_PREF_SIZE);
 
-        for (Exercise exercise : workout.getExercises())
+        for (WorkoutExercise workoutExercise : workout.getExercises())
         {
             ImageView imageView = null;
 
             try
             {
-                Image image = new Image(WorkoutView.class.getResource("/images/" + exercise.title + ".png").toExternalForm(), 100, 100, true, true);
+                Image image = new Image(WorkoutView.class.getResource("/images/" + workoutExercise.getExercise().title + ".png").toExternalForm(), 100, 100, true, true);
                 imageView = new ImageView(image);
             }
             catch (Exception e)
             {
-                System.out.println("Error loading image for exercise: " + exercise.title);
+                System.out.println("Error loading image for exercise: " + workoutExercise.getExercise().title);
                 imageView = new ImageView();
             }
 
-            Label exerciseLabel1 = new Label(exercise.title + ": ");
+            Label exerciseLabel1 = new Label(workoutExercise.getExercise().title + ": ");
             exerciseLabel1.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 
             EventHandler<MouseEvent> clickAction = event ->
                 {
-                System.out.println("Image or title clicked for exercise: " + exercise.title);
-                ViewController.setScene(ExerciseDetailsView.createScene(exercise));
+                System.out.println("Image or title clicked for exercise: " + workoutExercise.getExercise().title);
+                ViewController.setScene(ExerciseDetailsView.createScene(workoutExercise.getExercise()));
                 };
 
 
@@ -101,12 +102,12 @@ public class EditWorkoutView
 
             deleteExerciseButton.setOnAction(e ->
                 {
-                    workout.removeExercise(exercise);
+                    workout.removeExercise(workoutExercise);
                     ViewController.setScene(EditWorkoutView.createScene(workout));
                 });
             swapExerciseButton.setOnAction(e ->
                 {
-                   ViewController.setScene(SelectNewExerciseView.createScene(exercise,workout));
+                   ViewController.setScene(SelectNewExerciseView.createScene(workoutExercise.getExercise(),workout));
                 });
             //
             //

@@ -14,6 +14,11 @@ public class Api
 
     private static List<Exercise> exercises;
 
+    static
+    {
+        getAllExercises();
+    }
+
     public static List<Exercise> getAllExercises()
     {
         if (exercises == null)

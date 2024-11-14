@@ -1,7 +1,4 @@
-import Group15.Model.BodyPart;
-import Group15.Model.Equipment;
-import Group15.Model.Exercise;
-import Group15.Model.Workout;
+import Group15.Model.*;
 import Group15.Util.JSONParser;
 import org.junit.jupiter.api.*;
 
@@ -34,7 +31,9 @@ public class JSONParserTest
         Workout workout = new Workout();
         for (Exercise exercise : exercises)
         {
-            workout.addExercise(exercise);
+            WorkoutExercise workoutExercise = new WorkoutExercise();
+            workoutExercise.setExercise(exercise);
+            workout.addExercise(workoutExercise);
         }
         workouts.add(workout);
         workout = new Workout();

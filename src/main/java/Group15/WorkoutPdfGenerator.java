@@ -1,7 +1,7 @@
 package Group15;
 
-import Group15.Model.Exercise;
 import Group15.Model.Workout;
+import Group15.Model.WorkoutExercise;
 import Group15.View.WorkoutView;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -9,10 +9,8 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.io.source.ByteArrayOutputStream;
 
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.net.URL;
 
 public class WorkoutPdfGenerator {
@@ -23,23 +21,23 @@ public class WorkoutPdfGenerator {
 
         document.add(new Paragraph("Workout Plan").setFontSize(20).setBold());
 
-        for (Exercise exercise : workout.getExercises()) {
-            document.add(new Paragraph("Exercise: " + exercise.title).setFontSize(16).setBold());
-            document.add(new Paragraph("Description: " + exercise.description).setFontSize(12));
-            document.add(new Paragraph("Type: " + exercise.type + " | Body Part: " + exercise.bodyPart).setFontSize(12));
-            document.add(new Paragraph("Equipment: " + exercise.equipment + " | Difficulty: " + exercise.difficulty).setFontSize(12));
+        for (WorkoutExercise workoutExercise : workout.getExercises()) {
+            document.add(new Paragraph("Exercise: " + workoutExercise.getExercise().title).setFontSize(16).setBold());
+            document.add(new Paragraph("Description: " + workoutExercise.getExercise().description).setFontSize(12));
+            document.add(new Paragraph("Type: " + workoutExercise.getExercise().type + " | Body Part: " + workoutExercise.getExercise().bodyParts).setFontSize(12));
+            document.add(new Paragraph("Equipment: " + workoutExercise.getExercise().equipment + " | Difficulty: " + workoutExercise.getExercise().difficulty).setFontSize(12));
 
             try {
-                URL imageUrl = WorkoutView.class.getResource(exercise.imagePath);
+                URL imageUrl = WorkoutView.class.getResource(workoutExercise.getExercise().imagePath);
                 if (imageUrl != null) {
                     System.out.println("Loading image from: " + imageUrl.toExternalForm());
                     Image img = new Image(ImageDataFactory.create(imageUrl)).setWidth(100).setHeight(100);
                     document.add(img);
                 } else {
-                    System.out.println("Image not found for exercise: " + exercise.title);
+                    System.out.println("Image not found for exercise: " + workoutExercise.getExercise().title);
                 }
             } catch (Exception e) {
-                System.out.println("Could not load image for exercise: " + exercise.title);
+                System.out.println("Could not load image for exercise: " + workoutExercise.getExercise().title);
                 e.printStackTrace();
             }
 
