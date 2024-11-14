@@ -14,10 +14,10 @@ public class Exercise
     public int timePerRep;
     public String type;
 
-    public Exercise(String title, String description, List<BodyPart> bodyPart, List<Equipment> equipment, String difficulty, String imagePath, int timePerRep) {
+    public Exercise(String title, String description, List<BodyPart> bodyParts, List<Equipment> equipment, String difficulty, String imagePath, int timePerRep) {
         this.title = title;
         this.description = description;
-        this.bodyParts = bodyPart;
+        this.bodyParts = bodyParts;
         this.equipment = equipment;
         this.difficulty = difficulty;
         this.imagePath = imagePath;
