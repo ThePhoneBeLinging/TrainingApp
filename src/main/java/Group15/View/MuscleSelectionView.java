@@ -22,7 +22,7 @@ public class MuscleSelectionView {
     private static String workoutName;
 
     public static String getWorkoutName() {
-        return "Workout Name: " + workoutName;
+        return workoutName;
     }
 
     public static void setWorkoutName(String workoutName) {

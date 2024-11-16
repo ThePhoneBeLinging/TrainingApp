@@ -11,22 +11,21 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 
 import java.io.FileNotFoundException;
 
 public class WorkoutView {
     private  static Workout Workout = new Workout();
-    private static String title = "Workout";
+    private static String title = "Workout Details";
     private static String[] buttons = {"Back", "Edit Workout", "Save"};
 
     public static Scene createScene(Workout workout)
@@ -67,9 +66,8 @@ public class WorkoutView {
         workoutPane.setPrefSize(640, 600);
         workoutPane.setMaxWidth(Region.USE_PREF_SIZE);
 
-        Label workoutTitleLabel = new Label(MuscleSelectionView.getWorkoutName());
-        workoutTitleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-        workoutPane.getChildren().add(workoutTitleLabel);
+        Node workoutTitleNode = createWorkoutTitleNode();
+        workoutPane.getChildren().add(workoutTitleNode);
 
         for (WorkoutExercise workoutExercise : workout.getExercises())
         {
@@ -115,6 +113,48 @@ public class WorkoutView {
         scrollPane.setPadding(new Insets(10));
 
         return scrollPane;
+    }
+
+    private static Node createWorkoutTitleNode () {
+        HBox workoutTitleHBox = new HBox();
+        workoutTitleHBox.setAlignment(Pos.CENTER);
+        workoutTitleHBox.setSpacing(10);
+
+        Label workoutTitleLabel = new Label(MuscleSelectionView.getWorkoutName());
+        workoutTitleLabel.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.ITALIC, 24));
+
+        Button editNameButton = new Button("Edit Name");
+        editNameButton.setOnAction(event -> {
+            Dialog<String> editNameDialog = new Dialog<>();
+            editNameDialog.setTitle("Edit Workout Name");
+
+            Label instructionLabel = new Label("Enter a new name for your workout:");
+            TextField workoutNameInput = new TextField(MuscleSelectionView.getWorkoutName());
+            VBox dialogContent = new VBox(10, instructionLabel, workoutNameInput);
+            dialogContent.setAlignment(Pos.CENTER);
+            dialogContent.setPadding(new Insets(10));
+
+            editNameDialog.getDialogPane().setContent(dialogContent);
+            editNameDialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+            editNameDialog.setResultConverter(dialogButton -> {
+                if (dialogButton == ButtonType.OK) {
+                    return workoutNameInput.getText().trim();
+                }
+                return null;
+            });
+
+            editNameDialog.showAndWait().ifPresent(newWorkoutName -> {
+                if (!newWorkoutName.isEmpty()) {
+                    MuscleSelectionView.setWorkoutName(newWorkoutName);
+                    workoutTitleLabel.setText(newWorkoutName);
+                }
+            });
+        });
+
+        workoutTitleHBox.getChildren().addAll(workoutTitleLabel, editNameButton);
+
+        return workoutTitleHBox;
     }
 
     private static Pane createButtonPane(Workout workout){
