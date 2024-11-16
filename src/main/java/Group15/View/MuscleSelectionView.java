@@ -242,7 +242,6 @@ public class MuscleSelectionView {
         }
 
         int timeInMinutes = Integer.parseInt(minutesInputField.getText());
-        ViewController.setScene(WorkoutView.createScene(WorkoutAlgorithm.createWorkoutFromExercises(MuscleSelectionView.selectedBodyParts, MuscleSelectionView.dislikedBodyParts, MuscleSelectionView.selectedEquipment, timeInMinutes)));
 
         Dialog<String> workoutNameDialog = new Dialog<>();
         workoutNameDialog.setTitle("!");
