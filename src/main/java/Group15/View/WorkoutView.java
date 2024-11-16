@@ -67,6 +67,10 @@ public class WorkoutView {
         workoutPane.setPrefSize(640, 600);
         workoutPane.setMaxWidth(Region.USE_PREF_SIZE);
 
+        Label workoutTitleLabel = new Label(MuscleSelectionView.getWorkoutName());
+        workoutTitleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        workoutPane.getChildren().add(workoutTitleLabel);
+
         for (WorkoutExercise workoutExercise : workout.getExercises())
         {
             ImageView imageView = null;
