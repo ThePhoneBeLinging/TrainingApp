@@ -37,12 +37,15 @@ public class Api
                     new ParameterizedTypeReference<List<Exercise>>()
                     {
                     });
-            return response.getBody();
+            if (response.getBody() != null) {
+                return response.getBody();
+            } else {
+                System.out.println("API returned no exercises.");
+            }
+        } catch (Exception e) {
+            System.out.println("Exception occurred while fetching exercises: " + e.getMessage());
+            e.printStackTrace();
         }
-        catch (Exception e)
-        {
-            System.out.println("Exception occured: " + e.getMessage());
-        }
-        return null;
+        return List.of();
     }
 }

@@ -31,5 +31,3 @@ public enum BodyPart
         return super.toString();
     }
 }
-
-
