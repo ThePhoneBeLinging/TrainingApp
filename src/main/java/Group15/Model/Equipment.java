@@ -2,12 +2,23 @@ package Group15.Model;
 
 public enum Equipment
 {
-    Bodyweight,
-    Machine,
     Barbell,
-    Dumbbell,
+    Bodyweight,
     Cable,
-    NeutralGripHandle,
-    Kettlebell,
-    Landmine
+    Dumbbell,
+    EZBar,
+    Machine,
+    SmithMachine
+    ;
+
+    @Override
+    public String toString() {
+        if(this == EZBar) {
+            return "EZ Bar";
+        }
+        if(this == SmithMachine) {
+            return "Smith Machine";
+        }
+        return super.toString();
+    }
 }

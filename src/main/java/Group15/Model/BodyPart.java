@@ -2,29 +2,19 @@ package Group15.Model;
 
 public enum BodyPart
 {
-    Abdominals,
-    Adductors,
-    Abductors,
+    Abdominal,
     Biceps,
     Calves,
     Chest,
     Forearms,
+    Glutes,
+    Hamstrings,
     LowerBack,
-    MiddleBack,
-    UpperBack,
-    Back,
-    Traps,
     Quadriceps,
     Shoulders,
     Triceps,
-    Glutes,
-    Hamstrings,
-    RearDeltoids,
-    Quads,
-    Core,
-    Legs,
-    Arms,
-    Lats,
+    UpperBack
+
     ;
 
     @Override
@@ -34,12 +24,10 @@ public enum BodyPart
         {
             return "Lower Back";
         }
-        if (this == MiddleBack)
+        if (this == UpperBack)
         {
-            return "Middle Back";
+            return "Upper Back";
         }
         return super.toString();
     }
 }
-
-
