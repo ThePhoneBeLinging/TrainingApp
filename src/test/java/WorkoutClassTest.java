@@ -38,7 +38,7 @@ public class WorkoutClassTest
     @Test
     public void testRemoveExercise()
     {
-        Exercise situp = new Exercise("Situp", "Sit up and down", Collections.singletonList(BodyPart.Abdominals), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000);
+        Exercise situp = new Exercise("Situp", "Sit up and down", Collections.singletonList(BodyPart.Abdominal), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000);
         WorkoutExercise wSitup = new WorkoutExercise();
         wSitup.setExercise(situp);
         testAddExercise();
@@ -55,7 +55,7 @@ public class WorkoutClassTest
     {
         testRemoveExercise();
         Assertions.assertEquals("Pushup", testWorkout.getExercises().getFirst().getExercise().title);
-        Exercise pullup = new Exercise("Pullup", "Pull your body up and down", Collections.singletonList(BodyPart.Back), Collections.singletonList(Equipment.Bodyweight), "Hard", "None", 3000);
+        Exercise pullup = new Exercise("Pullup", "Pull your body up and down", Collections.singletonList(BodyPart.UpperBack), Collections.singletonList(Equipment.Bodyweight), "Hard", "None", 3000);
         WorkoutExercise wPullUp = new WorkoutExercise();
         wPullUp.setExercise(pullup);
         WorkoutExercise wPushUp = new WorkoutExercise();

@@ -128,6 +128,10 @@ public class WorkoutAlgorithm {
     {
         List<Exercise> exercises = Api.getAllExercises();
 
+        if (exercises == null || exercises.isEmpty()) {
+            throw new IllegalStateException("No exercises available. Ensure the API is reachable and returns data.");
+        }
+
         int randomIndex = (int) (Math.random() * exercises.size());
         return exercises.get(randomIndex);
     }

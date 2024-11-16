@@ -54,7 +54,7 @@ public class WorkoutAlgorithmTest
         Exercise legExtension = new Exercise();
         legExtension.title = "Leg Extension";
         legExtension.description = "Leg extension exercise";
-        legExtension.bodyParts = List.of(BodyPart.Quadriceps, BodyPart.Adductors, BodyPart.Abductors);
+        legExtension.bodyParts = List.of(BodyPart.Quadriceps);
         legExtension.equipment = List.of(Equipment.Machine, Equipment.Cable);
         legExtension.difficulty = "beginner";
         legExtension.timePerRep = 3000;

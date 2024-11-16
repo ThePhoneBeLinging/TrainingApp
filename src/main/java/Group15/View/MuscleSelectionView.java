@@ -3,7 +3,6 @@ package Group15.View;
 import Group15.Model.BodyPart;
 import Group15.Model.Equipment;
 import Group15.Util.WorkoutAlgorithm;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -19,10 +18,19 @@ import java.util.List;
 import java.util.Objects;
 
 public class MuscleSelectionView {
-
     private static List<BodyPart> selectedBodyParts = new ArrayList<>();
     private static final List<BodyPart> dislikedBodyParts = new ArrayList<>();
     private static final List<Equipment> selectedEquipment = new ArrayList<>();
+
+    private static String workoutName;
+
+    public static String getWorkoutName() {
+        return workoutName;
+    }
+
+    public static void setWorkoutName(String workoutName) {
+        MuscleSelectionView.workoutName = workoutName;
+    }
 
     public static Scene createMuscleSelectorScene() {
         VBox mainVBox = new VBox(20);
@@ -164,7 +172,6 @@ public class MuscleSelectionView {
             bodyPartImage = new Image(Objects.requireNonNull(MuscleSelectionView.class.getResourceAsStream("/bodyparts/empty.png")));
         }
 
-
         ImageView bodyPartImageView = new ImageView(bodyPartImage);
         bodyPartImageView.setFitHeight(200);
         bodyPartImageView.setFitWidth(200);
@@ -233,7 +240,50 @@ public class MuscleSelectionView {
             System.out.println("Invalid input");
             return;
         }
+
         int timeInMinutes = Integer.parseInt(minutesInputField.getText());
         ViewController.setScene(WorkoutView.createScene(WorkoutAlgorithm.createWorkoutFromExercises(MuscleSelectionView.selectedBodyParts, MuscleSelectionView.dislikedBodyParts, MuscleSelectionView.selectedEquipment, timeInMinutes)));
+
+        Dialog<String> workoutNameDialog = new Dialog<>();
+        workoutNameDialog.setTitle("!");
+
+        Label giveWorkoutNameLabel = new Label("Give your workout a name:");
+        giveWorkoutNameLabel.setStyle("-fx-font-weight: bold");
+
+        TextField workoutNameInputField = new TextField();
+        workoutNameInputField.setPromptText("Workout");
+
+        VBox dialogVBox = new VBox(10, giveWorkoutNameLabel, workoutNameInputField);
+        dialogVBox.setAlignment(Pos.CENTER);
+        dialogVBox.setPadding(new Insets(10));
+
+        workoutNameDialog.getDialogPane().setContent(dialogVBox);
+
+        ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        workoutNameDialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
+
+        workoutNameDialog.setResultConverter(dialogButton -> {
+            if (dialogButton == okButtonType) {
+                return workoutNameInputField.getText();
+            }
+            return null;
+        });
+
+        workoutNameDialog.showAndWait().ifPresentOrElse(
+                workoutName -> {
+                    String finalWorkoutName = workoutName.trim().isEmpty() ? "Workout" : workoutName.trim();
+                    MuscleSelectionView.setWorkoutName(finalWorkoutName);
+                    ViewController.setScene(WorkoutView.createScene(
+                            WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes)
+                    ));
+                },
+                () -> {
+                    MuscleSelectionView.setWorkoutName("Workout");
+                    ViewController.setScene(WorkoutView.createScene(
+                            WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes)
+                    ));
+                }
+        );
+
     }
 }
