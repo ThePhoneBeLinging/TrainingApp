@@ -19,6 +19,15 @@ import java.util.List;
 import java.util.Objects;
 
 public class MuscleSelectionView {
+    private static String workoutName;
+
+    public static String getWorkoutName() {
+        return workoutName;
+    }
+
+    public static void setWorkoutName(String workoutName) {
+        MuscleSelectionView.workoutName = workoutName;
+    }
 
     public static Scene createMuscleSelectorScene() {
         VBox mainVBox = new VBox(20);
@@ -211,6 +220,7 @@ public class MuscleSelectionView {
 
         workoutNameDialog.showAndWait().ifPresent(workoutName -> {
             if (!workoutName.trim().isEmpty()) {
+                MuscleSelectionView.setWorkoutName(workoutName);
                 ViewController.setScene(WorkoutView.createScene(
                         //TODO: Workoutalgo should take in a name maybe
                         WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes)
