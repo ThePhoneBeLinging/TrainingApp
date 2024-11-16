@@ -22,7 +22,7 @@ public class MuscleSelectionView {
     private static String workoutName;
 
     public static String getWorkoutName() {
-        return workoutName;
+        return "Workout Name: " + workoutName;
     }
 
     public static void setWorkoutName(String workoutName) {
@@ -200,7 +200,7 @@ public class MuscleSelectionView {
         giveWorkoutNameLabel.setStyle("-fx-font-weight: bold");
 
         TextField workoutNameInputField = new TextField();
-        workoutNameInputField.setPromptText("Workout Name");
+        workoutNameInputField.setPromptText("Workout");
 
         VBox dialogVBox = new VBox(10, giveWorkoutNameLabel, workoutNameInputField);
         dialogVBox.setAlignment(Pos.CENTER);
@@ -218,17 +218,21 @@ public class MuscleSelectionView {
             return null;
         });
 
-        workoutNameDialog.showAndWait().ifPresent(workoutName -> {
-            if (!workoutName.trim().isEmpty()) {
-                MuscleSelectionView.setWorkoutName(workoutName);
-                ViewController.setScene(WorkoutView.createScene(
-                        //TODO: Workoutalgo should take in a name maybe
-                        WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes)
-                ));
-            } else {
-                System.out.println("Workout name cannot be empty.");
-            }
-        });
+        workoutNameDialog.showAndWait().ifPresentOrElse(
+                workoutName -> {
+                    String finalWorkoutName = workoutName.trim().isEmpty() ? "Workout" : workoutName.trim();
+                    MuscleSelectionView.setWorkoutName(finalWorkoutName);
+                    ViewController.setScene(WorkoutView.createScene(
+                            WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes)
+                    ));
+                },
+                () -> {
+                    MuscleSelectionView.setWorkoutName("Workout");
+                    ViewController.setScene(WorkoutView.createScene(
+                            WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes)
+                    ));
+                }
+        );
 
     }
 }
