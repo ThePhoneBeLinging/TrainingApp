@@ -197,19 +197,15 @@ public class MuscleSelectionView {
         bodyPartToggleButton.setOnAction(_ -> {
             BodyPartButtonStates currentState = (BodyPartButtonStates) bodyPartToggleButton.getUserData();
 
-            System.out.println("Current state for " + bodyPart.name() + ": " + currentState);
             if (currentState == BodyPartButtonStates.DESELECT) {
                 bodyPartToggleButton.setUserData(BodyPartButtonStates.SELECT);
                 bodyPartToggleButton.setStyle("-fx-border-color: green; -fx-border-width: 2;");
-                System.out.println("State changed to: SELECT");
             } else if (currentState == BodyPartButtonStates.SELECT) {
                 bodyPartToggleButton.setUserData(BodyPartButtonStates.DISLIKE);
                 bodyPartToggleButton.setStyle("-fx-border-color: red; -fx-border-width: 2;");
-                System.out.println("State changed to: DISLIKE");
             } else {
                 bodyPartToggleButton.setUserData(BodyPartButtonStates.DESELECT);
                 bodyPartToggleButton.setStyle("-fx-border-color: black; -fx-border-width: 2;");
-                System.out.println("State changed to: DESELECT");
             }
             updateBodyPartLists(bodyPart, (BodyPartButtonStates) bodyPartToggleButton.getUserData());
         });
