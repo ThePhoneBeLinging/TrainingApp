@@ -26,18 +26,19 @@ public class EditWorkoutView
 
     public static Scene createScene(Workout workout)
     {
-        VBox layout = new VBox();
-        layout.setSpacing(20);
-        layout.setAlignment(Pos.CENTER);
+        BorderPane layout = new BorderPane();
+        layout.setPadding(new Insets(20));
 
         Pane titlePane = createTitlePane();
-        layout.getChildren().add(titlePane);
+        titlePane.setPadding(new Insets(10));
+        layout.setTop(titlePane);
 
-        Node workoutPane = createWorkoutPane(workout);
-        layout.getChildren().add(workoutPane);
+        Node WorkoutPane = createWorkoutPane(workout);
+        layout.setCenter(WorkoutPane);
 
         Pane buttonPane = createButtonPane(workout);
-        layout.getChildren().add(buttonPane);
+        buttonPane.setPadding(new Insets(20, 0, 0, 0));
+        layout.setBottom(buttonPane);
 
         return new Scene(layout);
     }
