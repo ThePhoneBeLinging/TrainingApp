@@ -113,8 +113,10 @@ public class MuscleSelectionView {
             for (Equipment equipment : Equipment.values()) {
                 if(!selectedEquipment.contains(equipment)) {
                     MuscleSelectionView.selectedEquipment.add(equipment);
+                    System.out.println(selectedEquipment);
                 } else {
                     MuscleSelectionView.selectedEquipment.remove(equipment);
+                    System.out.println(selectedEquipment);
                 }
             }
             for (CheckBox checkBox : equipmentCheckBoxes) {
@@ -124,10 +126,12 @@ public class MuscleSelectionView {
 
         noneButton.setOnAction(_ -> {
             for (Equipment equipment : Equipment.values()) {
-                if(!selectedEquipment.contains(equipment)) {
+                if(selectedEquipment.contains(equipment)) {
                     MuscleSelectionView.selectedEquipment.remove(equipment);
+                    System.out.println(selectedEquipment);
                 } else {
                     MuscleSelectionView.selectedEquipment.add(equipment);
+                    System.out.println(selectedEquipment);
                 }
             }
             for (CheckBox checkBox : equipmentCheckBoxes) {
