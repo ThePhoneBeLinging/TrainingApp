@@ -80,10 +80,10 @@ public class MuscleSelectionView {
 
         List<CheckBox> equipmentCheckBoxes = new ArrayList<>();
 
-        CheckBox allCheckbox = new CheckBox("All");
-        allCheckbox.setSelected(true);
-        equipmentCheckBoxes.add(allCheckbox);
-        equipmentSelectorGridPane.add(allCheckbox, 0, 1, 3, 1);
+        Button selectAllButton = new Button("All");
+        Button deselectAllButton = new Button("None");
+        equipmentSelectorGridPane.add(selectAllButton, 0, 1, 3, 1);
+        equipmentSelectorGridPane.add(deselectAllButton, 1, 1, 3, 1);
 
         int index = 0;
         int columns = 3;
@@ -99,7 +99,7 @@ public class MuscleSelectionView {
             index++;
         }
 
-        createEquipmentCheckboxFunctionality(allCheckbox, equipmentCheckBoxes);
+        createEquipmentCheckboxFunctionality(selectAllButton, deselectAllButton, equipmentCheckBoxes);
 
         ScrollPane equipmentSelectorScrollPane = new ScrollPane(equipmentSelectorGridPane);
         equipmentSelectorScrollPane.setFitToWidth(true);
@@ -108,28 +108,32 @@ public class MuscleSelectionView {
         return equipmentSelectorScrollPane;
     }
 
-    private static void createEquipmentCheckboxFunctionality(CheckBox allCheckbox, List<CheckBox> equipmentCheckBoxes) {
-        allCheckbox.setOnAction(_ -> {
-            if (allCheckbox.isSelected()) {
-                MuscleSelectionView.selectedEquipment.clear();
-                for (CheckBox checkbox : equipmentCheckBoxes) {
-                    if (checkbox != allCheckbox) checkbox.setSelected(false);
+    private static void createEquipmentCheckboxFunctionality(Button allButton, Button noneButton, List<CheckBox> equipmentCheckBoxes) {
+        allButton.setOnAction(_ -> {
+            for (Equipment equipment : Equipment.values()) {
+                if(!selectedEquipment.contains(equipment)) {
+                    MuscleSelectionView.selectedEquipment.add(equipment);
+                } else {
+                    MuscleSelectionView.selectedEquipment.remove(equipment);
                 }
             }
-        });
-        for (CheckBox checkbox : equipmentCheckBoxes) {
-            if (checkbox != allCheckbox) {
-                checkbox.setOnAction(_ -> {
-                    if (checkbox.isSelected()) {
-                        allCheckbox.setSelected(false);
-                        MuscleSelectionView.selectedEquipment.remove(Equipment.valueOf(checkbox.getText()));
-                        if (!MuscleSelectionView.selectedEquipment.contains(Equipment.valueOf(checkbox.getText()))) MuscleSelectionView.selectedEquipment.add(Equipment.valueOf(checkbox.getText()));
-                    } else {
-                        MuscleSelectionView.selectedEquipment.remove(Equipment.valueOf(checkbox.getText()));
-                    }
-                });
+            for (CheckBox checkBox : equipmentCheckBoxes) {
+                checkBox.setSelected(true);
             }
-        }
+        });
+
+        noneButton.setOnAction(_ -> {
+            for (Equipment equipment : Equipment.values()) {
+                if(!selectedEquipment.contains(equipment)) {
+                    MuscleSelectionView.selectedEquipment.remove(equipment);
+                } else {
+                    MuscleSelectionView.selectedEquipment.add(equipment);
+                }
+            }
+            for (CheckBox checkBox : equipmentCheckBoxes) {
+                checkBox.setSelected(false);
+            }
+        });
     }
 
     private static ScrollPane createBodyPartsSelectorScrollPane(List<BodyPart> selectedBodyParts) {
