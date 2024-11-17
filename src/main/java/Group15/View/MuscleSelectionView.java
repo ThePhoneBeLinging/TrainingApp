@@ -227,10 +227,10 @@ public class MuscleSelectionView {
         imageAndTextButtons.setPadding(new Insets(3,5,3,3));
         imageAndTextButtons.setAlignment(Pos.CENTER_LEFT);
 
-        return createBodyPartToggleButton(bodyPart, imageAndTextButtons);
+        return createBodyPartToggleButtonFunctionality(bodyPart, imageAndTextButtons);
     }
 
-    private static Button createBodyPartToggleButton(BodyPart bodyPart, HBox imageAndTextButtons) {
+    private static Button createBodyPartToggleButtonFunctionality(BodyPart bodyPart, HBox imageAndTextButtons) {
         Button bodyPartToggleButton = new Button();
         bodyPartToggleButton.setGraphic(imageAndTextButtons);
         bodyPartToggleButton.setMinSize(300, 150);
@@ -275,10 +275,22 @@ public class MuscleSelectionView {
     }
 
     private static void createSubmitButtonFunctionality(TextField minutesInputField) {
+        MuscleSelectionView.errorList.clear();
+
         if (minutesInputField.getText() == null || minutesInputField.getText().isEmpty() || !minutesInputField.getText().matches("\\d+")) {
             MuscleSelectionView.errorList.add("Invalid Input for Time!");
             updateErrorMessageTextArea();
-
+        }
+        if(selectedBodyParts.isEmpty()) {
+            MuscleSelectionView.errorList.add("No Bodyparts Selected!");
+            updateErrorMessageTextArea();
+        }
+        if(selectedEquipment.isEmpty()) {
+            MuscleSelectionView.errorList.add("No Equipment Selected");
+            updateErrorMessageTextArea();
+        }
+        if(!errorList.isEmpty()) {
+            updateErrorMessageTextArea();
             return;
         }
 
