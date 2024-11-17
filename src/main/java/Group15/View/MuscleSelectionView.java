@@ -25,6 +25,8 @@ public class MuscleSelectionView {
 
     private static String workoutName;
     private static TextField minutesInputField;
+    private static VBox errorVBox;
+    private static TextArea errorMessageTextArea;
 
     public static String getWorkoutName() {
         return workoutName;
@@ -79,7 +81,7 @@ public class MuscleSelectionView {
         MuscleSelectionView.minutesInputField.setPromptText("Input how many minutes to workout");
 
         ScrollPane equipmentSelectorScrollPane = createEquipmentSelectorScrollPane();
-        VBox errorVBox = createErrorVBox();
+        errorVBox = createErrorVBox();
         inputAndEquipBox.getChildren().addAll(errorVBox, minutesInputField, equipmentSelectorScrollPane);
 
         return inputAndEquipBox;
@@ -89,19 +91,25 @@ public class MuscleSelectionView {
         VBox errorVBox = new VBox(20);
         errorVBox.setAlignment(Pos.CENTER);
 
-        TextArea errorMessageTextArea = new TextArea();
+        errorMessageTextArea = new TextArea();
         errorMessageTextArea.setEditable(false);
         errorMessageTextArea.setWrapText(true);
 
-        errorMessageTextArea.clear();
-
-        for(String errorMessage : errorList) {
-            errorMessageTextArea.appendText(" - " + errorMessage + "\n");
-        }
-
+        updateErrorMessageTextArea();
         errorVBox.getChildren().add(errorMessageTextArea);
 
         return errorVBox;
+    }
+
+    private static void updateErrorMessageTextArea () {
+        if (errorMessageTextArea != null) {
+            errorMessageTextArea.clear();
+
+            for(String errorMessage : errorList) {
+                errorMessageTextArea.appendText(" - " + errorMessage + "\n");
+            }
+
+        }
     }
 
     private static ScrollPane createEquipmentSelectorScrollPane() {
@@ -269,7 +277,7 @@ public class MuscleSelectionView {
     private static void createSubmitButtonFunctionality(TextField minutesInputField) {
         if (minutesInputField.getText() == null || minutesInputField.getText().isEmpty() || !minutesInputField.getText().matches("\\d+")) {
             MuscleSelectionView.errorList.add("Invalid Input for Time!");
-            createErrorVBox();
+            updateErrorMessageTextArea();
 
             return;
         }
