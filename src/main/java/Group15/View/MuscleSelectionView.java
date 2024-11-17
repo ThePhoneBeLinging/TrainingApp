@@ -138,6 +138,50 @@ public class MuscleSelectionView {
                 checkBox.setSelected(false);
             }
         });
+
+        for (CheckBox checkBox : equipmentCheckBoxes) {
+            checkBox.setOnAction(_ -> {
+                if(checkBox.isSelected()) {
+                    MuscleSelectionView.selectedEquipment.add(fromTextToEquipment(checkBox.getText()));
+                    System.out.println(selectedEquipment);
+                } else {
+                    MuscleSelectionView.selectedEquipment.remove(fromTextToEquipment(checkBox.getText()));
+                    System.out.println(selectedEquipment);
+                }
+            });
+        }
+    }
+
+    private static Equipment fromTextToEquipment (String checkBoxText) {
+        if (checkBoxText == null || checkBoxText.isEmpty()) return null;
+
+        String normalizedText = checkBoxText.trim();
+
+        if("EZBar".equalsIgnoreCase(normalizedText)) {
+            return Equipment.EZBar;
+        }
+        if ("SmithMachine".equalsIgnoreCase(normalizedText)) {
+            return Equipment.SmithMachine;
+        }
+
+        String caseMatchedText = caseMatchText(normalizedText);
+
+        for (Equipment equipment : Equipment.values()) {
+            if (equipment.name().equals(caseMatchedText)) {
+                return equipment;
+            }
+        }
+        return null;
+    }
+
+    private static String caseMatchText(String text) {
+        if(text == null || text.isEmpty()) {
+            return null;
+        }
+        char firstChar = text.charAt(0);
+        String caseMatchedText = Character.toUpperCase(firstChar) + text.substring(1).toLowerCase();
+
+        return caseMatchedText;
     }
 
     private static ScrollPane createBodyPartsSelectorScrollPane(List<BodyPart> selectedBodyParts) {
