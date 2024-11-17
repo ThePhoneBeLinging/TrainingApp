@@ -38,7 +38,7 @@ public class MuscleSelectionView {
         DESELECT, SELECT, DISLIKE
     }
 
-    public static Scene createMuscleSelectorScene() {
+    public static Scene createMuscleSelectionScene() {
         VBox mainVBox = new VBox(20);
         mainVBox.setAlignment(Pos.CENTER);
 
@@ -54,7 +54,7 @@ public class MuscleSelectionView {
     private static HBox createBackAndSubmitBox () {
         Button submitButton = new Button("Submit");
         submitButton.setMinSize(200, 50);
-        submitButton.setOnAction(_ -> createSubmitButtonFunctionality(minutesInputField));
+        submitButton.setOnAction(_ -> createSubmitButtonFunctionality(MuscleSelectionView.minutesInputField));
 
         Button backButton = new Button("Back");
         backButton.setMinSize(200, 50);
@@ -73,10 +73,10 @@ public class MuscleSelectionView {
         HBox inputAndEquipBox = new HBox(20);
         inputAndEquipBox.setAlignment(Pos.CENTER);
 
-        minutesInputField = new TextField();
-        minutesInputField.setMinSize(210,40);
-        minutesInputField.setMaxSize(210,40);
-        minutesInputField.setPromptText("Input how many minutes to workout");
+        MuscleSelectionView.minutesInputField = new TextField();
+        MuscleSelectionView.minutesInputField.setMinSize(210,40);
+        MuscleSelectionView.minutesInputField.setMaxSize(210,40);
+        MuscleSelectionView.minutesInputField.setPromptText("Input how many minutes to workout");
 
         ScrollPane equipmentSelectorScrollPane = createEquipmentSelectorScrollPane();
         VBox errorVBox = createErrorVBox();
