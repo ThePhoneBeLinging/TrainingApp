@@ -19,9 +19,8 @@ import java.util.Objects;
 
 public class MuscleSelectionView {
     private static List<BodyPart> selectedBodyParts = new ArrayList<>();
-    private static final List<BodyPart> dislikedBodyParts = new ArrayList<>();
-    private static final List<Equipment> selectedEquipment = new ArrayList<>();
-
+    private static List<BodyPart> dislikedBodyParts = new ArrayList<>();
+    private static List<Equipment> selectedEquipment = new ArrayList<>();
     private static List<String> errorList = new ArrayList<>();
 
     private static String workoutName;
@@ -32,6 +31,10 @@ public class MuscleSelectionView {
 
     public static void setWorkoutName(String workoutName) {
         MuscleSelectionView.workoutName = workoutName;
+    }
+
+    private enum BodyPartButtonStates {
+        DESELECT, SELECT, DISLIKE
     }
 
     public static Scene createMuscleSelectorScene() {
@@ -177,10 +180,6 @@ public class MuscleSelectionView {
         ScrollPane bodyPartsScrollPane = new ScrollPane(bodyPartsGridPane);
         bodyPartsScrollPane.setFitToWidth(true);
         return bodyPartsScrollPane;
-    }
-
-    private enum BodyPartButtonStates {
-        DESELECT, SELECT, DISLIKE
     }
 
     private static Button createBodyPartToggleButton(BodyPart bodyPart) {
