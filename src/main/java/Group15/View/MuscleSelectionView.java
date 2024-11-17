@@ -19,9 +19,9 @@ import java.util.Objects;
 
 public class MuscleSelectionView {
     private static List<BodyPart> selectedBodyParts = new ArrayList<>();
-    private static List<BodyPart> dislikedBodyParts = new ArrayList<>();
-    private static List<Equipment> selectedEquipment = new ArrayList<>();
-    private static List<String> errorList = new ArrayList<>();
+    private static final List<BodyPart> dislikedBodyParts = new ArrayList<>();
+    private static final List<Equipment> selectedEquipment = new ArrayList<>();
+    private static final List<String> errorList = new ArrayList<>();
 
     private static String workoutName;
 
@@ -205,6 +205,10 @@ public class MuscleSelectionView {
         imageAndTextButtons.setPadding(new Insets(3,5,3,3));
         imageAndTextButtons.setAlignment(Pos.CENTER_LEFT);
 
+        return createBodyPartToggleButton(bodyPart, imageAndTextButtons);
+    }
+
+    private static Button createBodyPartToggleButton(BodyPart bodyPart, HBox imageAndTextButtons) {
         Button bodyPartToggleButton = new Button();
         bodyPartToggleButton.setGraphic(imageAndTextButtons);
         bodyPartToggleButton.setMinSize(300, 150);
@@ -227,7 +231,6 @@ public class MuscleSelectionView {
             }
             updateBodyPartLists(bodyPart, (BodyPartButtonStates) bodyPartToggleButton.getUserData());
         });
-
         return bodyPartToggleButton;
     }
 
@@ -251,7 +254,7 @@ public class MuscleSelectionView {
 
     private static void createSubmitButtonFunctionality(TextField minutesInputField) {
         if (minutesInputField.getText() == null || minutesInputField.getText().isEmpty() || !minutesInputField.getText().matches("\\d+")) {
-            errorList.add("Invalid Input for Time!");
+            MuscleSelectionView.errorList.add("Invalid Input for Time!");
             return;
         }
 
