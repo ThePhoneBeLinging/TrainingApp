@@ -80,12 +80,15 @@ public class MuscleSelectionView {
 
         TextArea errorMessageTextArea = new TextArea();
         errorMessageTextArea.setEditable(false);
+        errorMessageTextArea.setWrapText(true);
+
         errorMessageTextArea.clear();
-        errorVBox.getChildren().add(errorMessageTextArea);
 
         for(String errorMessage : errorList) {
             errorMessageTextArea.appendText(" - " + errorMessage + "\n");
         }
+
+        errorVBox.getChildren().add(errorMessageTextArea);
 
         return errorVBox;
     }
@@ -255,6 +258,8 @@ public class MuscleSelectionView {
     private static void createSubmitButtonFunctionality(TextField minutesInputField) {
         if (minutesInputField.getText() == null || minutesInputField.getText().isEmpty() || !minutesInputField.getText().matches("\\d+")) {
             MuscleSelectionView.errorList.add("Invalid Input for Time!");
+            createErrorVBox();
+
             return;
         }
 
