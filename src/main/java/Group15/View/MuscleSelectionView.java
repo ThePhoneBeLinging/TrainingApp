@@ -312,16 +312,10 @@ public class MuscleSelectionView {
 
         Dialog<String> workoutNameDialog = createWorkoutNameDialog();
 
-        workoutNameDialog.showAndWait().ifPresentOrElse(
+        workoutNameDialog.showAndWait().ifPresent(
                 workoutName -> {
                     String finalWorkoutName = workoutName.trim().isEmpty() ? "Workout" : workoutName.trim();
                     MuscleSelectionView.setWorkoutName(finalWorkoutName);
-                    ViewController.setScene(WorkoutView.createScene(
-                            WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes)
-                    ));
-                },
-                () -> {
-                    MuscleSelectionView.setWorkoutName("Workout");
                     ViewController.setScene(WorkoutView.createScene(
                             WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes)
                     ));
