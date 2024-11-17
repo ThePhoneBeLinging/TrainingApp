@@ -24,6 +24,7 @@ public class MuscleSelectionView {
     private static final List<String> errorList = new ArrayList<>();
 
     private static String workoutName;
+    private static TextField minutesInputField;
 
     public static String getWorkoutName() {
         return workoutName;
@@ -41,20 +42,16 @@ public class MuscleSelectionView {
         VBox mainVBox = new VBox(20);
         mainVBox.setAlignment(Pos.CENTER);
 
-        HBox inputAndEquipBox = new HBox(20);
-        inputAndEquipBox.setAlignment(Pos.CENTER);
-
-        TextField minutesInputField = new TextField();
-        minutesInputField.setMinSize(210,40);
-        minutesInputField.setMaxSize(210,40);
-        minutesInputField.setPromptText("Input how many minutes to workout");
-
-        ScrollPane equipmentSelectorScrollPane = createEquipmentSelectorScrollPane();
-        VBox errorVBox = createErrorVBox();
-        inputAndEquipBox.getChildren().addAll(errorVBox, minutesInputField, equipmentSelectorScrollPane);
-
+        HBox inputAndEquipBox = createInputAndEquipBox();
+        HBox backAndSubmitButton = createBackAndSubmitBox();
         ScrollPane bodyPartsScrollPane = createBodyPartsSelectorScrollPane(selectedBodyParts);
 
+        mainVBox.getChildren().addAll(bodyPartsScrollPane, inputAndEquipBox, backAndSubmitButton);
+
+        return new Scene(mainVBox);
+    }
+
+    private static HBox createBackAndSubmitBox () {
         Button submitButton = new Button("Submit");
         submitButton.setMinSize(200, 50);
         submitButton.setOnAction(_ -> createSubmitButtonFunctionality(minutesInputField));
@@ -69,9 +66,23 @@ public class MuscleSelectionView {
         backAndSubmitButton.getChildren().addAll(backButton, submitButton);
         backAndSubmitButton.setAlignment(Pos.CENTER);
 
-        mainVBox.getChildren().addAll(bodyPartsScrollPane, inputAndEquipBox, backAndSubmitButton);
+        return backAndSubmitButton;
+    }
 
-        return new Scene(mainVBox);
+    private static HBox createInputAndEquipBox() {
+        HBox inputAndEquipBox = new HBox(20);
+        inputAndEquipBox.setAlignment(Pos.CENTER);
+
+        minutesInputField = new TextField();
+        minutesInputField.setMinSize(210,40);
+        minutesInputField.setMaxSize(210,40);
+        minutesInputField.setPromptText("Input how many minutes to workout");
+
+        ScrollPane equipmentSelectorScrollPane = createEquipmentSelectorScrollPane();
+        VBox errorVBox = createErrorVBox();
+        inputAndEquipBox.getChildren().addAll(errorVBox, minutesInputField, equipmentSelectorScrollPane);
+
+        return inputAndEquipBox;
     }
 
     private static VBox createErrorVBox() {
@@ -265,6 +276,26 @@ public class MuscleSelectionView {
 
         int timeInMinutes = Integer.parseInt(minutesInputField.getText());
 
+        Dialog<String> workoutNameDialog = createWorkoutNameDialog();
+
+        workoutNameDialog.showAndWait().ifPresentOrElse(
+                workoutName -> {
+                    String finalWorkoutName = workoutName.trim().isEmpty() ? "Workout" : workoutName.trim();
+                    MuscleSelectionView.setWorkoutName(finalWorkoutName);
+                    ViewController.setScene(WorkoutView.createScene(
+                            WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes)
+                    ));
+                },
+                () -> {
+                    MuscleSelectionView.setWorkoutName("Workout");
+                    ViewController.setScene(WorkoutView.createScene(
+                            WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes)
+                    ));
+                }
+        );
+    }
+
+    private static Dialog<String> createWorkoutNameDialog () {
         Dialog<String> workoutNameDialog = new Dialog<>();
         workoutNameDialog.setTitle("!");
 
@@ -290,21 +321,6 @@ public class MuscleSelectionView {
             return null;
         });
 
-        workoutNameDialog.showAndWait().ifPresentOrElse(
-                workoutName -> {
-                    String finalWorkoutName = workoutName.trim().isEmpty() ? "Workout" : workoutName.trim();
-                    MuscleSelectionView.setWorkoutName(finalWorkoutName);
-                    ViewController.setScene(WorkoutView.createScene(
-                            WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes)
-                    ));
-                },
-                () -> {
-                    MuscleSelectionView.setWorkoutName("Workout");
-                    ViewController.setScene(WorkoutView.createScene(
-                            WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes)
-                    ));
-                }
-        );
-
+        return workoutNameDialog;
     }
 }
