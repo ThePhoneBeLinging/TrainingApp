@@ -25,7 +25,7 @@ public class MuscleSelectionView {
 
     private static String workoutName;
     private static TextField minutesInputField;
-    private static VBox errorVBox;
+    private static TitledPane errorVBox;
     private static TextArea errorMessageTextArea;
 
     public static String getWorkoutName() {
@@ -81,24 +81,25 @@ public class MuscleSelectionView {
         MuscleSelectionView.minutesInputField.setPromptText("Input how many minutes to workout");
 
         ScrollPane equipmentSelectorScrollPane = createEquipmentSelectorScrollPane();
-        errorVBox = createErrorVBox();
+        errorVBox = createErrorTitledPane();
         inputAndEquipBox.getChildren().addAll(errorVBox, minutesInputField, equipmentSelectorScrollPane);
 
         return inputAndEquipBox;
     }
 
-    private static VBox createErrorVBox() {
-        VBox errorVBox = new VBox(20);
-        errorVBox.setAlignment(Pos.CENTER);
-
+    private static TitledPane createErrorTitledPane() {
         errorMessageTextArea = new TextArea();
         errorMessageTextArea.setEditable(false);
         errorMessageTextArea.setWrapText(true);
 
-        updateErrorMessageTextArea();
-        errorVBox.getChildren().add(errorMessageTextArea);
+        TitledPane errorTitledPane = new TitledPane("Error Messages", errorMessageTextArea);
+        errorTitledPane.setAlignment(Pos.CENTER);
+        errorTitledPane.setStyle("-fx-font-weight: bold; -fx-font-size: 12px;");
+        errorTitledPane.setMaxSize(250,400);
 
-        return errorVBox;
+        updateErrorMessageTextArea();
+
+        return errorTitledPane;
     }
 
     private static void updateErrorMessageTextArea () {
