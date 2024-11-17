@@ -22,6 +22,8 @@ public class MuscleSelectionView {
     private static final List<BodyPart> dislikedBodyParts = new ArrayList<>();
     private static final List<Equipment> selectedEquipment = new ArrayList<>();
 
+    private static List<String> errorList = new ArrayList<>();
+
     private static String workoutName;
 
     public static String getWorkoutName() {
@@ -45,7 +47,8 @@ public class MuscleSelectionView {
         minutesInputField.setPromptText("Input how many minutes to workout");
 
         ScrollPane equipmentSelectorScrollPane = createEquipmentSelectorScrollPane();
-        inputAndEquipBox.getChildren().addAll(minutesInputField, equipmentSelectorScrollPane);
+        VBox errorVBox = createErrorVBox();
+        inputAndEquipBox.getChildren().addAll(errorVBox, minutesInputField, equipmentSelectorScrollPane);
 
         ScrollPane bodyPartsScrollPane = createBodyPartsSelectorScrollPane(selectedBodyParts);
 
@@ -66,6 +69,22 @@ public class MuscleSelectionView {
         mainVBox.getChildren().addAll(bodyPartsScrollPane, inputAndEquipBox, backAndSubmitButton);
 
         return new Scene(mainVBox);
+    }
+
+    private static VBox createErrorVBox() {
+        VBox errorVBox = new VBox(20);
+        errorVBox.setAlignment(Pos.CENTER);
+
+        TextArea errorMessageTextArea = new TextArea();
+        errorMessageTextArea.setEditable(false);
+        errorMessageTextArea.clear();
+        errorVBox.getChildren().add(errorMessageTextArea);
+
+        for(String errorMessage : errorList) {
+            errorMessageTextArea.appendText(" - " + errorMessage + "\n");
+        }
+
+        return errorVBox;
     }
 
     private static ScrollPane createEquipmentSelectorScrollPane() {
@@ -233,7 +252,7 @@ public class MuscleSelectionView {
 
     private static void createSubmitButtonFunctionality(TextField minutesInputField) {
         if (minutesInputField.getText() == null || minutesInputField.getText().isEmpty() || !minutesInputField.getText().matches("\\d+")) {
-            System.out.println("Invalid input");
+            errorList.add("Invalid Input for Time!");
             return;
         }
 
