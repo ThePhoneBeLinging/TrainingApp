@@ -3,6 +3,7 @@ package Group15.View;
 import Group15.Model.BodyPart;
 import Group15.Model.Equipment;
 import Group15.Util.WorkoutAlgorithm;
+import javafx.animation.PauseTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,7 @@ public class MuscleSelectionView {
 
     private static String workoutName;
     private static TextField minutesInputField;
-    private static TitledPane errorVBox;
+    private static TitledPane errorTitledPane;
     private static TextArea errorMessageTextArea;
 
     public static String getWorkoutName() {
@@ -81,8 +83,8 @@ public class MuscleSelectionView {
         MuscleSelectionView.minutesInputField.setPromptText("Input how many minutes to workout");
 
         ScrollPane equipmentSelectorScrollPane = createEquipmentSelectorScrollPane();
-        errorVBox = createErrorTitledPane();
-        inputAndEquipBox.getChildren().addAll(errorVBox, minutesInputField, equipmentSelectorScrollPane);
+        errorTitledPane = createErrorTitledPane();
+        inputAndEquipBox.getChildren().addAll(errorTitledPane, minutesInputField, equipmentSelectorScrollPane);
 
         return inputAndEquipBox;
     }
@@ -94,12 +96,23 @@ public class MuscleSelectionView {
 
         TitledPane errorTitledPane = new TitledPane("Error Messages", errorMessageTextArea);
         errorTitledPane.setAlignment(Pos.CENTER);
-        errorTitledPane.setStyle("-fx-font-weight: bold; -fx-font-size: 12px;");
+        errorTitledPane.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-font-weight: bold; -fx-font-size: 12px;");
         errorTitledPane.setMaxSize(250,400);
 
         updateErrorMessageTextArea();
 
         return errorTitledPane;
+    }
+
+    private static void notifyErrorTitledPane () {
+        if (errorTitledPane != null) {
+            errorTitledPane.setStyle("-fx-border-color: red; -fx-border-width: 1; -fx-font-weight: bold; -fx-font-size: 12px;");
+        }
+        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(2));
+        pauseTransition.setOnFinished(_ -> {
+            errorTitledPane.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-font-weight: bold; -fx-font-size: 12px;");
+        });
+        pauseTransition.play();
     }
 
     private static void updateErrorMessageTextArea () {
@@ -109,7 +122,7 @@ public class MuscleSelectionView {
             for(String errorMessage : errorList) {
                 errorMessageTextArea.appendText(" - " + errorMessage + "\n");
             }
-
+            notifyErrorTitledPane();
         }
     }
 
