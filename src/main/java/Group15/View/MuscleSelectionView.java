@@ -109,9 +109,7 @@ public class MuscleSelectionView {
             errorTitledPane.setStyle("-fx-border-color: red; -fx-border-width: 1; -fx-font-weight: bold; -fx-font-size: 12px;");
         }
         PauseTransition pauseTransition = new PauseTransition(Duration.seconds(2));
-        pauseTransition.setOnFinished(_ -> {
-            errorTitledPane.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-font-weight: bold; -fx-font-size: 12px;");
-        });
+        pauseTransition.setOnFinished(_ -> errorTitledPane.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-font-weight: bold; -fx-font-size: 12px;"));
         pauseTransition.play();
     }
 
@@ -197,13 +195,11 @@ public class MuscleSelectionView {
         bodyPartsGridPane.setVgap(20);
         bodyPartsGridPane.setAlignment(Pos.CENTER);
 
-        List<Button> bodyPartToggleButtons = new ArrayList<>();
         int columns = 0;
         int rows = 0;
 
         for (BodyPart bodyPart : BodyPart.values()) {
             Button bodyPartToggleButton = createBodyPartToggleButton(bodyPart);
-            bodyPartToggleButtons.add(bodyPartToggleButton);
             bodyPartsGridPane.add(bodyPartToggleButton, columns, rows);
 
             columns++;
