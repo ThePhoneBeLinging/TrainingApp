@@ -50,9 +50,12 @@ public class WorkoutView {
     private static Pane createTitlePane()
     {
         HBox titlePane = new HBox();
-        titlePane.setAlignment(Pos.TOP_CENTER);
+        titlePane.setAlignment(Pos.CENTER_LEFT);
+        titlePane.setPadding(new Insets(10, 0, 10, 0))
+
         Label titleLabel = new Label(title);
         titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 40));
+
         titlePane.getChildren().add(titleLabel);
 
         return titlePane;
@@ -61,7 +64,7 @@ public class WorkoutView {
     private static Node createWorkoutPane(Workout workout)
     {
         VBox workoutPane = new VBox();
-        workoutPane.setAlignment(Pos.CENTER);
+        workoutPane.setAlignment(Pos.TOP_CENTER);
         workoutPane.setSpacing(20);
         workoutPane.setPrefSize(640, 600);
         workoutPane.setMaxWidth(Region.USE_PREF_SIZE);
@@ -159,7 +162,7 @@ public class WorkoutView {
 
     private static Pane createButtonPane(Workout workout){
         HBox buttonPane = new HBox();
-        buttonPane.setAlignment(Pos.CENTER);
+        buttonPane.setAlignment(Pos.CENTER_RIGHT);
 
         for (String button : buttons){
             Button newButton = new Button(button);
