@@ -57,7 +57,7 @@ public class EditWorkoutView
     private static Node createWorkoutPane(Workout workout)
     {
         VBox workoutPane = new VBox();
-        workoutPane.setAlignment(Pos.CENTER);
+        workoutPane.setAlignment(Pos.TOP_CENTER);
         workoutPane.setSpacing(20);
         workoutPane.setPrefSize(640, 600);
         workoutPane.setMaxWidth(Region.USE_PREF_SIZE);
