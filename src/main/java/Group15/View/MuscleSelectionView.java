@@ -114,9 +114,6 @@ public class MuscleSelectionView {
                 if(!selectedEquipment.contains(equipment)) {
                     MuscleSelectionView.selectedEquipment.add(equipment);
 
-                } else {
-                    MuscleSelectionView.selectedEquipment.remove(equipment);
-
                 }
             }
             for (CheckBox checkBox : equipmentCheckBoxes) {
@@ -128,9 +125,6 @@ public class MuscleSelectionView {
             for (Equipment equipment : Equipment.values()) {
                 if(selectedEquipment.contains(equipment)) {
                     MuscleSelectionView.selectedEquipment.remove(equipment);
-
-                } else {
-                    MuscleSelectionView.selectedEquipment.add(equipment);
 
                 }
             }
