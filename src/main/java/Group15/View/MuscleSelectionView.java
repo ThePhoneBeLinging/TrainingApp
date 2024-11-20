@@ -182,7 +182,7 @@ public class MuscleSelectionView {
         noneButton.setOnAction(_ -> {
             for (Equipment equipment : Equipment.values()) {
                 if(selectedEquipment.contains(equipment)) {
-                    MuscleSelectionView.selectedEquipment.remove(equipment);
+                    MuscleSelectionView.selectedEquipment.clear();
 
                 }
             }
