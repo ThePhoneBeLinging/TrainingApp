@@ -39,7 +39,7 @@ public class SelectNewExerciseView
     private static Pane createTitlePane()
     {
         HBox titlePane = new HBox();
-        titlePane.setAlignment(Pos.TOP_CENTER);
+        titlePane.setAlignment(Pos.TOP_LEFT);
         Label titleLabel = new Label("Select Exercise");
         titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 40));
         titlePane.getChildren().add(titleLabel);

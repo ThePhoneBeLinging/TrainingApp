@@ -46,7 +46,7 @@ public class EditWorkoutView
     private static Pane createTitlePane()
     {
         HBox titlePane = new HBox();
-        titlePane.setAlignment(Pos.TOP_CENTER);
+        titlePane.setAlignment(Pos.TOP_LEFT);
         Label titleLabel = new Label("Edit Workout");
         titleLabel.setFont(Font.font("Arial", FontWeight.BOLD, 40));
         titlePane.getChildren().add(titleLabel);
@@ -130,7 +130,7 @@ public class EditWorkoutView
     private static Pane createButtonPane(Workout workout)
     {
         HBox buttonPane = new HBox();
-        buttonPane.setAlignment(Pos.CENTER);
+        buttonPane.setAlignment(Pos.CENTER_RIGHT);
 
         for (String button : buttons)
         {
