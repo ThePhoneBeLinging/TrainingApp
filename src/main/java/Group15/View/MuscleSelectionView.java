@@ -3,6 +3,8 @@ package Group15.View;
 import Group15.Model.BodyPart;
 import Group15.Model.Equipment;
 import Group15.Util.WorkoutAlgorithm;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -134,45 +136,29 @@ public class MuscleSelectionView {
         });
 
         for (CheckBox checkBox : equipmentCheckBoxes) {
-            checkBox.setOnAction(_ -> {
-                if(checkBox.isSelected()) {
-                    MuscleSelectionView.selectedEquipment.add(fromTextToEquipment(checkBox.getText()));
-
-                } else {
-                    MuscleSelectionView.selectedEquipment.remove(fromTextToEquipment(checkBox.getText()));
-
+            checkBox.setOnAction(e -> {
+                if (e.getSource() instanceof CheckBox) {
+                    handleCheckBoxAction((CheckBox) e.getSource());
                 }
             });
         }
     }
 
-    private static Equipment fromTextToEquipment (String checkBoxText) {
-        if (checkBoxText == null || checkBoxText.isEmpty()) return null;
-
-        if("EZBar".equalsIgnoreCase(checkBoxText)) {
-            return Equipment.EZBar;
-        }
-        if ("SmithMachine".equalsIgnoreCase(checkBoxText)) {
-            return Equipment.SmithMachine;
-        }
-
-        String caseMatchedText = caseMatchText(checkBoxText);
+    private static void handleCheckBoxAction(CheckBox checkBox) {
+        String checkBoxText = checkBox.getText();
 
         for (Equipment equipment : Equipment.values()) {
-            if (equipment.name().equals(caseMatchedText)) {
-                return equipment;
+            if (equipment.name().equalsIgnoreCase(checkBoxText)) {
+                if (checkBox.isSelected()) {
+                    MuscleSelectionView.selectedEquipment.add(equipment);
+
+                } else {
+                    MuscleSelectionView.selectedEquipment.remove(equipment);
+
+                }
+                break;
             }
         }
-        return null;
-    }
-
-    private static String caseMatchText(String text) {
-        if(text == null || text.isEmpty()) {
-            return null;
-        }
-        char firstChar = text.charAt(0);
-
-        return Character.toUpperCase(firstChar) + text.substring(1).toLowerCase();
     }
 
     private static ScrollPane createBodyPartsSelectorScrollPane(List<BodyPart> selectedBodyParts) {
