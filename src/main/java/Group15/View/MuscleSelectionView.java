@@ -3,6 +3,8 @@ package Group15.View;
 import Group15.Model.BodyPart;
 import Group15.Model.Equipment;
 import Group15.Util.WorkoutAlgorithm;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.animation.PauseTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -136,10 +138,10 @@ public class MuscleSelectionView {
 
         List<CheckBox> equipmentCheckBoxes = new ArrayList<>();
 
-        CheckBox allCheckbox = new CheckBox("All");
-        allCheckbox.setSelected(true);
-        equipmentCheckBoxes.add(allCheckbox);
-        equipmentSelectorGridPane.add(allCheckbox, 0, 1, 3, 1);
+        Button selectAllButton = new Button("All");
+        Button deselectAllButton = new Button("None");
+        equipmentSelectorGridPane.add(selectAllButton, 0, 1, 3, 1);
+        equipmentSelectorGridPane.add(deselectAllButton, 1, 1, 3, 1);
 
         int index = 0;
         int columns = 3;
@@ -155,35 +157,58 @@ public class MuscleSelectionView {
             index++;
         }
 
-        createEquipmentCheckboxFunctionality(allCheckbox, equipmentCheckBoxes);
+        createEquipmentCheckboxFunctionality(selectAllButton, deselectAllButton, equipmentCheckBoxes);
 
         ScrollPane equipmentSelectorScrollPane = new ScrollPane(equipmentSelectorGridPane);
         equipmentSelectorScrollPane.setFitToWidth(true);
-        equipmentSelectorScrollPane.setMinSize(350, 100);
+        equipmentSelectorScrollPane.setMinSize(350, 140);
 
         return equipmentSelectorScrollPane;
     }
 
-    private static void createEquipmentCheckboxFunctionality(CheckBox allCheckbox, List<CheckBox> equipmentCheckBoxes) {
-        allCheckbox.setOnAction(_ -> {
-            if (allCheckbox.isSelected()) {
-                MuscleSelectionView.selectedEquipment.clear();
-                for (CheckBox checkbox : equipmentCheckBoxes) {
-                    if (checkbox != allCheckbox) checkbox.setSelected(false);
+    private static void createEquipmentCheckboxFunctionality(Button allButton, Button noneButton, List<CheckBox> equipmentCheckBoxes) {
+        allButton.setOnAction(_ -> {
+            for (Equipment equipment : Equipment.values()) {
+                if(!selectedEquipment.contains(equipment)) {
+                    MuscleSelectionView.selectedEquipment.add(equipment);
+
                 }
             }
+            for (CheckBox checkBox : equipmentCheckBoxes) {
+                checkBox.setSelected(true);
+            }
         });
-        for (CheckBox checkbox : equipmentCheckBoxes) {
-            if (checkbox != allCheckbox) {
-                checkbox.setOnAction(_ -> {
-                    if (checkbox.isSelected()) {
-                        allCheckbox.setSelected(false);
-                        MuscleSelectionView.selectedEquipment.remove(Equipment.valueOf(checkbox.getText()));
-                        if (!MuscleSelectionView.selectedEquipment.contains(Equipment.valueOf(checkbox.getText()))) MuscleSelectionView.selectedEquipment.add(Equipment.valueOf(checkbox.getText()));
-                    } else {
-                        MuscleSelectionView.selectedEquipment.remove(Equipment.valueOf(checkbox.getText()));
-                    }
-                });
+
+        noneButton.setOnAction(_ -> {
+            MuscleSelectionView.selectedEquipment.clear();
+
+            for (CheckBox checkBox : equipmentCheckBoxes) {
+                checkBox.setSelected(false);
+            }
+        });
+
+        for (CheckBox checkBox : equipmentCheckBoxes) {
+            checkBox.setOnAction(e -> {
+                if (e.getSource() instanceof CheckBox) {
+                    handleCheckBoxAction((CheckBox) e.getSource());
+                }
+            });
+        }
+    }
+
+    private static void handleCheckBoxAction(CheckBox checkBox) {
+        String checkBoxText = checkBox.getText();
+
+        for (Equipment equipment : Equipment.values()) {
+            if (equipment.name().equalsIgnoreCase(checkBoxText)) {
+                if (checkBox.isSelected()) {
+                    MuscleSelectionView.selectedEquipment.add(equipment);
+
+                } else {
+                    MuscleSelectionView.selectedEquipment.remove(equipment);
+
+                }
+                break;
             }
         }
     }
@@ -263,6 +288,7 @@ public class MuscleSelectionView {
             }
             updateBodyPartLists(bodyPart, (BodyPartButtonStates) bodyPartToggleButton.getUserData());
         });
+
         return bodyPartToggleButton;
     }
 
