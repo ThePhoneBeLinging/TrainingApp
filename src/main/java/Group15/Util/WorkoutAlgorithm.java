@@ -92,7 +92,7 @@ public class WorkoutAlgorithm {
             {
                 if (exercise.bodyParts.contains(bodyPart))
                 {
-                    continue;
+                    break;
                 }
 
                 if (bodyPart.equals(selectedBodyParts.getLast()))
