@@ -2,6 +2,7 @@ package Group15.View;
 
 import Group15.MockData.MockWorkouts;
 import Group15.Model.Workout;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,18 +21,19 @@ public class HomeScreenView
     private static final String[] buttons = {"New Workout", "My Workouts", "Exit"};
 
     public static Scene createScene() {
-        VBox layout = new VBox();
-        layout.setSpacing(20);
-        layout.setAlignment(Pos.CENTER);
+        BorderPane layout = new BorderPane();
+        layout.setPadding(new Insets(20));
 
         Pane titlePane = createTitlePane();
-        layout.getChildren().add(titlePane);
+        titlePane.setPadding(new Insets(10));
+        layout.setTop(titlePane);
 
         Pane quickWorkoutPane = quickWorkoutPane();
-        layout.getChildren().add(quickWorkoutPane);
+        layout.setCenter(quickWorkoutPane);
 
         Pane buttonPane = createButtonPane();
-        layout.getChildren().add(buttonPane);
+        buttonPane.setPadding(new Insets(20, 0, 0, 0));
+        layout.setBottom(buttonPane);
 
         return new Scene(layout);
     }
@@ -70,7 +72,7 @@ public class HomeScreenView
             newButton.setOnAction(_ -> {
                 switch (button) {
                     case "New Workout":
-                        ViewController.setScene(MuscleSelectionView.createMuscleSelectorScene());
+                        ViewController.setScene(MuscleSelectionView.createMuscleSelectionScene());
                         break;
                     case "My Workouts":
                         System.out.println("My Workouts pressed");
@@ -114,10 +116,10 @@ public class HomeScreenView
             Label descriptionWorkout = new Label(workout.getDescription());
             workoutItem.getChildren().addAll(titleWorkout, descriptionWorkout);
 
-            // TODO: we need to change the workoutView to take a workout
+
             // In addition to that we should not navigate to the workoutView on the new workout button.
             // We can change this when mr. Musti finally merges his branch
-            workoutItem.onMouseClickedProperty().set(_ -> ViewController.setScene(WorkoutView.createScene()));
+            workoutItem.onMouseClickedProperty().set(_ -> ViewController.setScene(WorkoutView.createScene(new Workout())));
             workoutsPane.getChildren().add(workoutItem);
         }
 

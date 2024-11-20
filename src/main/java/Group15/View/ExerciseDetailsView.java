@@ -1,6 +1,7 @@
 package Group15.View;
 
 import Group15.Model.Exercise;
+import Group15.Model.Workout;
 import Group15.Util.ExerciseUtils;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -103,18 +104,18 @@ public class ExerciseDetailsView {
         updateButtonStyles(exercise, likeButton, dislikeButton);
 
         likeButton.setOnAction(_ -> {
-            ExerciseUtils.likeExercisePressed(exercise);
-            updateButtonStyles(exercise, likeButton, dislikeButton);
+        ExerciseUtils.likeExercisePressed(exercise);
+        updateButtonStyles(exercise, likeButton, dislikeButton);
         });
 
         dislikeButton.setOnAction(_ -> {
-            ExerciseUtils.dislikeExercisePressed(exercise);
-            updateButtonStyles(exercise, likeButton, dislikeButton);
+        ExerciseUtils.dislikeExercisePressed(exercise);
+        updateButtonStyles(exercise, likeButton, dislikeButton);
         });
 
         Button backButton = new Button("Back");
         backButton.setPrefSize(200, 50);
-        backButton.setOnAction(_ -> ViewController.setScene(WorkoutView.createScene()));
+        backButton.setOnAction(_ -> ViewController.goBack());
 
         buttonPane.getChildren().addAll(likeButton, dislikeButton, backButton);
 

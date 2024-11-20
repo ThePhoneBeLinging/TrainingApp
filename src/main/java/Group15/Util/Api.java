@@ -1,4 +1,4 @@
-package Group15.Api;
+package Group15.Util;
 
 import Group15.Model.Exercise;
 import org.springframework.core.ParameterizedTypeReference;
@@ -8,11 +8,16 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-public class ApiUtils
+public class Api
 {
     private static final String URL = "https://158.179.205.63/api/v3/get/exercise/all";
 
     private static List<Exercise> exercises;
+
+    static
+    {
+        getAllExercises();
+    }
 
     public static List<Exercise> getAllExercises()
     {
@@ -32,12 +37,15 @@ public class ApiUtils
                     new ParameterizedTypeReference<List<Exercise>>()
                     {
                     });
-            return response.getBody();
+            if (response.getBody() != null) {
+                return response.getBody();
+            } else {
+                System.out.println("API returned no exercises.");
+            }
+        } catch (Exception e) {
+            System.out.println("Exception occurred while fetching exercises: " + e.getMessage());
+            e.printStackTrace();
         }
-        catch (Exception e)
-        {
-            System.out.println("Exception occured: " + e.getMessage());
-        }
-        return null;
+        return List.of();
     }
 }

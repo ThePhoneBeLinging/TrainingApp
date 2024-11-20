@@ -1,45 +1,49 @@
 package Group15.View;
 
-import Group15.Api.ApiUtils;
-
-import Group15.Model.BodyPart;
-import Group15.Model.Equipment;
-import Group15.Model.Exercise;
+import Group15.Util.Api;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.util.Arrays;
+import java.util.Stack;
 
 public class ViewController
 {
     private static Stage stage;
+    private static Stack<Scene> navigationStack = new Stack<>();
 
     public static void init(Stage stage)
     {
-        ApiUtils.getAllExercises();
+        Api.getAllExercises();
         ViewController.stage = stage;
         ViewController.stage.setHeight(800);
         ViewController.stage.setWidth(1000);
-        ViewController.stage.setScene(ExerciseDetailsView.createScene(new Exercise(
-                "Bench Press",
-                "A compound exercise that targets the chest, shoulders, and triceps.",
-                "Strength",
-                Arrays.asList(BodyPart.Chest, BodyPart.Shoulders, BodyPart.Triceps),
-                Arrays.asList(Equipment.Barbell),
-                "Intermediate",
-                "/images/benchPress.png",
-                60
-        )));
+        navigationStack.push(HomeScreenView.createScene());
+        ViewController.stage.setScene(navigationStack.peek());
         ViewController.stage.show();
     }
 
     public static Scene getScene()
     {
-        return ViewController.stage.getScene();
+        return stage.getScene();
     }
 
     public static void setScene(Scene scene)
     {
-        ViewController.stage.setScene(scene);
+        navigationStack.push(scene);
+        stage.setScene(navigationStack.peek());
+    }
+
+    public static void applyChanges(Scene scene)
+    {
+        navigationStack.pop();
+        navigationStack.pop();
+        navigationStack.push(scene);
+        stage.setScene(navigationStack.peek());
+    }
+
+    public static void goBack()
+    {
+        navigationStack.pop();
+        stage.setScene(navigationStack.peek());
     }
 }

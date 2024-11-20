@@ -1,11 +1,6 @@
-import Group15.Model.BodyPart;
-import Group15.Model.Equipment;
-import Group15.Model.Exercise;
-import Group15.Model.Workout;
+import Group15.Model.*;
 import Group15.Util.JSONParser;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,37 +9,39 @@ import java.util.List;
 public class JSONParserTest
 {
     // Can hold objects between tests:
-    private String exercisesFilePath;
-    private String workoutsFilePath;
-    private List<Exercise> exercises;
-    private List<Workout> workouts;
+    private static String exercisesFilePath;
+    private static String workoutsFilePath;
+    private static List<Exercise> exercises;
+    private static List<Workout> workouts;
 
-    private void initExercises()
+    private static void initExercises()
     {
         exercises = new ArrayList<>();
 
-        Exercise pushup = new Exercise("Pushup", "Push your body up and down", "Strength", Collections.singletonList(BodyPart.Chest), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000);
-        Exercise situp = new Exercise("Situp", "Sit up and down", "Strength", Collections.singletonList(BodyPart.Abdominals), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000);
+        Exercise pushup = new Exercise("Pushup", "Push your body up and down", Collections.singletonList(BodyPart.Chest), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000);
+        Exercise situp = new Exercise("Situp", "Sit up and down", Collections.singletonList(BodyPart.Abdominal), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000);
         exercises.add(pushup);
         exercises.add(situp);
     }
 
-    private void initWorkouts()
+    private static void initWorkouts()
     {
         workouts = new ArrayList<>();
 
         Workout workout = new Workout();
         for (Exercise exercise : exercises)
         {
-            workout.addExercise(exercise);
+            WorkoutExercise workoutExercise = new WorkoutExercise();
+            workoutExercise.setExercise(exercise);
+            workout.addExercise(workoutExercise);
         }
         workouts.add(workout);
         workout = new Workout();
         workouts.add(workout);
     }
 
-    @Before
-    public void setUp()
+    @BeforeAll
+    public static void setUp()
     {
         initExercises();
         initWorkouts();
@@ -68,11 +65,11 @@ public class JSONParserTest
 
         for (int i = 0; i < exercises.size(); i++)
         {
-            Assert.assertEquals(jsonExercises[i], exercises.get(i));
+            Assertions.assertEquals(jsonExercises[i], exercises.get(i));
         }
         for (int i = 0; i < workouts.size(); i++)
         {
-            Assert.assertEquals(jsonWorkouts[i], workouts.get(i));
+            Assertions.assertEquals(jsonWorkouts[i], workouts.get(i));
         }
     }
 }

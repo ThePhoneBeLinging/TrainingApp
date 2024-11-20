@@ -22,7 +22,7 @@ public class ExerciseUtilsTest {
     private static final String LIKED_FILE_BACKUP_PATH = "src/main/resources/userData/likedExercises_backup.json";
     private static final String DISLIKED_FILE_BACKUP_PATH = "src/main/resources/userData/dislikedExercises_backup.json";
 
-    Exercise pushup = new Exercise("Pushup", "Push your body up and down", "Strength", Collections.singletonList(BodyPart.Chest), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000);
+    Exercise pushup = new Exercise("Pushup", "Push your body up and down", Collections.singletonList(BodyPart.Chest), Collections.singletonList(Equipment.Bodyweight), "Easy", "None", 3000);
 
     @BeforeEach
     public void setUp() throws IOException {

@@ -1,23 +1,23 @@
 package Group15.Model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Exercise
 {
     public String title;
     public String description;
-    public String type;
     public List<BodyPart> bodyParts;
     public List<Equipment> equipment;
     public String difficulty;
     public String imagePath;
     public int timePerRep;
+    public String type;
 
-    public Exercise(String title, String description, String type, List<BodyPart> bodyPart, List<Equipment> equipment, String difficulty, String imagePath, int timePerRep) {
+    public Exercise(String title, String description, List<BodyPart> bodyParts, List<Equipment> equipment, String difficulty, String imagePath, int timePerRep) {
         this.title = title;
         this.description = description;
-        this.type = type;
-        this.bodyParts = bodyPart;
+        this.bodyParts = bodyParts;
         this.equipment = equipment;
         this.difficulty = difficulty;
         this.imagePath = imagePath;
@@ -37,12 +37,14 @@ public class Exercise
             return false;
         }
         boolean result = true;
-        result &= this.title.equals(((Exercise) obj).title);
-        result &= this.description.equals(((Exercise) obj).description);
-        result &= this.type.equals(((Exercise) obj).type);
-        result &= this.bodyParts.equals(((Exercise) obj).bodyParts);
-        result &= this.equipment.equals(((Exercise) obj).equipment);
-        result &= this.difficulty.equals(((Exercise) obj).difficulty);
+
+        result &= Objects.equals(this.title,((Exercise) obj).title);
+        result &= Objects.equals(this.description,((Exercise) obj).description);
+        result &= Objects.equals(this.bodyParts,((Exercise) obj).bodyParts);
+        result &= Objects.equals(this.equipment,((Exercise) obj).equipment);
+        result &= Objects.equals(this.difficulty,((Exercise) obj).difficulty);
+        result &= Objects.equals(this.timePerRep,((Exercise) obj).timePerRep);
+
 
 
         return result;
