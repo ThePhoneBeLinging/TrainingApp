@@ -123,7 +123,7 @@ public class WorkoutAlgorithmTest
     }
 
     @Test
-    public void testCreateWorkoutWithAllEquipment()
+    public void testCreateWorkoutWithMultipleEquipment()
     {
         Workout workout = WorkoutAlgorithm.createWorkoutFromExercises(
                 Collections.singletonList(BodyPart.Chest),
