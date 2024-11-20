@@ -180,12 +180,8 @@ public class MuscleSelectionView {
         });
 
         noneButton.setOnAction(_ -> {
-            for (Equipment equipment : Equipment.values()) {
-                if(selectedEquipment.contains(equipment)) {
-                    MuscleSelectionView.selectedEquipment.clear();
+            MuscleSelectionView.selectedEquipment.clear();
 
-                }
-            }
             for (CheckBox checkBox : equipmentCheckBoxes) {
                 checkBox.setSelected(false);
             }
