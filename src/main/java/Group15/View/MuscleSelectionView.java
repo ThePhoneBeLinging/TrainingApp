@@ -5,6 +5,7 @@ import Group15.Model.Equipment;
 import Group15.Util.WorkoutAlgorithm;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.animation.PauseTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +25,12 @@ public class MuscleSelectionView {
     private static List<BodyPart> selectedBodyParts = new ArrayList<>();
     private static final List<BodyPart> dislikedBodyParts = new ArrayList<>();
     private static final List<Equipment> selectedEquipment = new ArrayList<>();
+    private static final List<String> errorList = new ArrayList<>();
 
     private static String workoutName;
+    private static TextField minutesInputField;
+    private static TitledPane errorTitledPane;
+    private static TextArea errorMessageTextArea;
 
     public static String getWorkoutName() {
         return workoutName;
@@ -34,26 +40,27 @@ public class MuscleSelectionView {
         MuscleSelectionView.workoutName = workoutName;
     }
 
-    public static Scene createMuscleSelectorScene() {
+    private enum BodyPartButtonStates {
+        DESELECT, SELECT, DISLIKE
+    }
+
+    public static Scene createMuscleSelectionScene() {
         VBox mainVBox = new VBox(20);
         mainVBox.setAlignment(Pos.CENTER);
 
-        HBox inputAndEquipBox = new HBox(20);
-        inputAndEquipBox.setAlignment(Pos.CENTER);
-
-        TextField minutesInputField = new TextField();
-        minutesInputField.setMinSize(210,40);
-        minutesInputField.setMaxSize(210,40);
-        minutesInputField.setPromptText("Input how many minutes to workout");
-
-        ScrollPane equipmentSelectorScrollPane = createEquipmentSelectorScrollPane();
-        inputAndEquipBox.getChildren().addAll(minutesInputField, equipmentSelectorScrollPane);
-
+        HBox inputAndEquipBox = createInputAndEquipBox();
+        HBox backAndSubmitButton = createBackAndSubmitBox();
         ScrollPane bodyPartsScrollPane = createBodyPartsSelectorScrollPane(selectedBodyParts);
 
+        mainVBox.getChildren().addAll(bodyPartsScrollPane, inputAndEquipBox, backAndSubmitButton);
+
+        return new Scene(mainVBox);
+    }
+
+    private static HBox createBackAndSubmitBox () {
         Button submitButton = new Button("Submit");
         submitButton.setMinSize(200, 50);
-        submitButton.setOnAction(_ -> createSubmitButtonFunctionality(minutesInputField));
+        submitButton.setOnAction(_ -> createSubmitButtonFunctionality(MuscleSelectionView.minutesInputField));
 
         Button backButton = new Button("Back");
         backButton.setMinSize(200, 50);
@@ -65,9 +72,58 @@ public class MuscleSelectionView {
         backAndSubmitButton.getChildren().addAll(backButton, submitButton);
         backAndSubmitButton.setAlignment(Pos.CENTER);
 
-        mainVBox.getChildren().addAll(bodyPartsScrollPane, inputAndEquipBox, backAndSubmitButton);
+        return backAndSubmitButton;
+    }
 
-        return new Scene(mainVBox);
+    private static HBox createInputAndEquipBox() {
+        HBox inputAndEquipBox = new HBox(20);
+        inputAndEquipBox.setAlignment(Pos.CENTER);
+
+        MuscleSelectionView.minutesInputField = new TextField();
+        MuscleSelectionView.minutesInputField.setMinSize(210,40);
+        MuscleSelectionView.minutesInputField.setMaxSize(210,40);
+        MuscleSelectionView.minutesInputField.setPromptText("Input how many minutes to workout");
+
+        ScrollPane equipmentSelectorScrollPane = createEquipmentSelectorScrollPane();
+        errorTitledPane = createErrorTitledPane();
+        inputAndEquipBox.getChildren().addAll(errorTitledPane, minutesInputField, equipmentSelectorScrollPane);
+
+        return inputAndEquipBox;
+    }
+
+    private static TitledPane createErrorTitledPane() {
+        errorMessageTextArea = new TextArea();
+        errorMessageTextArea.setEditable(false);
+        errorMessageTextArea.setWrapText(true);
+
+        TitledPane errorTitledPane = new TitledPane("Error Messages", errorMessageTextArea);
+        errorTitledPane.setAlignment(Pos.CENTER);
+        errorTitledPane.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-font-weight: bold; -fx-font-size: 12px;");
+        errorTitledPane.setMaxSize(250,400);
+
+        updateErrorMessageTextArea();
+
+        return errorTitledPane;
+    }
+
+    private static void notifyErrorTitledPane () {
+        if (errorTitledPane != null) {
+            errorTitledPane.setStyle("-fx-border-color: red; -fx-border-width: 1; -fx-font-weight: bold; -fx-font-size: 12px;");
+        }
+        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(2));
+        pauseTransition.setOnFinished(_ -> errorTitledPane.setStyle("-fx-border-color: black; -fx-border-width: 1; -fx-font-weight: bold; -fx-font-size: 12px;"));
+        pauseTransition.play();
+    }
+
+    private static void updateErrorMessageTextArea () {
+        if (errorMessageTextArea != null) {
+            errorMessageTextArea.clear();
+
+            for(String errorMessage : errorList) {
+                errorMessageTextArea.appendText(" - " + errorMessage + "\n");
+            }
+            notifyErrorTitledPane();
+        }
     }
 
     private static ScrollPane createEquipmentSelectorScrollPane() {
@@ -168,13 +224,11 @@ public class MuscleSelectionView {
         bodyPartsGridPane.setVgap(20);
         bodyPartsGridPane.setAlignment(Pos.CENTER);
 
-        List<Button> bodyPartToggleButtons = new ArrayList<>();
         int columns = 0;
         int rows = 0;
 
         for (BodyPart bodyPart : BodyPart.values()) {
             Button bodyPartToggleButton = createBodyPartToggleButton(bodyPart);
-            bodyPartToggleButtons.add(bodyPartToggleButton);
             bodyPartsGridPane.add(bodyPartToggleButton, columns, rows);
 
             columns++;
@@ -187,10 +241,6 @@ public class MuscleSelectionView {
         ScrollPane bodyPartsScrollPane = new ScrollPane(bodyPartsGridPane);
         bodyPartsScrollPane.setFitToWidth(true);
         return bodyPartsScrollPane;
-    }
-
-    private enum BodyPartButtonStates {
-        DESELECT, SELECT, DISLIKE
     }
 
     private static Button createBodyPartToggleButton(BodyPart bodyPart) {
@@ -216,6 +266,10 @@ public class MuscleSelectionView {
         imageAndTextButtons.setPadding(new Insets(3,5,3,3));
         imageAndTextButtons.setAlignment(Pos.CENTER_LEFT);
 
+        return createBodyPartToggleButtonFunctionality(bodyPart, imageAndTextButtons);
+    }
+
+    private static Button createBodyPartToggleButtonFunctionality(BodyPart bodyPart, HBox imageAndTextButtons) {
         Button bodyPartToggleButton = new Button();
         bodyPartToggleButton.setGraphic(imageAndTextButtons);
         bodyPartToggleButton.setMinSize(300, 150);
@@ -261,13 +315,41 @@ public class MuscleSelectionView {
     }
 
     private static void createSubmitButtonFunctionality(TextField minutesInputField) {
+        MuscleSelectionView.errorList.clear();
+
         if (minutesInputField.getText() == null || minutesInputField.getText().isEmpty() || !minutesInputField.getText().matches("\\d+")) {
-            System.out.println("Invalid input");
+            MuscleSelectionView.errorList.add("Invalid Input for Time!");
+            updateErrorMessageTextArea();
+        }
+        if(selectedBodyParts.isEmpty()) {
+            MuscleSelectionView.errorList.add("No Bodyparts Selected!");
+            updateErrorMessageTextArea();
+        }
+        if(selectedEquipment.isEmpty()) {
+            MuscleSelectionView.errorList.add("No Equipment Selected");
+            updateErrorMessageTextArea();
+        }
+        if(!errorList.isEmpty()) {
+            updateErrorMessageTextArea();
             return;
         }
 
         int timeInMinutes = Integer.parseInt(minutesInputField.getText());
 
+        Dialog<String> workoutNameDialog = createWorkoutNameDialog();
+
+        workoutNameDialog.showAndWait().ifPresent(
+                workoutName -> {
+                    String finalWorkoutName = workoutName.trim().isEmpty() ? "Workout" : workoutName.trim();
+                    MuscleSelectionView.setWorkoutName(finalWorkoutName);
+                    ViewController.setScene(WorkoutView.createScene(
+                            WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes)
+                    ));
+                }
+        );
+    }
+
+    private static Dialog<String> createWorkoutNameDialog () {
         Dialog<String> workoutNameDialog = new Dialog<>();
         workoutNameDialog.setTitle("!");
 
@@ -293,21 +375,6 @@ public class MuscleSelectionView {
             return null;
         });
 
-        workoutNameDialog.showAndWait().ifPresentOrElse(
-                workoutName -> {
-                    String finalWorkoutName = workoutName.trim().isEmpty() ? "Workout" : workoutName.trim();
-                    MuscleSelectionView.setWorkoutName(finalWorkoutName);
-                    ViewController.setScene(WorkoutView.createScene(
-                            WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes)
-                    ));
-                },
-                () -> {
-                    MuscleSelectionView.setWorkoutName("Workout");
-                    ViewController.setScene(WorkoutView.createScene(
-                            WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes)
-                    ));
-                }
-        );
-
+        return workoutNameDialog;
     }
 }
