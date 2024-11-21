@@ -3,8 +3,6 @@ package Group15.View;
 import Group15.Model.BodyPart;
 import Group15.Model.Equipment;
 import Group15.Util.WorkoutAlgorithm;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.animation.PauseTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
