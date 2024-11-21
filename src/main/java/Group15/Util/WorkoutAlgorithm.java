@@ -8,14 +8,14 @@ import java.util.List;
 
 public class WorkoutAlgorithm {
 
-    private static HashMap<String, Boolean> selectedExercises = new HashMap<>();
+    private static HashMap<String, Boolean> selectedExercises;
 
     public static Workout createWorkoutFromExercises(
             List<BodyPart> selectedBodyParts,
             List<BodyPart> bodyPartsToAvoid,
             List<Equipment> equipment,
             int timeInMinutes){
-
+        selectedExercises = new HashMap<>();
         int timeLeftInMilli = timeInMinutes * 60000;
         Workout workout = new Workout();
         int breakBetweenSets = 120000;
