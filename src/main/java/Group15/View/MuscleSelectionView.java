@@ -62,6 +62,10 @@ public class MuscleSelectionView {
         submitButton.setMinSize(200, 50);
         submitButton.setOnAction(_ -> createSubmitButtonFunctionality(MuscleSelectionView.minutesInputField));
 
+        Button randomizeButton = new Button("Randomize Muscles");
+        randomizeButton.setMinSize(200,50);
+        randomizeButton.setOnAction(_ -> randomizeBodyParts());
+
         Button backButton = new Button("Back");
         backButton.setMinSize(200, 50);
         backButton.setOnAction(_ -> ViewController.goBack());
@@ -290,6 +294,10 @@ public class MuscleSelectionView {
         });
 
         return bodyPartToggleButton;
+    }
+
+    private static void randomizeBodyParts() {
+
     }
 
     private static void updateBodyPartLists(BodyPart bodyPart, BodyPartButtonStates currenState) {
