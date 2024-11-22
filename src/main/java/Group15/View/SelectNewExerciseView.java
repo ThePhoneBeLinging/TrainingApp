@@ -84,6 +84,10 @@ public class SelectNewExerciseView
             exerciseBox.setAlignment(Pos.CENTER);
             exerciseBox.setBackground(Background.fill(Color.LIGHTGRAY));
             exerciseBox.setPadding(new Insets(10));
+
+            Region spacer = new Region();
+            HBox.setHgrow(spacer, Priority.ALWAYS);
+
             Button chooseExerciseButton = new Button("Choose Exercise");
 
             chooseExerciseButton.setOnAction(e ->
@@ -105,7 +109,7 @@ public class SelectNewExerciseView
                 ViewController.applyChanges(EditWorkoutView.createScene(workout));
                 });
 
-            exerciseBox.getChildren().addAll(imageView, exerciseLabel1, chooseExerciseButton);
+            exerciseBox.getChildren().addAll(imageView, exerciseLabel1, spacer, chooseExerciseButton);
             workoutPane.getChildren().add(exerciseBox);
         }
         ScrollPane scrollPane = new ScrollPane(workoutPane);
