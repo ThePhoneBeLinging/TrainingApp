@@ -71,7 +71,7 @@ public class MuscleSelectionView {
         HBox backAndSubmitButton = new HBox();
         backAndSubmitButton.setSpacing(20);
         backAndSubmitButton.setPadding(new Insets(0,0,20,0));
-        backAndSubmitButton.getChildren().addAll(backButton, submitButton);
+        backAndSubmitButton.getChildren().addAll(backButton, randomizeButton, submitButton);
         backAndSubmitButton.setAlignment(Pos.CENTER);
 
         return backAndSubmitButton;
@@ -276,18 +276,7 @@ public class MuscleSelectionView {
         bodyPartToggleButton.setStyle("-fx-border-color: black; -fx-border-width: 2;");
 
         bodyPartToggleButton.setOnAction(_ -> {
-            BodyPartButtonStates currentState = (BodyPartButtonStates) bodyPartToggleButton.getUserData();
-
-            if (currentState == BodyPartButtonStates.DESELECT) {
-                bodyPartToggleButton.setUserData(BodyPartButtonStates.SELECT);
-                bodyPartToggleButton.setStyle("-fx-border-color: green; -fx-border-width: 2;");
-            } else if (currentState == BodyPartButtonStates.SELECT) {
-                bodyPartToggleButton.setUserData(BodyPartButtonStates.DISLIKE);
-                bodyPartToggleButton.setStyle("-fx-border-color: red; -fx-border-width: 2;");
-            } else {
-                bodyPartToggleButton.setUserData(BodyPartButtonStates.DESELECT);
-                bodyPartToggleButton.setStyle("-fx-border-color: black; -fx-border-width: 2;");
-            }
+            updateButtonStates(bodyPartToggleButton);
             updateBodyPartLists(bodyPart, (BodyPartButtonStates) bodyPartToggleButton.getUserData());
         });
 
@@ -296,6 +285,24 @@ public class MuscleSelectionView {
 
     private static void randomizeBodyParts() {
 
+    }
+
+    private static void updateButtonStates(Button bodyPartToggleButton) {
+        BodyPartButtonStates currentState = (BodyPartButtonStates) bodyPartToggleButton.getUserData();
+        switch (currentState) {
+            case DESELECT:
+                bodyPartToggleButton.setUserData(BodyPartButtonStates.SELECT);
+                bodyPartToggleButton.setStyle("-fx-border-color: green; -fx-border-width: 2;");
+                break;
+            case SELECT:
+                bodyPartToggleButton.setUserData(BodyPartButtonStates.DISLIKE);
+                bodyPartToggleButton.setStyle("-fx-border-color: red; -fx-border-width: 2;");
+                break;
+            default:
+                bodyPartToggleButton.setUserData(BodyPartButtonStates.DESELECT);
+                bodyPartToggleButton.setStyle("-fx-border-color: black; -fx-border-width: 2;");
+                break;
+        }
     }
 
     private static void updateBodyPartLists(BodyPart bodyPart, BodyPartButtonStates currenState) {
@@ -310,6 +317,7 @@ public class MuscleSelectionView {
         if(currenState == BodyPartButtonStates.DISLIKE) {
             if(!dislikedBodyParts.contains(bodyPart)) {
                 dislikedBodyParts.add(bodyPart);
+                selectedBodyParts.remove(bodyPart);
             }
         } else if (currenState == BodyPartButtonStates.DESELECT) {
             dislikedBodyParts.remove(bodyPart);
