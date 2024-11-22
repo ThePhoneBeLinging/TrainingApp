@@ -313,8 +313,9 @@ public class MuscleSelectionView {
                 }
             }
         }
-        System.out.println(selectedBodyParts);
-        System.out.println(dislikedBodyParts);
+        errorList.add("Randomly added muscles: " + selectedBodyParts);
+        updateErrorMessageTextArea();
+        errorList.clear();
     }
 
     private static void updateButtonStates(Button bodyPartToggleButton) {
