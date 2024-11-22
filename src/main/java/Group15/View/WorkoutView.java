@@ -156,6 +156,26 @@ public class WorkoutView {
         return workoutTitleHBox;
     }
 
+    private static void createSuccessSaveDialog() {
+        Dialog<String> succesDialog = new Dialog<>();
+        succesDialog.setTitle("!");
+
+        Label successSaveLabel = new Label("Succesfully saved workout as PDF");
+        successSaveLabel.setStyle("-fx-font-weight: bold");
+
+        VBox dialogVBox = new VBox(10, successSaveLabel);
+        dialogVBox.setAlignment(Pos.CENTER);
+        dialogVBox.setPadding(new Insets(10));
+
+        succesDialog.getDialogPane().setContent(dialogVBox);
+
+        ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        succesDialog.getDialogPane().getButtonTypes().addAll(okButtonType);
+
+        succesDialog.showAndWait();
+
+    }
+
     private static Pane createButtonPane(Workout workout){
         HBox buttonPane = new HBox();
         buttonPane.setAlignment(Pos.CENTER);
@@ -169,6 +189,7 @@ public class WorkoutView {
                     case "Edit Workout" -> ViewController.setScene(EditWorkoutView.createScene(WorkoutView.workout));
                     case "Save" -> {
                         try {
+                            createSuccessSaveDialog();
                             WorkoutPdfGenerator.saveWorkoutAsPdf(WorkoutView.workout, "workout.pdf");
                             System.out.println("Workout saved as PDF successfully.");
                         } catch (FileNotFoundException e) {
