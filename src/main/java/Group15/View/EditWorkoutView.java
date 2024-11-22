@@ -94,7 +94,6 @@ public class EditWorkoutView
             exerciseBox.setBackground(Background.fill(Color.LIGHTGRAY));
             exerciseBox.setPadding(new Insets(10));
 
-
             //
             // THE FOLLOWING SHOULD NOT BE UPDATED CASUALLY
             //
@@ -113,9 +112,9 @@ public class EditWorkoutView
             //
             //
             //
-            exerciseBox.getChildren().addAll(imageView, exerciseLabel1,swapExerciseButton,deleteExerciseButton);
+            exerciseBox.getChildren().addAll(imageView, exerciseLabel1, deleteExerciseButton, swapExerciseButton);
 
-            workoutPane.getChildren().add(exerciseBox);
+            workoutPane.getChildren().addAll(exerciseBox);
         }
 
         ScrollPane scrollPane = new ScrollPane(workoutPane);
