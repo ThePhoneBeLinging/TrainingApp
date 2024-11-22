@@ -309,7 +309,7 @@ public class MuscleSelectionView {
                 if (randomState == BodyPartButtonStates.SELECT) {
                     button.setStyle("-fx-border-color: green; -fx-border-width: 2;");
                 } else {
-                    button.setStyle("-fx-border-color: red; -fx-border-width: 2;");
+                    button.setStyle("-fx-border-color: black; -fx-border-width: 2;");
                 }
             }
         }
