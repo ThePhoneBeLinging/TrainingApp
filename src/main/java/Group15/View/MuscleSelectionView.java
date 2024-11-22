@@ -15,15 +15,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class MuscleSelectionView {
     private static List<BodyPart> selectedBodyParts = new ArrayList<>();
     private static final List<BodyPart> dislikedBodyParts = new ArrayList<>();
     private static final List<Equipment> selectedEquipment = new ArrayList<>();
     private static final List<String> errorList = new ArrayList<>();
+    private static final Map<BodyPart, Button> bodyPartButtonMap = new HashMap<>();
 
     private static String workoutName;
     private static TextField minutesInputField;
@@ -228,6 +227,7 @@ public class MuscleSelectionView {
         for (BodyPart bodyPart : BodyPart.values()) {
             Button bodyPartToggleButton = createBodyPartToggleButton(bodyPart);
             bodyPartsGridPane.add(bodyPartToggleButton, columns, rows);
+            bodyPartButtonMap.put(bodyPart, bodyPartToggleButton);
 
             columns++;
             if (columns > 1) {
@@ -284,7 +284,37 @@ public class MuscleSelectionView {
     }
 
     private static void randomizeBodyParts() {
+        List<BodyPart> allBodyParts = new ArrayList<>(List.of(BodyPart.values()));
 
+        Collections.shuffle(allBodyParts);
+        int numberOfRandomBodyParts = 1 + ((int) (Math.random() * allBodyParts.size()));
+        List<BodyPart> randomBodyParts = allBodyParts.subList(0, numberOfRandomBodyParts);
+
+        selectedBodyParts.clear();
+        dislikedBodyParts.clear();
+
+        for(Button button : bodyPartButtonMap.values()) {
+            button.setUserData(BodyPartButtonStates.DESELECT);
+            button.setStyle("-fx-border-color: black; -fx-border-width: 2;");
+        }
+
+        for(BodyPart bodyPart : randomBodyParts) {
+            BodyPartButtonStates randomState = Math.random() > 0.5 ? BodyPartButtonStates.SELECT : BodyPartButtonStates.DESELECT;
+
+            updateBodyPartLists(bodyPart, randomState);
+
+            Button button = bodyPartButtonMap.get(bodyPart);
+            if (button != null) {
+                button.setUserData(randomState);
+                if (randomState == BodyPartButtonStates.SELECT) {
+                    button.setStyle("-fx-border-color: green; -fx-border-width: 2;");
+                } else {
+                    button.setStyle("-fx-border-color: red; -fx-border-width: 2;");
+                }
+            }
+        }
+        System.out.println(selectedBodyParts);
+        System.out.println(dislikedBodyParts);
     }
 
     private static void updateButtonStates(Button bodyPartToggleButton) {
