@@ -90,7 +90,7 @@ public class WorkoutAlgorithm {
 
             for (var bodyPart : selectedBodyParts)
             {
-                if (exercise.bodyParts.contains(bodyPart))
+                if (exercise.bodyParts.getFirst() == bodyPart)
                 {
                     break;
                 }
