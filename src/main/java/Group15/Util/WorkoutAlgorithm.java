@@ -45,11 +45,11 @@ public class WorkoutAlgorithm {
             selectedExercises.put(validExercise.title,true);
             workout.addExercise(workoutExercise);
             // Check if time is spent, if so, we remove the last set or exercise if sets = 1
-            if (timeLeftInMilli < 0)
+            if (timeLeftInMilli <= 0)
             {
                 // If we only went over time because of the break between sets, we can simply return the
                 // workout without removal
-                if (timeLeftInMilli < (breakBetweenSets*-1))
+                if (timeLeftInMilli <= (breakBetweenSets*-1))
                 {
                     return workout;
                 }
