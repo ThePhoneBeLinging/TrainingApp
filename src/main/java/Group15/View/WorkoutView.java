@@ -151,9 +151,21 @@ public class WorkoutView {
             });
         });
 
-        workoutTitleHBox.getChildren().addAll(workoutTitleLabel, editNameButton);
+        Label workoutDurationLabel = new Label(formatWorkoutDuration(workout.getWorkoutDuration()));
+        workoutDurationLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        workoutDurationLabel.setAlignment(Pos.CENTER_RIGHT);
+        HBox.setHgrow(workoutDurationLabel, Priority.ALWAYS);
+
+        workoutTitleHBox.getChildren().addAll(workoutTitleLabel, editNameButton, workoutDurationLabel);
 
         return workoutTitleHBox;
+    }
+
+    private static String formatWorkoutDuration(int durationInMilli) {
+        int totalSeconds = durationInMilli / 1000;
+        int minutes = totalSeconds / 60;
+        int seconds = totalSeconds % 60;
+        return String.format("Duration: %d:%02d min", minutes, seconds);
     }
 
     private static Pane createButtonPane(Workout workout){
