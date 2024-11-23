@@ -1,6 +1,5 @@
 package Group15.View;
 
-import Group15.Model.Exercise;
 import Group15.Model.Workout;
 
 import Group15.Model.WorkoutExercise;
@@ -8,7 +7,6 @@ import Group15.WorkoutPdfGenerator;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -24,12 +22,13 @@ import javafx.scene.text.FontWeight;
 import java.io.FileNotFoundException;
 
 public class WorkoutView {
-    private  static Workout Workout = new Workout();
+    private  static Workout workout;
     private static String title = "Workout Details";
     private static String[] buttons = {"Back", "Edit Workout", "Save"};
 
-    public static Scene createScene(Workout workout)
+    public static Scene createScene(Workout workoutToEdit)
     {
+        workout = workoutToEdit;
         BorderPane layout = new BorderPane();
         layout.setPadding(new Insets(20));
 
@@ -169,10 +168,10 @@ public class WorkoutView {
             newButton.setOnAction(_ -> {
                 switch (button){
                     case "Back" -> ViewController.goBack();
-                    case "Edit Workout" -> ViewController.setScene(EditWorkoutView.createScene(Workout));
+                    case "Edit Workout" -> ViewController.setScene(EditWorkoutView.createScene(WorkoutView.workout));
                     case "Save" -> {
                         try {
-                            WorkoutPdfGenerator.saveWorkoutAsPdf(Workout, "workout.pdf");
+                            WorkoutPdfGenerator.saveWorkoutAsPdf(WorkoutView.workout, "workout.pdf");
                             System.out.println("Workout saved as PDF successfully.");
                         } catch (FileNotFoundException e) {
                             System.err.println("Failed to save workout as PDF: " + e.getMessage());

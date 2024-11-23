@@ -72,7 +72,7 @@ public class HomeScreenView
             newButton.setOnAction(_ -> {
                 switch (button) {
                     case "New Workout":
-                        ViewController.setScene(MuscleSelectionView.createMuscleSelectorScene());
+                        ViewController.setScene(MuscleSelectionView.createMuscleSelectionScene());
                         break;
                     case "My Workouts":
                         System.out.println("My Workouts pressed");
