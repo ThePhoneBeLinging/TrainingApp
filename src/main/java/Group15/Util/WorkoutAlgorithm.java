@@ -8,6 +8,8 @@ import java.util.List;
 public class WorkoutAlgorithm {
 
     private static HashMap<String, Boolean> selectedExercises;
+    private static final int MAX_SETS = 3;
+    private static final int BREAK_BETWEEN_SETS = 180000;
 
     public static Workout createWorkoutFromExercises(
             List<BodyPart> selectedBodyParts,
@@ -16,15 +18,12 @@ public class WorkoutAlgorithm {
             int timeInMinutes){
         selectedExercises = new HashMap<>();
         int initialTimeInMilli = timeInMinutes * 60000;
-        Workout workout = new Workout(initialTimeInMilli);
-        int breakBetweenSets = 180000;
+        Workout workout = new Workout();
 
-        while (initialTimeInMilli - workout.getWorkoutDuration() > 0)
-        {
+        while (initialTimeInMilli - workout.getWorkoutDuration() > 0) {
             Exercise validExercise = getValidExercise(selectedBodyParts, bodyPartsToAvoid, equipment);
             // If this happens, we have most likely gathered all exercises that fit the given parameters
-            if (validExercise == null)
-            {
+            if (validExercise == null) {
                 return workout;
             }
 
@@ -35,34 +34,38 @@ public class WorkoutAlgorithm {
             workoutExercise.setRepsPerSet(5);
             int timePerSet = validExercise.timePerRep * 5;
 
-            while (initialTimeInMilli - workout.getWorkoutDuration()> 0 && workoutExercise.getSets() < 3)
-            {
+            while (initialTimeInMilli - workout.getWorkoutDuration() > 0 && workoutExercise.getSets() < MAX_SETS) {
                 workoutExercise.setSets(workoutExercise.getSets() + 1);
 
-                int timeUsedThisSet = timePerSet + (workout.getWorkoutDuration() > 1 ? breakBetweenSets : 0);
-                if(initialTimeInMilli - (workout.getWorkoutDuration() + timeUsedThisSet) < 0) {
+                int timeUsedThisSet = workout.getWorkoutDuration() + timePerSet;
+                if (workoutExercise.getSets() > 1) {
+                    timeUsedThisSet += BREAK_BETWEEN_SETS;
+                }
+                if (timeUsedThisSet > initialTimeInMilli) {
                     workoutExercise.setSets(workoutExercise.getSets() - 1);
                     break;
                 }
             }
-            selectedExercises.put(validExercise.title,true);
+            selectedExercises.put(validExercise.title, true);
             workout.addExercise(workoutExercise);
+
             // Check if time is spent, if so, we remove the last set or exercise if sets = 1
-            if (initialTimeInMilli <= 0)
-            {
+            if (initialTimeInMilli - workout.getWorkoutDuration() <= 0) {
                 // If we only went over time because of the break between sets, we can simply return the
                 // workout without removal
-                if (initialTimeInMilli - workout.getWorkoutDuration() < 0) {
+                int timeWithoutBreaks = workout.getWorkoutDuration() - (workoutExercise.getSets() - 1) * BREAK_BETWEEN_SETS;
+                if (initialTimeInMilli >= timeWithoutBreaks) {
+                    break;
+                } else {
                     if (workoutExercise.getSets() == 1) {
                         workout.removeExercise(workoutExercise);
+                    } else {
+                        workoutExercise.setSets(workoutExercise.getSets() - 1);
                     }
-                } else {
-                    workoutExercise.setSets(workoutExercise.getSets() - 1);
                 }
                 break;
             }
         }
-
         return workout;
     }
 
