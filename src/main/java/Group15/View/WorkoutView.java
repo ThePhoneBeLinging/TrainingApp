@@ -68,14 +68,13 @@ public class WorkoutView {
             ImageView imageView = null;
 
             try {
-                // Dynamically derive the image path based on the exercise title
                 String imagePath = deriveImagePath(workoutExercise.getExercise().title); // Now appends .webp
                 Image image = new Image(WorkoutView.class.getResource(imagePath).toExternalForm(), 100, 100, true, true);
                 imageView = new ImageView(image);
             } catch (Exception e) {
                 System.out.println("Error loading image for exercise: " + workoutExercise.getExercise().title);
                 e.printStackTrace();
-                imageView = new ImageView(); // Fallback to an empty ImageView if the image fails to load
+                imageView = new ImageView();
             }
 
             Label exerciseLabel1 = new Label(workoutExercise.getExercise().title + ": ");
@@ -108,7 +107,6 @@ public class WorkoutView {
     }
 
     private static String deriveImagePath(String title) {
-        // Replace spaces with underscores and append .png
         return "/images/" + title.replace(" ", "_") + ".png";
     }
 

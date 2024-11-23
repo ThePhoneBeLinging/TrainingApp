@@ -23,7 +23,6 @@ public class ExerciseDetailsView {
         layout.setSpacing(20);
         layout.setAlignment(Pos.CENTER);
 
-        // Dynamically derive the image path and create the image pane
         String imagePath = deriveImagePath(exercise.title);
         Pane exerciseImagePane = createExerciseImagePane(imagePath);
         layout.getChildren().add(exerciseImagePane);
@@ -62,7 +61,6 @@ public class ExerciseDetailsView {
     }
 
     private static String deriveImagePath(String title) {
-        // Replace spaces with underscores and append .png
         return "/images/" + title.replace(" ", "_") + ".png";
     }
 
