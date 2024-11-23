@@ -23,8 +23,8 @@ import java.io.FileNotFoundException;
 
 public class WorkoutView {
     private  static Workout workout;
-    private static String title = "Workout Details";
-    private static String[] buttons = {"Back", "Edit Workout", "Save"};
+    private static final String title = "Workout Details";
+    private static final String[] buttons = {"Back", "Edit Workout", "Save"};
 
     public static Scene createScene(Workout workoutToEdit)
     {
@@ -39,7 +39,7 @@ public class WorkoutView {
         Node WorkoutPane = createWorkoutPane(workout);
         layout.setCenter(WorkoutPane);
 
-        Pane buttonPane = createButtonPane(workout);
+        Pane buttonPane = createButtonPane();
         buttonPane.setPadding(new Insets(20, 0, 0, 0));
         layout.setBottom(buttonPane);
 
@@ -90,7 +90,7 @@ public class WorkoutView {
             exerciseSetsLabel.setFont(Font.font("Arial", FontWeight.LIGHT, 16));
             exerciseRepsLabel.setFont(Font.font("Arial", FontWeight.LIGHT, 16));
 
-            EventHandler<MouseEvent> clickAction = event ->
+            EventHandler<MouseEvent> clickAction = _ ->
                 {
                 System.out.println("Image or title clicked for exercise: " + workoutExercise.getExercise().title);
                 Scene exerciseDetailsScene = ExerciseDetailsView.createScene(workoutExercise.getExercise());
@@ -126,7 +126,7 @@ public class WorkoutView {
         workoutTitleLabel.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.ITALIC, 24));
 
         Button editNameButton = new Button("Edit Name");
-        editNameButton.setOnAction(event -> {
+        editNameButton.setOnAction(_ -> {
             Dialog<String> editNameDialog = new Dialog<>();
             editNameDialog.setTitle("Edit Workout Name");
 
@@ -171,7 +171,7 @@ public class WorkoutView {
         return String.format("Duration: %d:%02d min", minutes, seconds);
     }
 
-    private static Pane createButtonPane(Workout workout){
+    private static Pane createButtonPane(){
         HBox buttonPane = new HBox();
         buttonPane.setAlignment(Pos.CENTER);
 
