@@ -16,6 +16,22 @@ public class Workout implements Serializable {
     public Workout() {
     }
 
+    public Workout(int initialTimeInMilli) {
+    }
+
+    public int getWorkoutDuration() {
+        int totalTime = 0;
+        int breakBetweenSets = 180000;
+
+        for (WorkoutExercise workoutExercise : exercises) {
+            int timePerSet = workoutExercise.getExercise().timePerRep * workoutExercise.getRepsPerSet();
+            totalTime += (timePerSet * workoutExercise.getSets());
+            totalTime += breakBetweenSets * (workoutExercise.getSets() - 1);
+        }
+
+        return totalTime;
+    }
+
     public void setName(String name) {
         this.name = name;
     }

@@ -2,7 +2,6 @@ package Group15.Util;
 
 import Group15.Model.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,11 +15,11 @@ public class WorkoutAlgorithm {
             List<Equipment> equipment,
             int timeInMinutes){
         selectedExercises = new HashMap<>();
-        int timeLeftInMilli = timeInMinutes * 60000;
-        Workout workout = new Workout();
-        int breakBetweenSets = 120000;
+        int initialTimeInMilli = timeInMinutes * 60000;
+        Workout workout = new Workout(initialTimeInMilli);
+        int breakBetweenSets = 180000;
 
-        while (timeLeftInMilli > 0)
+        while (initialTimeInMilli - workout.getWorkoutDuration() > 0)
         {
             Exercise validExercise = getValidExercise(selectedBodyParts, bodyPartsToAvoid, equipment);
             // If this happens, we have most likely gathered all exercises that fit the given parameters
@@ -36,36 +35,35 @@ public class WorkoutAlgorithm {
             workoutExercise.setRepsPerSet(5);
             int timePerSet = validExercise.timePerRep * 5;
 
-            while (timeLeftInMilli > 0 && workoutExercise.getSets() < 3)
+            while (initialTimeInMilli - workout.getWorkoutDuration()> 0 && workoutExercise.getSets() < 3)
             {
-                timeLeftInMilli -= timePerSet;
                 workoutExercise.setSets(workoutExercise.getSets() + 1);
-                timeLeftInMilli -= breakBetweenSets;
+
+                int timeUsedThisSet = timePerSet + (workout.getWorkoutDuration() > 1 ? breakBetweenSets : 0);
+                if(initialTimeInMilli - (workout.getWorkoutDuration() + timeUsedThisSet) < 0) {
+                    workoutExercise.setSets(workoutExercise.getSets() - 1);
+                    break;
+                }
             }
             selectedExercises.put(validExercise.title,true);
             workout.addExercise(workoutExercise);
             // Check if time is spent, if so, we remove the last set or exercise if sets = 1
-            if (timeLeftInMilli <= 0)
+            if (initialTimeInMilli <= 0)
             {
                 // If we only went over time because of the break between sets, we can simply return the
                 // workout without removal
-                if (timeLeftInMilli <= (breakBetweenSets*-1))
-                {
-                    return workout;
-                }
-                if (workoutExercise.getSets() == 1)
-                {
-                    workout.removeExercise(workoutExercise);
-                }
-                else
-                {
+                if (initialTimeInMilli - workout.getWorkoutDuration() < 0) {
+                    if (workoutExercise.getSets() == 1) {
+                        workout.removeExercise(workoutExercise);
+                    }
+                } else {
                     workoutExercise.setSets(workoutExercise.getSets() - 1);
                 }
-                return workout;
+                break;
             }
         }
 
-        return null;
+        return workout;
     }
 
     private static Exercise getValidExercise(List<BodyPart> selectedBodyParts, List<BodyPart> bodyPartsToAvoid, List<Equipment> equipment)
