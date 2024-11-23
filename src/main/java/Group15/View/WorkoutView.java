@@ -1,6 +1,7 @@
 package Group15.View;
 
 import Group15.Model.Workout;
+
 import Group15.Model.WorkoutExercise;
 import Group15.WorkoutPdfGenerator;
 import javafx.event.EventHandler;
@@ -21,11 +22,12 @@ import javafx.scene.text.FontWeight;
 import java.io.FileNotFoundException;
 
 public class WorkoutView {
-    private static Workout workout;
+    private  static Workout workout;
     private static String title = "Workout Details";
     private static String[] buttons = {"Back", "Edit Workout", "Save"};
 
-    public static Scene createScene(Workout workoutToEdit) {
+    public static Scene createScene(Workout workoutToEdit)
+    {
         workout = workoutToEdit;
         BorderPane layout = new BorderPane();
         layout.setPadding(new Insets(20));
@@ -34,8 +36,8 @@ public class WorkoutView {
         titlePane.setPadding(new Insets(10));
         layout.setTop(titlePane);
 
-        Node workoutPane = createWorkoutPane(workout);
-        layout.setCenter(workoutPane);
+        Node WorkoutPane = createWorkoutPane(workout);
+        layout.setCenter(WorkoutPane);
 
         Pane buttonPane = createButtonPane(workout);
         buttonPane.setPadding(new Insets(20, 0, 0, 0));
@@ -44,7 +46,8 @@ public class WorkoutView {
         return new Scene(layout);
     }
 
-    private static Pane createTitlePane() {
+    private static Pane createTitlePane()
+    {
         HBox titlePane = new HBox();
         titlePane.setAlignment(Pos.TOP_CENTER);
         Label titleLabel = new Label(title);
@@ -54,7 +57,8 @@ public class WorkoutView {
         return titlePane;
     }
 
-    private static Node createWorkoutPane(Workout workout) {
+    private static Node createWorkoutPane(Workout workout)
+    {
         VBox workoutPane = new VBox();
         workoutPane.setAlignment(Pos.CENTER);
         workoutPane.setSpacing(20);
@@ -64,34 +68,38 @@ public class WorkoutView {
         Node workoutTitleNode = createWorkoutTitleNode();
         workoutPane.getChildren().add(workoutTitleNode);
 
-        for (WorkoutExercise workoutExercise : workout.getExercises()) {
+        for (WorkoutExercise workoutExercise : workout.getExercises())
+        {
             ImageView imageView = null;
 
-            try {
-                String imagePath = deriveImagePath(workoutExercise.getExercise().title); // Now appends .webp
-                Image image = new Image(WorkoutView.class.getResource(imagePath).toExternalForm(), 100, 100, true, true);
+            try
+            {
+                Image image = new Image(WorkoutView.class.getResource("/images/" + workoutExercise.getExercise().title + ".png").toExternalForm(), 100, 100, true, true);
                 imageView = new ImageView(image);
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 System.out.println("Error loading image for exercise: " + workoutExercise.getExercise().title);
-                e.printStackTrace();
                 imageView = new ImageView();
             }
 
             Label exerciseLabel1 = new Label(workoutExercise.getExercise().title + ": ");
             exerciseLabel1.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 
-            EventHandler<MouseEvent> clickAction = event -> {
+            EventHandler<MouseEvent> clickAction = event ->
+            {
                 System.out.println("Image or title clicked for exercise: " + workoutExercise.getExercise().title);
+                Scene currentScene = ViewController.getScene();
                 Scene exerciseDetailsScene = ExerciseDetailsView.createScene(workoutExercise.getExercise());
                 ViewController.setScene(exerciseDetailsScene);
             };
-
             HBox exerciseBox = new HBox();
             exerciseBox.setOnMouseClicked(clickAction);
             exerciseBox.setSpacing(10);
             exerciseBox.setAlignment(Pos.CENTER_LEFT);
             exerciseBox.setBackground(Background.fill(Color.LIGHTGRAY));
             exerciseBox.setPadding(new Insets(10));
+
             exerciseBox.getChildren().addAll(imageView, exerciseLabel1);
 
             workoutPane.getChildren().add(exerciseBox);
@@ -106,11 +114,7 @@ public class WorkoutView {
         return scrollPane;
     }
 
-    private static String deriveImagePath(String title) {
-        return "/images/" + title.replace(" ", "_") + ".png";
-    }
-
-    private static Node createWorkoutTitleNode() {
+    private static Node createWorkoutTitleNode () {
         HBox workoutTitleHBox = new HBox();
         workoutTitleHBox.setAlignment(Pos.CENTER);
         workoutTitleHBox.setSpacing(10);
@@ -152,15 +156,15 @@ public class WorkoutView {
         return workoutTitleHBox;
     }
 
-    private static Pane createButtonPane(Workout workout) {
+    private static Pane createButtonPane(Workout workout){
         HBox buttonPane = new HBox();
         buttonPane.setAlignment(Pos.CENTER);
 
-        for (String button : buttons) {
+        for (String button : buttons){
             Button newButton = new Button(button);
             newButton.setPrefSize(200, 50);
             newButton.setOnAction(_ -> {
-                switch (button) {
+                switch (button){
                     case "Back" -> ViewController.goBack();
                     case "Edit Workout" -> ViewController.setScene(EditWorkoutView.createScene(WorkoutView.workout));
                     case "Save" -> {

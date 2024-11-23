@@ -1,6 +1,7 @@
 package Group15.View;
 
 import Group15.Model.Exercise;
+import Group15.Model.Workout;
 import Group15.Util.ExerciseUtils;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -23,8 +24,7 @@ public class ExerciseDetailsView {
         layout.setSpacing(20);
         layout.setAlignment(Pos.CENTER);
 
-        String imagePath = deriveImagePath(exercise.title);
-        Pane exerciseImagePane = createExerciseImagePane(imagePath);
+        Pane exerciseImagePane = createExerciseImagePane(exercise.imagePath);
         layout.getChildren().add(exerciseImagePane);
 
         Pane exerciseInfoPane = createExerciseInfoPane(exercise);
@@ -42,7 +42,7 @@ public class ExerciseDetailsView {
         imagePane.setPrefSize(640, 400);
 
         try {
-            String fullImagePath = ExerciseDetailsView.class.getResource(imagePath).toExternalForm();
+            String fullImagePath = WorkoutView.class.getResource(imagePath).toExternalForm();
             System.out.println("Loading image from: " + fullImagePath);
 
             Image exerciseImage = new Image(fullImagePath);
@@ -58,10 +58,6 @@ public class ExerciseDetailsView {
         }
 
         return imagePane;
-    }
-
-    private static String deriveImagePath(String title) {
-        return "/images/" + title.replace(" ", "_") + ".png";
     }
 
     private static Pane createExerciseInfoPane(Exercise exercise) {
