@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Workout implements Serializable {
     private final List<WorkoutExercise> exercises = new ArrayList<>();
-    private static final int BREAK_BETWEEN_SETS = 180000;
+    public static final int BREAK_BETWEEN_SETS = 180000;
 
     private String name;
     private String description;

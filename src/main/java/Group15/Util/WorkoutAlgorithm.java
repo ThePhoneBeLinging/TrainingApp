@@ -9,7 +9,6 @@ public class WorkoutAlgorithm {
 
     private static HashMap<String, Boolean> selectedExercises;
     private static final int MAX_SETS = 3;
-    private static final int BREAK_BETWEEN_SETS = 180000;
 
     public static Workout createWorkoutFromExercises(
             List<BodyPart> selectedBodyParts,
@@ -39,7 +38,7 @@ public class WorkoutAlgorithm {
 
                 int timeUsedThisSet = workout.getWorkoutDuration() + timePerSet;
                 if (workoutExercise.getSets() > 1) {
-                    timeUsedThisSet += BREAK_BETWEEN_SETS;
+                    timeUsedThisSet += Workout.BREAK_BETWEEN_SETS;
                 }
                 if (timeUsedThisSet > initialTimeInMilli) {
                     workoutExercise.setSets(workoutExercise.getSets() - 1);
@@ -53,7 +52,7 @@ public class WorkoutAlgorithm {
             if (initialTimeInMilli - workout.getWorkoutDuration() <= 0) {
                 // If we only went over time because of the break between sets, we can simply return the
                 // workout without removal
-                int timeWithoutBreaks = workout.getWorkoutDuration() - (workoutExercise.getSets() - 1) * BREAK_BETWEEN_SETS;
+                int timeWithoutBreaks = workout.getWorkoutDuration() - (workoutExercise.getSets() - 1) * Workout.BREAK_BETWEEN_SETS;
                 if (initialTimeInMilli >= timeWithoutBreaks) {
                     break;
                 } else {
