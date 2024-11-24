@@ -2,6 +2,7 @@ package Group15.View;
 
 import Group15.MockData.MockWorkouts;
 import Group15.Model.Workout;
+import Group15.Util.WorkoutUtils;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -99,9 +100,16 @@ public class HomeScreenView {
         title.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         workoutsPane.getChildren().add(title);
 
-        // TODO: here we would fetch the workouts and put them into a list, but for now we just fetch mock data
-        MockWorkouts mockWorkouts = new MockWorkouts();
-        List<Workout> workouts = mockWorkouts.getWorkouts();
+        MockWorkouts mcokData = new MockWorkouts();
+        List<Workout> favoriteWorkouts = mcokData.getWorkouts();
+
+        List<Workout> workouts;
+        if ("Saved".equals(workoutsToShow)) {
+            workouts = WorkoutUtils.getSavedWorkouts();
+        } else {
+            // TODO: Fetch popular workouts
+            workouts = favoriteWorkouts; // Placeholder for popular workouts
+        }
 
         for (Workout workout : workouts) {
             VBox workoutItem = new VBox();
@@ -114,14 +122,10 @@ public class HomeScreenView {
             Label descriptionWorkout = new Label(workout.getDescription());
             workoutItem.getChildren().addAll(titleWorkout, descriptionWorkout);
 
-
-            // In addition to that we should not navigate to the workoutView on the new workout button.
-            // We can change this when mr. Musti finally merges his branch
-            workoutItem.onMouseClickedProperty().set(_ -> ViewController.setScene(WorkoutView.createScene(new Workout())));
+            workoutItem.onMouseClickedProperty().set(_ -> ViewController.setScene(WorkoutView.createScene(workout)));
             workoutsPane.getChildren().add(workoutItem);
         }
 
         return workoutsPane;
     }
-
 }
