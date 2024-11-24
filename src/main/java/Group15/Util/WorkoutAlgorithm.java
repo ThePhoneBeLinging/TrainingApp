@@ -73,6 +73,7 @@ public class WorkoutAlgorithm {
                 {
                     workoutExercise.setSets(workoutExercise.getSets() - 1);
                 }
+                workout.setWorkoutDuration((timeInMinutes * 60000) - timeLeftInMilli);
                 return workout;
             }
         }

@@ -14,20 +14,17 @@ public class Workout implements Serializable {
 
     private String name;
     private String description;
+    private int duration = 0;
 
     public Workout() {
     }
 
     public int getWorkoutDuration() {
-        int totalTime = 0;
+        return duration;
+    }
 
-        for (WorkoutExercise workoutExercise : exercises) {
-            int timePerSet = workoutExercise.getExercise().timePerRep * workoutExercise.getRepsPerSet();
-            totalTime += (timePerSet * workoutExercise.getSets());
-            totalTime += BREAK_BETWEEN_SETS * (workoutExercise.getSets() - 1);
-        }
-
-        return totalTime;
+    public void setWorkoutDuration(int durationToSet) {
+        duration = durationToSet;
     }
 
     public void setName(String name) {
