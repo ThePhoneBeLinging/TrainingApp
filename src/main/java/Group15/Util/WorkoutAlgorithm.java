@@ -2,13 +2,13 @@ package Group15.Util;
 
 import Group15.Model.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class WorkoutAlgorithm {
 
     private static HashMap<String, Boolean> selectedExercises;
-    private static final int MAX_SETS = 3;
 
     public static Workout createWorkoutFromExercises(
             List<BodyPart> selectedBodyParts,
@@ -16,15 +16,27 @@ public class WorkoutAlgorithm {
             List<Equipment> equipment,
             int timeInMinutes){
         selectedExercises = new HashMap<>();
-        int initialTimeInMilli = timeInMinutes * 60000;
+        int timeLeftInMilli = timeInMinutes * 60000;
         Workout workout = new Workout();
+        int breakBetweenSets = 120000;
+        int bodyPartIndex = 0;
+        int nullExercisesInARow = 0;
 
-        while (initialTimeInMilli - workout.getWorkoutDuration() > 0) {
-            Exercise validExercise = getValidExercise(selectedBodyParts, bodyPartsToAvoid, equipment);
+        while (timeLeftInMilli > 0)
+        {
+            Exercise validExercise = getValidExercise(selectedBodyParts.get(bodyPartIndex), bodyPartsToAvoid, equipment);
             // If this happens, we have most likely gathered all exercises that fit the given parameters
-            if (validExercise == null) {
-                return workout;
+            if (validExercise == null)
+            {
+                nullExercisesInARow++;
+                if (nullExercisesInARow == selectedBodyParts.size())
+                {
+                    return workout;
+                }
+                bodyPartIndex = (bodyPartIndex + 1) % selectedBodyParts.size();
+                continue;
             }
+            nullExercisesInARow = 0;
 
             WorkoutExercise workoutExercise = new WorkoutExercise();
             workoutExercise.setExercise(validExercise);
@@ -33,42 +45,40 @@ public class WorkoutAlgorithm {
             workoutExercise.setRepsPerSet(5);
             int timePerSet = validExercise.timePerRep * 5;
 
-            while (initialTimeInMilli - workout.getWorkoutDuration() > 0 && workoutExercise.getSets() < MAX_SETS) {
+            while (timeLeftInMilli > 0 && workoutExercise.getSets() < 3)
+            {
+                timeLeftInMilli -= timePerSet;
                 workoutExercise.setSets(workoutExercise.getSets() + 1);
-
-                int timeUsedThisSet = workout.getWorkoutDuration() + timePerSet;
-                if (workoutExercise.getSets() > 1) {
-                    timeUsedThisSet += Workout.BREAK_BETWEEN_SETS;
-                }
-                if (timeUsedThisSet > initialTimeInMilli) {
-                    workoutExercise.setSets(workoutExercise.getSets() - 1);
-                    break;
-                }
+                timeLeftInMilli -= breakBetweenSets;
             }
-            selectedExercises.put(validExercise.title, true);
+            selectedExercises.put(validExercise.title,true);
             workout.addExercise(workoutExercise);
-
+            bodyPartIndex = (bodyPartIndex + 1) % selectedBodyParts.size();
             // Check if time is spent, if so, we remove the last set or exercise if sets = 1
-            if (initialTimeInMilli - workout.getWorkoutDuration() <= 0) {
+            if (timeLeftInMilli <= 0)
+            {
                 // If we only went over time because of the break between sets, we can simply return the
                 // workout without removal
-                int timeWithoutBreaks = workout.getWorkoutDuration() - (workoutExercise.getSets() - 1) * Workout.BREAK_BETWEEN_SETS;
-                if (initialTimeInMilli >= timeWithoutBreaks) {
-                    break;
-                } else {
-                    if (workoutExercise.getSets() == 1) {
-                        workout.removeExercise(workoutExercise);
-                    } else {
-                        workoutExercise.setSets(workoutExercise.getSets() - 1);
-                    }
+                if (timeLeftInMilli <= (breakBetweenSets*-1))
+                {
+                    return workout;
                 }
-                break;
+                if (workoutExercise.getSets() == 1)
+                {
+                    workout.removeExercise(workoutExercise);
+                }
+                else
+                {
+                    workoutExercise.setSets(workoutExercise.getSets() - 1);
+                }
+                return workout;
             }
         }
-        return workout;
+
+        return null;
     }
 
-    private static Exercise getValidExercise(List<BodyPart> selectedBodyParts, List<BodyPart> bodyPartsToAvoid, List<Equipment> equipment)
+    private static Exercise getValidExercise(BodyPart bodyPart, List<BodyPart> bodyPartsToAvoid, List<Equipment> equipment)
     {
 
         int maxRuns = 1000;
@@ -76,28 +86,15 @@ public class WorkoutAlgorithm {
         double chanceToAvoidNonLiked = 0.25;
         while (maxRuns > totalRuns)
         {
-            Exercise exercise = getRandomExercise();
+            Exercise exercise = getRandomExercise(bodyPart);
 
             boolean exerciseValid = true;
-            for (var bodyPart : bodyPartsToAvoid)
+            for (var bodyPartToAvoid : bodyPartsToAvoid)
             {
-                if (exercise.bodyParts.contains(bodyPart))
+                if (exercise.bodyParts.contains(bodyPartToAvoid))
                 {
                     exerciseValid = false;
                     break;
-                }
-            }
-
-            for (var bodyPart : selectedBodyParts)
-            {
-                if (exercise.bodyParts.getFirst() == bodyPart)
-                {
-                    break;
-                }
-
-                if (bodyPart.equals(selectedBodyParts.getLast()))
-                {
-                    exerciseValid = false;
                 }
             }
 
@@ -107,7 +104,6 @@ public class WorkoutAlgorithm {
 
             if (exerciseValid)
             {
-
                 if (!ExerciseUtils.getLikedExercises().contains(exercise))
                 {
                     if (Math.random() <= chanceToAvoidNonLiked)
@@ -116,7 +112,6 @@ public class WorkoutAlgorithm {
                     }
                 }
 
-
                 return exercise;
             }
             totalRuns++;
@@ -124,9 +119,9 @@ public class WorkoutAlgorithm {
         return null;
     }
 
-    private static Exercise getRandomExercise()
+    private static Exercise getRandomExercise(BodyPart bodyPart)
     {
-        List<Exercise> exercises = Api.getAllExercises();
+        List<Exercise> exercises = Api.getExercisesForBodyPart(bodyPart);
 
         if (exercises == null || exercises.isEmpty()) {
             throw new IllegalStateException("No exercises available. Ensure the API is reachable and returns data.");

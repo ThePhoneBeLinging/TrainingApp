@@ -45,7 +45,6 @@
             <artifactId>junit-jupiter</artifactId>
             <version>RELEASE</version>
             <scope>compile</scope>
-
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
@@ -92,5 +91,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
