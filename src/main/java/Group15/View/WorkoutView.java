@@ -189,8 +189,8 @@ public class WorkoutView {
                     case "Edit Workout" -> ViewController.setScene(EditWorkoutView.createScene(WorkoutView.workout));
                     case "Save" -> {
                         try {
-                            createSuccessSaveDialog();
                             WorkoutPdfGenerator.saveWorkoutAsPdf(WorkoutView.workout, "workout.pdf");
+                            createSuccessSaveDialog();
                             System.out.println("Workout saved as PDF successfully.");
                         } catch (FileNotFoundException e) {
                             System.err.println("Failed to save workout as PDF: " + e.getMessage());
