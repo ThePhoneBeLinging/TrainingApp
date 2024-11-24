@@ -14,11 +14,10 @@ import javafx.scene.text.FontWeight;
 
 import java.util.List;
 
-public class HomeScreenView
-{
+public class HomeScreenView {
 
     private static final String title = "Workout App";
-    private static final String[] buttons = {"New Workout", "My Workouts", "Exit"};
+    private static final String[] buttons = {"New Workout", "Do smthn", "Exit"}; //TODO: Find out what to do with middle button
 
     public static Scene createScene() {
         BorderPane layout = new BorderPane();
@@ -48,8 +47,7 @@ public class HomeScreenView
         return titlePane;
     }
 
-    private static Pane quickWorkoutPane()
-    {
+    private static Pane quickWorkoutPane() {
         HBox quickWorkoutPane = new HBox();
         quickWorkoutPane.setSpacing(20);
         quickWorkoutPane.setAlignment(Pos.CENTER);
@@ -74,8 +72,8 @@ public class HomeScreenView
                     case "New Workout":
                         ViewController.setScene(MuscleSelectionView.createMuscleSelectionScene());
                         break;
-                    case "My Workouts":
-                        System.out.println("My Workouts pressed");
+                    case "Do smthn":
+                        //TODO: Implement this button
                         break;
                     case "Exit":
                         System.exit(0);
