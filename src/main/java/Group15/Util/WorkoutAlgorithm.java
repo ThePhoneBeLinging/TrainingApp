@@ -19,15 +19,23 @@ public class WorkoutAlgorithm {
         int timeLeftInMilli = timeInMinutes * 60000;
         Workout workout = new Workout();
         int breakBetweenSets = 120000;
+        int bodyPartIndex = 0;
+        int nullExercisesInARow = 0;
 
         while (timeLeftInMilli > 0)
         {
-            Exercise validExercise = getValidExercise(selectedBodyParts, bodyPartsToAvoid, equipment);
+            Exercise validExercise = getValidExercise(selectedBodyParts.get(bodyPartIndex), bodyPartsToAvoid, equipment);
             // If this happens, we have most likely gathered all exercises that fit the given parameters
             if (validExercise == null)
             {
-                return workout;
+                nullExercisesInARow++;
+                if (nullExercisesInARow == selectedBodyParts.size())
+                {
+                    return workout;
+                }
+                continue;
             }
+            nullExercisesInARow = 0;
 
             WorkoutExercise workoutExercise = new WorkoutExercise();
             workoutExercise.setExercise(validExercise);
@@ -44,6 +52,7 @@ public class WorkoutAlgorithm {
             }
             selectedExercises.put(validExercise.title,true);
             workout.addExercise(workoutExercise);
+            bodyPartIndex = (bodyPartIndex + 1) % selectedBodyParts.size();
             // Check if time is spent, if so, we remove the last set or exercise if sets = 1
             if (timeLeftInMilli <= 0)
             {
@@ -68,7 +77,7 @@ public class WorkoutAlgorithm {
         return null;
     }
 
-    private static Exercise getValidExercise(List<BodyPart> selectedBodyParts, List<BodyPart> bodyPartsToAvoid, List<Equipment> equipment)
+    private static Exercise getValidExercise(BodyPart bodyPart, List<BodyPart> bodyPartsToAvoid, List<Equipment> equipment)
     {
 
         int maxRuns = 1000;
@@ -76,28 +85,15 @@ public class WorkoutAlgorithm {
         double chanceToAvoidNonLiked = 0.25;
         while (maxRuns > totalRuns)
         {
-            Exercise exercise = getRandomExercise();
+            Exercise exercise = getRandomExercise(bodyPart);
 
             boolean exerciseValid = true;
-            for (var bodyPart : bodyPartsToAvoid)
+            for (var bodyPartToAvoid : bodyPartsToAvoid)
             {
-                if (exercise.bodyParts.contains(bodyPart))
+                if (exercise.bodyParts.contains(bodyPartToAvoid))
                 {
                     exerciseValid = false;
                     break;
-                }
-            }
-
-            for (var bodyPart : selectedBodyParts)
-            {
-                if (exercise.bodyParts.getFirst() == bodyPart)
-                {
-                    break;
-                }
-
-                if (bodyPart.equals(selectedBodyParts.getLast()))
-                {
-                    exerciseValid = false;
                 }
             }
 
@@ -107,7 +103,6 @@ public class WorkoutAlgorithm {
 
             if (exerciseValid)
             {
-
                 if (!ExerciseUtils.getLikedExercises().contains(exercise))
                 {
                     if (Math.random() <= chanceToAvoidNonLiked)
@@ -116,7 +111,6 @@ public class WorkoutAlgorithm {
                     }
                 }
 
-
                 return exercise;
             }
             totalRuns++;
@@ -124,9 +118,9 @@ public class WorkoutAlgorithm {
         return null;
     }
 
-    private static Exercise getRandomExercise()
+    private static Exercise getRandomExercise(BodyPart bodyPart)
     {
-        List<Exercise> exercises = Api.getAllExercises();
+        List<Exercise> exercises = Api.getExercisesForBodyPart(bodyPart);
 
         if (exercises == null || exercises.isEmpty()) {
             throw new IllegalStateException("No exercises available. Ensure the API is reachable and returns data.");
