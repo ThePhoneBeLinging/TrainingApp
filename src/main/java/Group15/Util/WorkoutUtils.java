@@ -9,14 +9,34 @@ import java.util.stream.Collectors;
 
 public class WorkoutUtils {
 
-    private static final String SAVED_WORKOUTS_FILE_PATH = "src/main/resources/userData/savedWorkouts.json";
+    private static final String USER_DATA_PATH = "src/main/resources/userData/savedWorkouts.json";
+    private static List<Workout> savedWorkouts;
+
+    static {
+        init();
+    }
+
+    public static void init() {
+        savedWorkouts = new ArrayList<>(Arrays.asList(JSONParser.loadObjectsFromJSON(USER_DATA_PATH, Workout[].class)));
+        removeInvalidWorkouts();
+    }
+
+    private static void removeInvalidWorkouts() {
+        savedWorkouts = savedWorkouts.stream()
+                .filter(workout -> workout.getName() != null || workout.getDescription() != null || !workout.getExercises().isEmpty())
+                .collect(Collectors.toList());
+    }
 
     public static List<Workout> getSavedWorkouts() {
-        List<Workout> savedWorkouts = new ArrayList<>(Arrays.asList(JSONParser.loadObjectsFromJSON(SAVED_WORKOUTS_FILE_PATH, Workout[].class)));
+        return savedWorkouts;
+    }
 
-        // Only way i could figure out how to remove the null workout that is in the file by standard
-        return savedWorkouts.stream()
-                .filter(workout -> workout.getName() != null && workout.getDescription() != null)
-                .collect(Collectors.toList());
+    public static void addWorkout(Workout workout) {
+        savedWorkouts.add(workout);
+        writeToFile();
+    }
+
+    private static void writeToFile() {
+        JSONParser.saveObjectsAsJSON(USER_DATA_PATH, savedWorkouts.toArray());
     }
 }
