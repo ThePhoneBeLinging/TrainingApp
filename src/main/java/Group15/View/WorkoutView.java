@@ -86,12 +86,15 @@ public class WorkoutView {
             }
 
             Label exerciseLabel1 = new Label(workoutExercise.getExercise().title + ": ");
+            Label exerciseSetsLabel = new Label(" Sets: " + workoutExercise.getSets());
+            Label exerciseRepsLabel = new Label(" Reps: " + workoutExercise.getRepsPerSet());
             exerciseLabel1.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+            exerciseSetsLabel.setFont(Font.font("Arial", FontWeight.LIGHT, 16));
+            exerciseRepsLabel.setFont(Font.font("Arial", FontWeight.LIGHT, 16));
 
             EventHandler<MouseEvent> clickAction = event ->
             {
                 System.out.println("Image or title clicked for exercise: " + workoutExercise.getExercise().title);
-                Scene currentScene = ViewController.getScene();
                 Scene exerciseDetailsScene = ExerciseDetailsView.createScene(workoutExercise.getExercise());
                 ViewController.setScene(exerciseDetailsScene);
             };
@@ -102,7 +105,7 @@ public class WorkoutView {
             exerciseBox.setBackground(Background.fill(Color.LIGHTGRAY));
             exerciseBox.setPadding(new Insets(10));
 
-            exerciseBox.getChildren().addAll(imageView, exerciseLabel1);
+            exerciseBox.getChildren().addAll(imageView, exerciseLabel1, exerciseSetsLabel, exerciseRepsLabel);
 
             workoutPane.getChildren().add(exerciseBox);
         }
