@@ -298,8 +298,16 @@ public class MuscleSelectionView {
             button.setStyle("-fx-border-color: black; -fx-border-width: 2;");
         }
 
+        boolean firstSelectedMuscle = false;
         for(BodyPart bodyPart : randomBodyParts) {
-            BodyPartButtonStates randomState = Math.random() > 0.5 ? BodyPartButtonStates.SELECT : BodyPartButtonStates.DESELECT;
+            BodyPartButtonStates randomState;
+
+            if(!firstSelectedMuscle) {
+                randomState = BodyPartButtonStates.SELECT;
+                firstSelectedMuscle = true;
+            } else {
+                randomState = Math.random() > 0.5 ? BodyPartButtonStates.SELECT : BodyPartButtonStates.DESELECT;
+            }
 
             updateBodyPartLists(bodyPart, randomState);
 
