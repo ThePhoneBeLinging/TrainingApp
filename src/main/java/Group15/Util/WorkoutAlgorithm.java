@@ -9,6 +9,8 @@ import java.util.List;
 public class WorkoutAlgorithm {
 
     private static HashMap<String, Boolean> selectedExercises;
+    private static final int MAX_SETS = 3;
+    private static final int REPS_PER_SET = 5;
 
     public static Workout createWorkoutFromExercises(
             List<BodyPart> selectedBodyParts,
@@ -18,7 +20,7 @@ public class WorkoutAlgorithm {
         selectedExercises = new HashMap<>();
         int timeLeftInMilli = timeInMinutes * 60000;
         Workout workout = new Workout();
-        int breakBetweenSets = 120000;
+
         int bodyPartIndex = 0;
         int nullExercisesInARow = 0;
 
@@ -42,14 +44,14 @@ public class WorkoutAlgorithm {
             workoutExercise.setExercise(validExercise);
 
             // This is basicly what musti does, might not be optimal
-            workoutExercise.setRepsPerSet(5);
-            int timePerSet = validExercise.timePerRep * 5;
+            workoutExercise.setRepsPerSet(REPS_PER_SET);
+            int timePerSet = validExercise.timePerRep * REPS_PER_SET;
 
-            while (timeLeftInMilli > 0 && workoutExercise.getSets() < 3)
+            while (timeLeftInMilli > 0 && workoutExercise.getSets() < MAX_SETS)
             {
                 timeLeftInMilli -= timePerSet;
                 workoutExercise.setSets(workoutExercise.getSets() + 1);
-                timeLeftInMilli -= breakBetweenSets;
+                timeLeftInMilli -= Workout.BREAK_BETWEEN_SETS;
             }
             selectedExercises.put(validExercise.title,true);
             workout.addExercise(workoutExercise);
@@ -59,7 +61,7 @@ public class WorkoutAlgorithm {
             {
                 // If we only went over time because of the break between sets, we can simply return the
                 // workout without removal
-                if (timeLeftInMilli <= (breakBetweenSets*-1))
+                if (timeLeftInMilli <= (Workout.BREAK_BETWEEN_SETS*-1))
                 {
                     return workout;
                 }
