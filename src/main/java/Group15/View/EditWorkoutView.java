@@ -57,7 +57,7 @@ public class EditWorkoutView
     private static Node createWorkoutPane(Workout workout)
     {
         VBox workoutPane = new VBox();
-        workoutPane.setAlignment(Pos.CENTER);
+        workoutPane.setAlignment(Pos.TOP_CENTER);
         workoutPane.setSpacing(20);
         workoutPane.setPrefSize(640, 600);
         workoutPane.setMaxWidth(Region.USE_PREF_SIZE);
@@ -80,12 +80,10 @@ public class EditWorkoutView
             Label exerciseLabel1 = new Label(workoutExercise.getExercise().title + ": ");
             exerciseLabel1.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 
-            EventHandler<MouseEvent> clickAction = event ->
-                {
+            EventHandler<MouseEvent> clickAction = event -> {
                 System.out.println("Image or title clicked for exercise: " + workoutExercise.getExercise().title);
                 ViewController.setScene(ExerciseDetailsView.createScene(workoutExercise.getExercise()));
-                };
-
+            };
 
             HBox exerciseBox = new HBox();
             exerciseBox.setOnMouseClicked(clickAction);
@@ -94,28 +92,32 @@ public class EditWorkoutView
             exerciseBox.setBackground(Background.fill(Color.LIGHTGRAY));
             exerciseBox.setPadding(new Insets(10));
 
-
             //
             // THE FOLLOWING SHOULD NOT BE UPDATED CASUALLY
             //
+
+            Region spacer = new Region();
+            HBox.setHgrow(spacer, Priority.ALWAYS);
+
             Button deleteExerciseButton = new Button("Delete Exercise");
             Button swapExerciseButton = new Button("Swap Exercise");
 
-            deleteExerciseButton.setOnAction(e ->
-                {
-                    workout.removeExercise(workoutExercise);
-                    ViewController.setScene(EditWorkoutView.createScene(workout));
-                });
-            swapExerciseButton.setOnAction(e ->
-                {
-                   ViewController.setScene(SelectNewExerciseView.createScene(workoutExercise.getExercise(),workout));
-                });
-            //
-            //
-            //
-            exerciseBox.getChildren().addAll(imageView, exerciseLabel1,swapExerciseButton,deleteExerciseButton);
+            deleteExerciseButton.setOnAction(e -> {
+                workout.removeExercise(workoutExercise);
+                ViewController.setScene(EditWorkoutView.createScene(workout));
+            });
 
-            workoutPane.getChildren().add(exerciseBox);
+            swapExerciseButton.setOnAction(e -> {
+                ViewController.setScene(SelectNewExerciseView.createScene(workoutExercise.getExercise(), workout));
+            });
+
+            //
+            //
+            //
+
+            exerciseBox.getChildren().addAll(imageView, exerciseLabel1, spacer, deleteExerciseButton, swapExerciseButton);
+
+            workoutPane.getChildren().addAll(exerciseBox);
         }
 
         ScrollPane scrollPane = new ScrollPane(workoutPane);
