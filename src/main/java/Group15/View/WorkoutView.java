@@ -89,12 +89,12 @@ public class WorkoutView {
             exerciseLabel1.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 
             EventHandler<MouseEvent> clickAction = event ->
-                {
+            {
                 System.out.println("Image or title clicked for exercise: " + workoutExercise.getExercise().title);
                 Scene currentScene = ViewController.getScene();
                 Scene exerciseDetailsScene = ExerciseDetailsView.createScene(workoutExercise.getExercise());
                 ViewController.setScene(exerciseDetailsScene);
-                };
+            };
             HBox exerciseBox = new HBox();
             exerciseBox.setOnMouseClicked(clickAction);
             exerciseBox.setSpacing(10);
