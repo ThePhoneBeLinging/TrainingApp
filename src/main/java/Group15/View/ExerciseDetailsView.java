@@ -73,9 +73,6 @@ public class ExerciseDetailsView {
         descriptionLabel.setWrapText(true);
         descriptionLabel.setMaxWidth(600);
 
-        Label typeLabel = new Label("Type: " + exercise.type);
-        typeLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
-
         Label bodyPartLabel = new Label("Body Part: " + exercise.bodyParts);
         bodyPartLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
@@ -85,7 +82,7 @@ public class ExerciseDetailsView {
         Label difficultyLabel = new Label("Difficulty: " + exercise.difficulty);
         difficultyLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
-        infoPane.getChildren().addAll(nameLabel, descriptionLabel, typeLabel, bodyPartLabel, equipmentLabel, difficultyLabel);
+        infoPane.getChildren().addAll(nameLabel, descriptionLabel, bodyPartLabel, equipmentLabel, difficultyLabel);
 
         return infoPane;
     }
