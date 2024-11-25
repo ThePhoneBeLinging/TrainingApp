@@ -19,10 +19,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import Group15.Util.JSONParser;
 
 import java.io.FileNotFoundException;
-import java.util.List;
 
 public class WorkoutView {
     private  static Workout workout;
@@ -190,7 +188,7 @@ public class WorkoutView {
 
     }
 
-    private static Pane createButtonPane(Workout workout){
+    private static Pane createButtonPane(){
         HBox buttonPane = new HBox();
         buttonPane.setAlignment(Pos.CENTER);
 

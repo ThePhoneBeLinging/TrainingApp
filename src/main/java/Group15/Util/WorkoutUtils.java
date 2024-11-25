@@ -10,7 +10,12 @@ import java.util.stream.Collectors;
 public class WorkoutUtils {
 
     private static final String USER_DATA_PATH = "src/main/resources/userData/savedWorkouts.json";
+
+    private static final String POPULAR_DATA_PATH = "src/main/resources/userData/popularWorkouts.json";
+
     private static List<Workout> savedWorkouts;
+
+    private static List<Workout> popularWorkouts;
 
     static {
         init();
@@ -18,6 +23,7 @@ public class WorkoutUtils {
 
     public static void init() {
         savedWorkouts = new ArrayList<>(Arrays.asList(JSONParser.loadObjectsFromJSON(USER_DATA_PATH, Workout[].class)));
+        popularWorkouts = new ArrayList<>(Arrays.asList(JSONParser.loadObjectsFromJSON(POPULAR_DATA_PATH, Workout[].class)));
         removeInvalidWorkouts();
     }
 
@@ -25,11 +31,19 @@ public class WorkoutUtils {
         savedWorkouts = savedWorkouts.stream()
                 .filter(workout -> workout.getName() != null || workout.getDescription() != null || !workout.getExercises().isEmpty())
                 .collect(Collectors.toList());
+        if (popularWorkouts != null) {
+            popularWorkouts = popularWorkouts.stream()
+                    .filter(workout -> workout.getName() != null || workout.getDescription() != null || !workout.getExercises().isEmpty())
+                    .collect(Collectors.toList());
+        }
+
     }
 
     public static List<Workout> getSavedWorkouts() {
         return savedWorkouts;
     }
+
+    public static List<Workout> getPopularWorkouts(){return popularWorkouts;}
 
     public static void addWorkout(Workout workout) {
         savedWorkouts.add(workout);
