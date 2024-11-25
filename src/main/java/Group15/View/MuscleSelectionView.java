@@ -59,9 +59,9 @@ public class MuscleSelectionView {
         submitButton.setMinSize(200, 50);
         submitButton.setOnAction(_ -> createSubmitButtonFunctionality(MuscleSelectionView.minutesInputField));
 
-        Button randomizeButton = new Button("Randomize Muscles");
-        randomizeButton.setMinSize(200,50);
-        randomizeButton.setOnAction(_ -> randomizeBodyParts());
+        Button allBodyPartsButton = new Button("All Muscles");
+        allBodyPartsButton.setMinSize(200,50);
+        allBodyPartsButton.setOnAction(_ -> selectAllBodyParts());
 
         Button backButton = new Button("Back");
         backButton.setMinSize(200, 50);
@@ -70,7 +70,7 @@ public class MuscleSelectionView {
         HBox backAndSubmitButton = new HBox();
         backAndSubmitButton.setSpacing(20);
         backAndSubmitButton.setPadding(new Insets(0,0,20,0));
-        backAndSubmitButton.getChildren().addAll(backButton, randomizeButton, submitButton);
+        backAndSubmitButton.getChildren().addAll(backButton, allBodyPartsButton, submitButton);
         backAndSubmitButton.setAlignment(Pos.CENTER);
 
         return backAndSubmitButton;
@@ -283,47 +283,16 @@ public class MuscleSelectionView {
         return bodyPartToggleButton;
     }
 
-    private static void randomizeBodyParts() {
+    private static void selectAllBodyParts() {
         List<BodyPart> allBodyParts = new ArrayList<>(List.of(BodyPart.values()));
-
-        Collections.shuffle(allBodyParts);
-        int numberOfRandomBodyParts = 1 + ((int) (Math.random() * allBodyParts.size()));
-        List<BodyPart> randomBodyParts = allBodyParts.subList(0, numberOfRandomBodyParts);
 
         selectedBodyParts.clear();
         dislikedBodyParts.clear();
 
+        selectedBodyParts.addAll(allBodyParts);
         for(Button button : bodyPartButtonMap.values()) {
-            button.setUserData(BodyPartButtonStates.DESELECT);
-            button.setStyle("-fx-border-color: black; -fx-border-width: 2;");
+            updateButtonStates(button);
         }
-
-        boolean firstSelectedMuscle = false;
-        for(BodyPart bodyPart : randomBodyParts) {
-            BodyPartButtonStates randomState;
-
-            if(!firstSelectedMuscle) {
-                randomState = BodyPartButtonStates.SELECT;
-                firstSelectedMuscle = true;
-            } else {
-                randomState = Math.random() > 0.5 ? BodyPartButtonStates.SELECT : BodyPartButtonStates.DESELECT;
-            }
-
-            updateBodyPartLists(bodyPart, randomState);
-
-            Button button = bodyPartButtonMap.get(bodyPart);
-            if (button != null) {
-                button.setUserData(randomState);
-                if (randomState == BodyPartButtonStates.SELECT) {
-                    button.setStyle("-fx-border-color: green; -fx-border-width: 2;");
-                } else {
-                    button.setStyle("-fx-border-color: black; -fx-border-width: 2;");
-                }
-            }
-        }
-        errorList.add("Randomly added muscles: " + selectedBodyParts);
-        updateErrorMessageTextArea();
-        errorList.clear();
     }
 
     private static void updateButtonStates(Button bodyPartToggleButton) {
