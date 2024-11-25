@@ -117,7 +117,7 @@ public class WorkoutView {
         workoutTitleHBox.setAlignment(Pos.CENTER);
         workoutTitleHBox.setSpacing(10);
 
-        Label workoutTitleLabel = new Label(MuscleSelectionView.getWorkoutName());
+        Label workoutTitleLabel = new Label(workout.getName());
         workoutTitleLabel.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.ITALIC, 24));
 
         Button editNameButton = new Button("Edit Name");
@@ -126,7 +126,7 @@ public class WorkoutView {
             editNameDialog.setTitle("Edit Workout Name");
 
             Label instructionLabel = new Label("Enter a new name for your workout:");
-            TextField workoutNameInput = new TextField(MuscleSelectionView.getWorkoutName());
+            TextField workoutNameInput = new TextField(workout.getName());
             VBox dialogContent = new VBox(10, instructionLabel, workoutNameInput);
             dialogContent.setAlignment(Pos.CENTER);
             dialogContent.setPadding(new Insets(10));
@@ -143,7 +143,7 @@ public class WorkoutView {
 
             editNameDialog.showAndWait().ifPresent(newWorkoutName -> {
                 if (!newWorkoutName.isEmpty()) {
-                    MuscleSelectionView.setWorkoutName(newWorkoutName);
+                    workout.setName(newWorkoutName);
                     workoutTitleLabel.setText(newWorkoutName);
                 }
             });
