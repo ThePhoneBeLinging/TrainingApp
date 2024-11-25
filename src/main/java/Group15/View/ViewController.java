@@ -46,4 +46,11 @@ public class ViewController
         navigationStack.pop();
         stage.setScene(navigationStack.peek());
     }
+
+    public static void goHome()
+    {
+        navigationStack.clear();
+        navigationStack.push(HomeScreenView.createScene());
+        stage.setScene(navigationStack.peek());
+    }
 }

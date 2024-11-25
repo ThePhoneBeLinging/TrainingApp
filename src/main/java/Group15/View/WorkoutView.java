@@ -191,9 +191,11 @@ public class WorkoutView {
         alert.showAndWait().ifPresent(type -> {
             if (type == buttonTypeSave) {
                 WorkoutUtils.addWorkout(WorkoutView.workout);
+                ViewController.goHome();
             } else if (type == buttonTypePDF) {
                 try {
                     WorkoutPdfGenerator.saveWorkoutAsPdf(WorkoutView.workout, "workout.pdf");
+                    ViewController.goHome();
                 } catch (FileNotFoundException e) {
                     // TODO: Show error message to user instead of printing in console
                     System.err.println("Failed to save workout as PDF: " + e.getMessage());
