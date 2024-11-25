@@ -93,7 +93,7 @@ public class SelectNewExerciseView {
                     workout.addExercise(workoutExercise);
                 } else {
                     var workoutExercise = new WorkoutExercise();
-                    workoutExercise.setExercise(exercise);
+                    workoutExercise.setExercise(exerciseToSwap);
                     var otherWorkOutExercise = new WorkoutExercise();
                     otherWorkOutExercise.setExercise(exercise);
                     otherWorkOutExercise.setSets(workoutExercise.getSets());
