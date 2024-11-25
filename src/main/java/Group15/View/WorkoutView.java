@@ -41,7 +41,7 @@ public class WorkoutView {
         Node WorkoutPane = createWorkoutPane(workout);
         layout.setCenter(WorkoutPane);
 
-        Pane buttonPane = createButtonPane(workout);
+        Pane buttonPane = createButtonPane();
         buttonPane.setPadding(new Insets(20, 0, 0, 0));
         layout.setBottom(buttonPane);
 
@@ -190,7 +190,7 @@ public class WorkoutView {
 
     }
 
-    private static Pane createButtonPane(Workout workout){
+    private static Pane createButtonPane(){
         HBox buttonPane = new HBox();
         buttonPane.setAlignment(Pos.CENTER);
 
