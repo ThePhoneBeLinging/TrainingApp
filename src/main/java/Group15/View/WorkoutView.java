@@ -165,7 +165,7 @@ public class WorkoutView {
         return workoutTitleHBox;
     }
 
-    private static String formatWorkoutDuration(int durationInMilli) {
+    public static String formatWorkoutDuration(int durationInMilli) {
         int totalSeconds = durationInMilli / 1000;
         int hours = totalSeconds / 3600;
         int minutes = (totalSeconds % 3600) / 60;
