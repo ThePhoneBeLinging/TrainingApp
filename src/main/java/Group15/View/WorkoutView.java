@@ -4,7 +4,7 @@ import Group15.Model.Workout;
 
 import Group15.Model.WorkoutExercise;
 import Group15.Util.WorkoutUtils;
-import Group15.WorkoutPdfGenerator;
+import Group15.Util.WorkoutPdfGenerator;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

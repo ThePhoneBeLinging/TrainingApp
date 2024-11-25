@@ -1,4 +1,4 @@
-package Group15;
+package Group15.Util;
 
 import Group15.Model.Workout;
 import Group15.Model.WorkoutExercise;
