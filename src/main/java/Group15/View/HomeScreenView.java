@@ -14,12 +14,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 public class HomeScreenView {
 
     private static final String title = "Workout App";
-    private static final String[] buttons = {"New Workout", "Do smthn", "Exit"}; //TODO: Find out what to do with middle button
+    private static final String[] buttons = {"New Workout", "Support the Developers", "Exit"}; //TODO: Find out what to do with middle button
 
     public static Scene createScene() {
         BorderPane layout = new BorderPane();
@@ -74,8 +78,8 @@ public class HomeScreenView {
                     case "New Workout":
                         ViewController.setScene(MuscleSelectionView.createMuscleSelectionScene());
                         break;
-                    case "Do smthn":
-                        //TODO: Implement this button
+                    case "Support the Developers":
+                        openPayPalLink();
                         break;
                     case "Exit":
                         System.exit(0);
@@ -133,5 +137,18 @@ public class HomeScreenView {
         scrollPane.setPrefViewportHeight(600);
 
         return scrollPane;
+    }
+
+    private static void openPayPalLink() {
+        String url = "https://paypal.me/FBastrup?country.x=DK&locale.x=da_DK";
+        if (Desktop.isDesktopSupported()) {
+            try {
+                Desktop.getDesktop().browse(new URI(url));
+            } catch (IOException | URISyntaxException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.err.println("Desktop is not supported. Cannot open PayPal link.");
+        }
     }
 }
