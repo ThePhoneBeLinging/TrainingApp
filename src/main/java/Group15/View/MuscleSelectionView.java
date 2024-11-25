@@ -332,6 +332,11 @@ public class MuscleSelectionView {
             MuscleSelectionView.errorList.add("Invalid Input for Time!");
             updateErrorMessageTextArea();
         }
+        if (Integer.parseInt(minutesInputField.getText()) < 5 || Integer.parseInt(minutesInputField.getText()) > 1000) {
+            MuscleSelectionView.errorList.add("Time needs to be at least 5 minutes and maximum 1000 minutes");
+            updateErrorMessageTextArea();
+        }
+
         if(selectedBodyParts.isEmpty()) {
             MuscleSelectionView.errorList.add("No Bodyparts Selected!");
             updateErrorMessageTextArea();

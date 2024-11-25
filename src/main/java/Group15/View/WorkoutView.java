@@ -41,7 +41,7 @@ public class WorkoutView {
         Node WorkoutPane = createWorkoutPane(workout);
         layout.setCenter(WorkoutPane);
 
-        Pane buttonPane = createButtonPane();
+        Pane buttonPane = createButtonPane(workout);
         buttonPane.setPadding(new Insets(20, 0, 0, 0));
         layout.setBottom(buttonPane);
 
