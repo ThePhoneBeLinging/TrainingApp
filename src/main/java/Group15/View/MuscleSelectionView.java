@@ -354,7 +354,6 @@ public class MuscleSelectionView {
                     String finalWorkoutName = workoutName.trim().isEmpty() ? "Workout" : workoutName.trim();
                     Workout workout = WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes);
                     workout.setName(finalWorkoutName);
-                    workout.setBodyParts(selectedBodyParts);
                     ViewController.setScene(WorkoutView.createScene(workout));
                 }
         );

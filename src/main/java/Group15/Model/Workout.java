@@ -10,7 +10,6 @@ import java.util.List;
 
 public class Workout implements Serializable {
     private final List<WorkoutExercise> exercises = new ArrayList<>();
-    private List<BodyPart> bodyParts = new ArrayList<>();
     public static final int BREAK_BETWEEN_SETS = 180000;
     private static final int BREAK_BETWEEN_EXERCISES = 60000;
 
@@ -56,12 +55,24 @@ public class Workout implements Serializable {
 
     public String getDescription() {
         StringBuilder description = new StringBuilder();
-        int duration = getWorkoutDuration() / 60000;
+        int duration = calculateWorkoutDuration() / 60000;
         description.append(duration + " min. ");
-        for (BodyPart bodyPart : bodyParts) {
+        for (BodyPart bodyPart : usedBodyParts()) {
             description.append(bodyPart.toString() + ", ");
         }
         return description.toString();
+    }
+
+    private List<BodyPart> usedBodyParts() {
+        List<BodyPart> usedBodyParts = new ArrayList<>();
+        for (WorkoutExercise exercise : exercises) {
+            BodyPart bodyPart = exercise.getExercise().bodyParts.getFirst();
+            if (usedBodyParts.contains(bodyPart)) {
+                continue;
+            }
+            usedBodyParts.add(bodyPart);
+        }
+        return usedBodyParts;
     }
 
     public void addExercise(WorkoutExercise exercise) {
@@ -85,10 +96,6 @@ public class Workout implements Serializable {
 
     public List<WorkoutExercise> getExercises() {
         return exercises;
-    }
-
-    public void setBodyParts(List<BodyPart> bodyParts) {
-        this.bodyParts = bodyParts;
     }
 
     @Override
