@@ -20,8 +20,8 @@ public class WorkoutPdfGenerator {
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
 
-        document.add(new Paragraph(workout.getName()).setFontSize(20).setBold());
-        document.add(new Paragraph().setFontSize(20).setBold());
+        document.add(new Paragraph(workout.getName()).setFontSize(40).setBold());
+        document.add(new Paragraph(WorkoutView.formatWorkoutDuration(workout.calculateWorkoutDuration())).setFontSize(20).setBold());
         String breakFieldString = Workout.BREAK_BETWEEN_SETS / 1000 + " seconds break between sets" + " | " + Workout.BREAK_BETWEEN_EXERCISES / 1000 + " seconds break between exercises";
         document.add(new Paragraph(breakFieldString).setHorizontalAlignment(HorizontalAlignment.CENTER));
 
