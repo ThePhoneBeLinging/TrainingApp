@@ -19,10 +19,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import Group15.Util.JSONParser;
 
 import java.io.FileNotFoundException;
-import java.util.List;
 
 public class WorkoutView {
     private  static Workout workout;
@@ -152,7 +150,7 @@ public class WorkoutView {
             });
         });
 
-        Label workoutDurationLabel = new Label(formatWorkoutDuration(workout.getWorkoutDuration()));
+        Label workoutDurationLabel = new Label(formatWorkoutDuration(workout.calculateWorkoutDuration()));
         workoutDurationLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         workoutDurationLabel.setAlignment(Pos.CENTER_RIGHT);
         HBox.setHgrow(workoutDurationLabel, Priority.ALWAYS);

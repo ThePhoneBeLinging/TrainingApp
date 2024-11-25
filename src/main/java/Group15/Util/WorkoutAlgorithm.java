@@ -2,7 +2,6 @@ package Group15.Util;
 
 import Group15.Model.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class WorkoutAlgorithm {
         int bodyPartIndex = 0;
         int nullExercisesInARow = 0;
 
-        while (workout.getWorkoutDuration() <= timeInMilli)
+        while (workout.calculateWorkoutDuration() <= timeInMilli)
         {
             Exercise validExercise = getValidExercise(selectedBodyParts.get(bodyPartIndex), bodyPartsToAvoid, equipment);
             bodyPartIndex = (bodyPartIndex + 1) % selectedBodyParts.size();
@@ -46,7 +45,7 @@ public class WorkoutAlgorithm {
 
             workout.addExercise(workoutExercise);
 
-            while (workout.getWorkoutDuration() >= timeInMilli)
+            while (workout.calculateWorkoutDuration() >= timeInMilli)
             {
                 if (workoutExercise.getSets() == 1)
                 {
@@ -57,7 +56,7 @@ public class WorkoutAlgorithm {
                     workoutExercise.setSets(workoutExercise.getSets() - 1);
                 }
 
-                if (workout.getWorkoutDuration() < timeInMilli)
+                if (workout.calculateWorkoutDuration() < timeInMilli)
                 {
                     return workout;
                 }
