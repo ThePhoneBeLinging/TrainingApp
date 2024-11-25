@@ -67,6 +67,11 @@ public class WorkoutView {
 
         Node workoutTitleNode = createWorkoutTitleNode();
         workoutPane.getChildren().add(workoutTitleNode);
+        Label breakField = new Label("" + Workout.BREAK_BETWEEN_SETS / 1000 + " seconds break between sets");
+        String breakFieldString = Workout.BREAK_BETWEEN_SETS / 1000 + " seconds break between sets" + " | " + Workout.BREAK_BETWEEN_EXERCISES / 1000 + " seconds break between exercises";
+        breakField.setText(breakFieldString);
+        workoutPane.getChildren().add(breakField);
+        breakField.setFont(Font.font("Arial", FontWeight.MEDIUM, FontPosture.ITALIC, 18));
 
         for (WorkoutExercise workoutExercise : workout.getExercises()) {
             ImageView imageView = null;
