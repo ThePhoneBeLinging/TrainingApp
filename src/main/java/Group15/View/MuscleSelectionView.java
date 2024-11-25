@@ -325,6 +325,18 @@ public class MuscleSelectionView {
         }
     }
 
+    private static void clearSelections() {
+        selectedBodyParts.clear();
+        dislikedBodyParts.clear();
+        selectedEquipment.clear();
+        errorList.clear();
+        updateErrorMessageTextArea();
+        for (Button button : bodyPartButtonMap.values()) {
+            button.setUserData(BodyPartButtonStates.DESELECT);
+            button.setStyle("-fx-border-color: black; -fx-border-width: 2;");
+        }
+    }
+
     private static void createSubmitButtonFunctionality(TextField minutesInputField) {
         MuscleSelectionView.errorList.clear();
 
@@ -354,6 +366,7 @@ public class MuscleSelectionView {
                     String finalWorkoutName = workoutName.trim().isEmpty() ? "Workout" : workoutName.trim();
                     Workout workout = WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes);
                     workout.setName(finalWorkoutName);
+                    clearSelections();
                     ViewController.setScene(WorkoutView.createScene(workout));
                 }
         );
