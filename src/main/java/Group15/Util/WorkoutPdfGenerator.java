@@ -9,6 +9,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.layout.property.HorizontalAlignment;
 
 import java.io.FileNotFoundException;
 import java.net.URL;
@@ -19,7 +20,10 @@ public class WorkoutPdfGenerator {
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
 
-        document.add(new Paragraph("Workout Plan").setFontSize(20).setBold());
+        document.add(new Paragraph(workout.getName()).setFontSize(20).setBold());
+        document.add(new Paragraph().setFontSize(20).setBold());
+        String breakFieldString = Workout.BREAK_BETWEEN_SETS / 1000 + " seconds break between sets" + " | " + Workout.BREAK_BETWEEN_EXERCISES / 1000 + " seconds break between exercises";
+        document.add(new Paragraph(breakFieldString).setHorizontalAlignment(HorizontalAlignment.CENTER));
 
         for (WorkoutExercise workoutExercise : workout.getExercises()) {
             document.add(new Paragraph("Exercise: " + workoutExercise.getExercise().title).setFontSize(16).setBold());
