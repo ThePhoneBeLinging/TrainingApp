@@ -23,7 +23,7 @@ public class WorkoutAlgorithm {
         int bodyPartIndex = 0;
         int nullExercisesInARow = 0;
 
-        while (workout.getWorkoutDuration() < timeInMilli)
+        while (workout.getWorkoutDuration() <= timeInMilli)
         {
             Exercise validExercise = getValidExercise(selectedBodyParts.get(bodyPartIndex), bodyPartsToAvoid, equipment);
             bodyPartIndex = (bodyPartIndex + 1) % selectedBodyParts.size();
@@ -46,7 +46,7 @@ public class WorkoutAlgorithm {
 
             workout.addExercise(workoutExercise);
 
-            while (workout.getWorkoutDuration() > timeInMilli)
+            while (workout.getWorkoutDuration() >= timeInMilli)
             {
                 if (workoutExercise.getSets() == 1)
                 {
