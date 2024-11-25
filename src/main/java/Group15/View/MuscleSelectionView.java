@@ -2,6 +2,7 @@ package Group15.View;
 
 import Group15.Model.BodyPart;
 import Group15.Model.Equipment;
+import Group15.Model.Workout;
 import Group15.Util.WorkoutAlgorithm;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,18 +28,9 @@ public class MuscleSelectionView {
     private static final List<Equipment> selectedEquipment = new ArrayList<>();
     private static final List<String> errorList = new ArrayList<>();
 
-    private static String workoutName;
     private static TextField minutesInputField;
     private static TitledPane errorTitledPane;
     private static TextArea errorMessageTextArea;
-
-    public static String getWorkoutName() {
-        return workoutName;
-    }
-
-    public static void setWorkoutName(String workoutName) {
-        MuscleSelectionView.workoutName = workoutName;
-    }
 
     private enum BodyPartButtonStates {
         DESELECT, SELECT, DISLIKE
@@ -337,10 +329,9 @@ public class MuscleSelectionView {
         workoutNameDialog.showAndWait().ifPresent(
                 workoutName -> {
                     String finalWorkoutName = workoutName.trim().isEmpty() ? "Workout" : workoutName.trim();
-                    MuscleSelectionView.setWorkoutName(finalWorkoutName);
-                    ViewController.setScene(WorkoutView.createScene(
-                            WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes)
-                    ));
+                    Workout workout = WorkoutAlgorithm.createWorkoutFromExercises(selectedBodyParts, dislikedBodyParts, selectedEquipment, timeInMinutes);
+                    workout.setName(finalWorkoutName);
+                    ViewController.setScene(WorkoutView.createScene(workout));
                 }
         );
     }
