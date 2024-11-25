@@ -14,7 +14,6 @@ public class Workout implements Serializable {
     private static final int BREAK_BETWEEN_EXERCISES = 60000;
 
     private String name;
-    private String description;
     private Boolean isSaved = false;
 
     public Workout() {
@@ -51,9 +50,7 @@ public class Workout implements Serializable {
         return name;
     }
 
-    public void setDescription(String description) { this.description = description; }
-
-    public String getDescription() {
+    public String makeDescription() {
         StringBuilder description = new StringBuilder();
         int duration = calculateWorkoutDuration() / 60000;
         description.append(duration + " min. ");
