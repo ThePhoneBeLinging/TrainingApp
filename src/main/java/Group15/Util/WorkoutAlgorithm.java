@@ -9,6 +9,8 @@ import java.util.List;
 public class WorkoutAlgorithm {
 
     private static HashMap<String, Boolean> selectedExercises;
+    private static int MAX_SETS = 3;
+    private static int REPS_PER_SET = 5;
 
     public static Workout createWorkoutFromExercises(
             List<BodyPart> selectedBodyParts,
@@ -39,8 +41,8 @@ public class WorkoutAlgorithm {
 
             WorkoutExercise workoutExercise = new WorkoutExercise();
             workoutExercise.setExercise(validExercise);
-            workoutExercise.setRepsPerSet(5);
-            workoutExercise.setSets(3);
+            workoutExercise.setRepsPerSet(REPS_PER_SET);
+            workoutExercise.setSets(MAX_SETS);
 
             workout.addExercise(workoutExercise);
 

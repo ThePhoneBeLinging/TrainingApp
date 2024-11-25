@@ -168,10 +168,12 @@ public class WorkoutView {
 
     private static String formatWorkoutDuration(int durationInMilli) {
         int totalSeconds = durationInMilli / 1000;
-        int minutes = totalSeconds / 60;
+        int hours = totalSeconds / 3600;
+        int minutes = (totalSeconds % 3600) / 60;
         int seconds = totalSeconds % 60;
-        return String.format("Duration: %d:%02d min", minutes, seconds);
+        return String.format("Duration: %02d:%02d:%02d", hours, minutes, seconds);
     }
+
 
     private static Pane createButtonPane(){
         HBox buttonPane = new HBox();
