@@ -190,7 +190,7 @@ public class WorkoutView {
 
     }
 
-    private static Pane createButtonPane(Workout workout){
+    private static Pane createButtonPane(){
         HBox buttonPane = new HBox();
         buttonPane.setAlignment(Pos.CENTER);
 
