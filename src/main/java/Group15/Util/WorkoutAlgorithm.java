@@ -33,6 +33,7 @@ public class WorkoutAlgorithm {
                 {
                     return workout;
                 }
+                bodyPartIndex = (bodyPartIndex + 1) % selectedBodyParts.size();
                 continue;
             }
             nullExercisesInARow = 0;

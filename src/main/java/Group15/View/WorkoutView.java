@@ -82,12 +82,15 @@ public class WorkoutView {
             }
 
             Label exerciseLabel1 = new Label(workoutExercise.getExercise().title + ": ");
+            Label exerciseSetsLabel = new Label(" Sets: " + workoutExercise.getSets());
+            Label exerciseRepsLabel = new Label(" Reps: " + workoutExercise.getRepsPerSet());
             exerciseLabel1.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+            exerciseSetsLabel.setFont(Font.font("Arial", FontWeight.LIGHT, 16));
+            exerciseRepsLabel.setFont(Font.font("Arial", FontWeight.LIGHT, 16));
 
             EventHandler<MouseEvent> clickAction = event ->
             {
                 System.out.println("Image or title clicked for exercise: " + workoutExercise.getExercise().title);
-                Scene currentScene = ViewController.getScene();
                 Scene exerciseDetailsScene = ExerciseDetailsView.createScene(workoutExercise.getExercise());
                 ViewController.setScene(exerciseDetailsScene);
             };
@@ -98,7 +101,7 @@ public class WorkoutView {
             exerciseBox.setBackground(Background.fill(Color.LIGHTGRAY));
             exerciseBox.setPadding(new Insets(10));
 
-            exerciseBox.getChildren().addAll(imageView, exerciseLabel1);
+            exerciseBox.getChildren().addAll(imageView, exerciseLabel1, exerciseSetsLabel, exerciseRepsLabel);
 
             workoutPane.getChildren().add(exerciseBox);
         }
@@ -112,7 +115,7 @@ public class WorkoutView {
         return scrollPane;
     }
 
-    private static Node createWorkoutTitleNode() {
+    private static Node createWorkoutTitleNode () {
         HBox workoutTitleHBox = new HBox();
         workoutTitleHBox.setAlignment(Pos.CENTER);
         workoutTitleHBox.setSpacing(10);
@@ -154,7 +157,27 @@ public class WorkoutView {
         return workoutTitleHBox;
     }
 
-    private static Pane createButtonPane(Workout workout) {
+    private static void createSuccessSaveDialog() {
+        Dialog<String> succesDialog = new Dialog<>();
+        succesDialog.setTitle("!");
+
+        Label successSaveLabel = new Label("Succesfully saved workout as PDF");
+        successSaveLabel.setStyle("-fx-font-weight: bold");
+
+        VBox dialogVBox = new VBox(10, successSaveLabel);
+        dialogVBox.setAlignment(Pos.CENTER);
+        dialogVBox.setPadding(new Insets(10));
+
+        succesDialog.getDialogPane().setContent(dialogVBox);
+
+        ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        succesDialog.getDialogPane().getButtonTypes().addAll(okButtonType);
+
+        succesDialog.showAndWait();
+
+    }
+
+    private static Pane createButtonPane(Workout workout){
         HBox buttonPane = new HBox();
         buttonPane.setAlignment(Pos.CENTER);
 
@@ -199,7 +222,7 @@ public class WorkoutView {
             } else if (type == buttonTypePDF) {
                 try {
                     WorkoutPdfGenerator.saveWorkoutAsPdf(WorkoutView.workout, "workout.pdf");
-                    ViewController.goHome();
+                    createSuccessSaveDialog();
                 } catch (FileNotFoundException e) {
                     // TODO: Show error message to user instead of printing in console
                     System.err.println("Failed to save workout as PDF: " + e.getMessage());

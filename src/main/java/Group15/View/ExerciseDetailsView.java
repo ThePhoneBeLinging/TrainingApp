@@ -24,7 +24,7 @@ public class ExerciseDetailsView {
         layout.setSpacing(20);
         layout.setAlignment(Pos.CENTER);
 
-        Pane exerciseImagePane = createExerciseImagePane(exercise.imagePath);
+        Pane exerciseImagePane = createExerciseImagePane("/images/" +exercise.title + ".png");
         layout.getChildren().add(exerciseImagePane);
 
         Pane exerciseInfoPane = createExerciseInfoPane(exercise);
@@ -101,13 +101,13 @@ public class ExerciseDetailsView {
         updateButtonStyles(exercise, likeButton, dislikeButton);
 
         likeButton.setOnAction(_ -> {
-        ExerciseUtils.likeExercisePressed(exercise);
-        updateButtonStyles(exercise, likeButton, dislikeButton);
+            ExerciseUtils.likeExercisePressed(exercise);
+            updateButtonStyles(exercise, likeButton, dislikeButton);
         });
 
         dislikeButton.setOnAction(_ -> {
-        ExerciseUtils.dislikeExercisePressed(exercise);
-        updateButtonStyles(exercise, likeButton, dislikeButton);
+            ExerciseUtils.dislikeExercisePressed(exercise);
+            updateButtonStyles(exercise, likeButton, dislikeButton);
         });
 
         Button backButton = new Button("Back");
