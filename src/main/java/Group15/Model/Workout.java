@@ -20,7 +20,7 @@ public class Workout implements Serializable {
     public Workout() {
     }
 
-    public int getWorkoutDuration()
+    public int calculateWorkoutDuration()
     {
         int workoutDuration = 0;
         boolean first = true;
