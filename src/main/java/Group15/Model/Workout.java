@@ -15,6 +15,7 @@ public class Workout implements Serializable {
 
     private String name;
     private String description;
+    private Boolean isSaved = false;
 
     public Workout() {
     }
@@ -123,5 +124,13 @@ public class Workout implements Serializable {
             }
         }
         return new ArrayList<>();
+    }
+
+    public void setIsSaved(Boolean isSaved) {
+        this.isSaved = isSaved;
+    }
+
+    public Boolean getIsSaved() {
+        return isSaved;
     }
 }

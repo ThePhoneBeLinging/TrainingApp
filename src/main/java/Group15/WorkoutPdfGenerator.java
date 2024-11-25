@@ -28,7 +28,7 @@ public class WorkoutPdfGenerator {
             document.add(new Paragraph("Equipment: " + workoutExercise.getExercise().equipment + " | Difficulty: " + workoutExercise.getExercise().difficulty).setFontSize(12));
 
             try {
-                URL imageUrl = WorkoutView.class.getResource(workoutExercise.getExercise().imagePath);
+                URL imageUrl = WorkoutView.class.getResource("/images/" + workoutExercise.getExercise().title + ".png");
                 if (imageUrl != null) {
                     System.out.println("Loading image from: " + imageUrl.toExternalForm());
                     Image img = new Image(ImageDataFactory.create(imageUrl)).setWidth(100).setHeight(100);
