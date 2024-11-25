@@ -342,15 +342,19 @@ public class MuscleSelectionView {
 
         if (minutesInputField.getText() == null || minutesInputField.getText().isEmpty() || !minutesInputField.getText().matches("\\d+")) {
             MuscleSelectionView.errorList.add("Invalid Input for Time!");
-            updateErrorMessageTextArea();
+
         }
+        else if (Integer.parseInt(minutesInputField.getText()) < 5 || Integer.parseInt(minutesInputField.getText()) > 1000) {
+            MuscleSelectionView.errorList.add("Time needs to be at least 5 minutes and maximum 1000 minutes");
+
+        }
+
         if(selectedBodyParts.isEmpty()) {
             MuscleSelectionView.errorList.add("No Bodyparts Selected!");
-            updateErrorMessageTextArea();
         }
         if(selectedEquipment.isEmpty()) {
             MuscleSelectionView.errorList.add("No Equipment Selected");
-            updateErrorMessageTextArea();
+
         }
         if(!errorList.isEmpty()) {
             updateErrorMessageTextArea();
