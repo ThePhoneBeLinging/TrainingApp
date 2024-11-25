@@ -12,9 +12,7 @@ public class MockWorkouts {
 
     public MockWorkouts() {
         workout1.setName("Workout 1");
-        workout1.setDescription("This is a workout description");
         workout2.setName("Workout 2");
-        workout2.setDescription("This is another workout description");
         workouts.add(workout1);
         workouts.add(workout2);
     }
