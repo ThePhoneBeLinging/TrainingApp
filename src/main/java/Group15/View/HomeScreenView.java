@@ -119,13 +119,14 @@ public class HomeScreenView {
 
         for (Workout workout : workouts) {
             VBox workoutItem = new VBox();
-            workoutItem.setPrefSize(300, 60);
+            workoutItem.setPrefSize(300, 80);
             workoutItem.setMaxWidth(Region.USE_PREF_SIZE);
             workoutItem.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
 
             Label titleWorkout = new Label(workout.getName());
             titleWorkout.setFont(Font.font("Arial", FontWeight.BOLD, 14));
             Label descriptionWorkout = new Label(workout.getDescription());
+            descriptionWorkout.setWrapText(true);
             workoutItem.getChildren().addAll(titleWorkout, descriptionWorkout);
 
             workoutItem.onMouseClickedProperty().set(_ -> ViewController.setScene(WorkoutView.createScene(workout)));
