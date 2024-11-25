@@ -43,7 +43,6 @@ public class WorkoutAlgorithm {
             WorkoutExercise workoutExercise = new WorkoutExercise();
             workoutExercise.setExercise(validExercise);
 
-            // This is basicly what musti does, might not be optimal
             workoutExercise.setRepsPerSet(REPS_PER_SET);
             int timePerSet = validExercise.timePerRep * REPS_PER_SET;
 
@@ -73,7 +72,6 @@ public class WorkoutAlgorithm {
                 {
                     workoutExercise.setSets(workoutExercise.getSets() - 1);
                 }
-                workout.setWorkoutDuration((timeInMinutes * 60000) - timeLeftInMilli);
                 return workout;
             }
         }
