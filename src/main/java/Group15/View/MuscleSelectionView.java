@@ -291,7 +291,8 @@ public class MuscleSelectionView {
 
         selectedBodyParts.addAll(allBodyParts);
         for(Button button : bodyPartButtonMap.values()) {
-            updateButtonStates(button);
+            button.setUserData(BodyPartButtonStates.SELECT);
+            button.setStyle("-fx-border-color: green; -fx-border-width: 2;");
         }
     }
 
