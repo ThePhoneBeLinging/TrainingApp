@@ -23,7 +23,7 @@ public class WorkoutUtils {
 
     private static void removeInvalidWorkouts() {
         savedWorkouts = savedWorkouts.stream()
-                .filter(workout -> workout.getName() != null || workout.getDescription() != null || !workout.getExercises().isEmpty())
+                .filter(workout -> workout.getName() != null || !workout.getExercises().isEmpty())
                 .collect(Collectors.toList());
     }
 

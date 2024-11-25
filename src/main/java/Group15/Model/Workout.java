@@ -14,7 +14,6 @@ public class Workout implements Serializable {
     private static final int BREAK_BETWEEN_EXERCISES = 60000;
 
     private String name;
-    private String description;
     private Boolean isSaved = false;
 
     public Workout() {
@@ -51,12 +50,30 @@ public class Workout implements Serializable {
         return name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public String makeDescription() {
+        StringBuilder description = new StringBuilder();
+        int duration = calculateWorkoutDuration() / 60000;
+        description.append(duration + " min. ");
+        for (BodyPart bodyPart : usedBodyParts()) {
+            if (usedBodyParts().indexOf(bodyPart) == usedBodyParts().size() - 1) {
+                description.append(bodyPart.toString() + ".");
+                break;
+            }
+            description.append(bodyPart.toString() + ", ");
+        }
+        return description.toString();
     }
 
-    public String getDescription() {
-        return description;
+    private List<BodyPart> usedBodyParts() {
+        List<BodyPart> usedBodyParts = new ArrayList<>();
+        for (WorkoutExercise exercise : exercises) {
+            BodyPart bodyPart = exercise.getExercise().bodyParts.getFirst();
+            if (usedBodyParts.contains(bodyPart)) {
+                continue;
+            }
+            usedBodyParts.add(bodyPart);
+        }
+        return usedBodyParts;
     }
 
     public void addExercise(WorkoutExercise exercise) {
