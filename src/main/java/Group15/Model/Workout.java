@@ -55,6 +55,10 @@ public class Workout implements Serializable {
         int duration = calculateWorkoutDuration() / 60000;
         description.append(duration + " min. ");
         for (BodyPart bodyPart : usedBodyParts()) {
+            if (usedBodyParts().indexOf(bodyPart) == usedBodyParts().size() - 1) {
+                description.append(bodyPart.toString() + ".");
+                break;
+            }
             description.append(bodyPart.toString() + ", ");
         }
         return description.toString();
