@@ -43,14 +43,14 @@ public class WorkoutUtils {
         return savedWorkouts;
     }
 
-    public static List<Workout> getPopularWorkouts(){return popularWorkouts;}
+    public static List<Workout> getPopularWorkouts(){
+        return popularWorkouts;
+    }
 
     public static void addWorkout(Workout workout) {
         savedWorkouts.add(workout);
         writeToFile();
     }
 
-    public static void writeToFile() {
-        JSONParser.saveObjectsAsJSON(USER_DATA_PATH, savedWorkouts.toArray());
-    }
+    public static void writeToFile() {JSONParser.saveObjectsAsJSON(USER_DATA_PATH, savedWorkouts.toArray());}
 }
