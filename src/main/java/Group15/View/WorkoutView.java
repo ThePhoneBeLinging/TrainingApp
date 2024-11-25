@@ -25,9 +25,9 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 public class WorkoutView {
-    private static Workout workout;
-    private static String title = "Workout Details";
-    private static String[] buttons = {"Back", "Edit Workout", "Save"};
+    private  static Workout workout;
+    private static final String title = "Workout Details";
+    private static final String[] buttons = {"Back", "Edit Workout", "Save"};
 
     public static Scene createScene(Workout workoutToEdit) {
         workout = workoutToEdit;
@@ -41,7 +41,7 @@ public class WorkoutView {
         Node WorkoutPane = createWorkoutPane(workout);
         layout.setCenter(WorkoutPane);
 
-        Pane buttonPane = createButtonPane(workout);
+        Pane buttonPane = createButtonPane();
         buttonPane.setPadding(new Insets(20, 0, 0, 0));
         layout.setBottom(buttonPane);
 
@@ -88,8 +88,8 @@ public class WorkoutView {
             exerciseSetsLabel.setFont(Font.font("Arial", FontWeight.LIGHT, 16));
             exerciseRepsLabel.setFont(Font.font("Arial", FontWeight.LIGHT, 16));
 
-            EventHandler<MouseEvent> clickAction = event ->
-            {
+            EventHandler<MouseEvent> clickAction = _ ->
+                {
                 System.out.println("Image or title clicked for exercise: " + workoutExercise.getExercise().title);
                 Scene exerciseDetailsScene = ExerciseDetailsView.createScene(workoutExercise.getExercise());
                 ViewController.setScene(exerciseDetailsScene);
@@ -124,7 +124,7 @@ public class WorkoutView {
         workoutTitleLabel.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.ITALIC, 24));
 
         Button editNameButton = new Button("Edit Name");
-        editNameButton.setOnAction(event -> {
+        editNameButton.setOnAction(_ -> {
             Dialog<String> editNameDialog = new Dialog<>();
             editNameDialog.setTitle("Edit Workout Name");
 
@@ -152,9 +152,22 @@ public class WorkoutView {
             });
         });
 
-        workoutTitleHBox.getChildren().addAll(workoutTitleLabel, editNameButton);
+        Label workoutDurationLabel = new Label(formatWorkoutDuration(workout.getWorkoutDuration()));
+        workoutDurationLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        workoutDurationLabel.setAlignment(Pos.CENTER_RIGHT);
+        HBox.setHgrow(workoutDurationLabel, Priority.ALWAYS);
+
+        workoutTitleHBox.getChildren().addAll(workoutTitleLabel, editNameButton, workoutDurationLabel);
 
         return workoutTitleHBox;
+    }
+
+    private static String formatWorkoutDuration(int durationInMilli) {
+        int totalSeconds = durationInMilli / 1000;
+        int hours = totalSeconds / 3600;
+        int minutes = (totalSeconds % 3600) / 60;
+        int seconds = totalSeconds % 60;
+        return String.format("Duration: %02d:%02d:%02d", hours, minutes, seconds);
     }
 
     private static void createSuccessSaveDialog() {

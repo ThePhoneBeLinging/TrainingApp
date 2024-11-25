@@ -9,6 +9,8 @@ import java.util.List;
 public class WorkoutAlgorithm {
 
     private static HashMap<String, Boolean> selectedExercises;
+    private static int MAX_SETS = 3;
+    private static int REPS_PER_SET = 5;
 
     public static Workout createWorkoutFromExercises(
             List<BodyPart> selectedBodyParts,
@@ -16,16 +18,15 @@ public class WorkoutAlgorithm {
             List<Equipment> equipment,
             int timeInMinutes){
         selectedExercises = new HashMap<>();
-        int timeLeftInMilli = timeInMinutes * 60000;
+        int timeInMilli = timeInMinutes * 60000;
         Workout workout = new Workout();
-        int breakBetweenSets = 120000;
         int bodyPartIndex = 0;
         int nullExercisesInARow = 0;
 
-        while (timeLeftInMilli > 0)
+        while (workout.getWorkoutDuration() <= timeInMilli)
         {
             Exercise validExercise = getValidExercise(selectedBodyParts.get(bodyPartIndex), bodyPartsToAvoid, equipment);
-            // If this happens, we have most likely gathered all exercises that fit the given parameters
+            bodyPartIndex = (bodyPartIndex + 1) % selectedBodyParts.size();
             if (validExercise == null)
             {
                 nullExercisesInARow++;
@@ -33,36 +34,20 @@ public class WorkoutAlgorithm {
                 {
                     return workout;
                 }
-                bodyPartIndex = (bodyPartIndex + 1) % selectedBodyParts.size();
                 continue;
             }
             nullExercisesInARow = 0;
+            selectedExercises.put(validExercise.title,true);
 
             WorkoutExercise workoutExercise = new WorkoutExercise();
             workoutExercise.setExercise(validExercise);
+            workoutExercise.setRepsPerSet(REPS_PER_SET);
+            workoutExercise.setSets(MAX_SETS);
 
-            // This is basicly what musti does, might not be optimal
-            workoutExercise.setRepsPerSet(5);
-            int timePerSet = validExercise.timePerRep * 5;
-
-            while (timeLeftInMilli > 0 && workoutExercise.getSets() < 3)
-            {
-                timeLeftInMilli -= timePerSet;
-                workoutExercise.setSets(workoutExercise.getSets() + 1);
-                timeLeftInMilli -= breakBetweenSets;
-            }
-            selectedExercises.put(validExercise.title,true);
             workout.addExercise(workoutExercise);
-            bodyPartIndex = (bodyPartIndex + 1) % selectedBodyParts.size();
-            // Check if time is spent, if so, we remove the last set or exercise if sets = 1
-            if (timeLeftInMilli <= 0)
+
+            while (workout.getWorkoutDuration() >= timeInMilli)
             {
-                // If we only went over time because of the break between sets, we can simply return the
-                // workout without removal
-                if (timeLeftInMilli <= (breakBetweenSets*-1))
-                {
-                    return workout;
-                }
                 if (workoutExercise.getSets() == 1)
                 {
                     workout.removeExercise(workoutExercise);
@@ -71,8 +56,13 @@ public class WorkoutAlgorithm {
                 {
                     workoutExercise.setSets(workoutExercise.getSets() - 1);
                 }
-                return workout;
+
+                if (workout.getWorkoutDuration() < timeInMilli)
+                {
+                    return workout;
+                }
             }
+
         }
 
         return null;

@@ -10,12 +10,38 @@ import java.util.List;
 
 public class Workout implements Serializable {
     private final List<WorkoutExercise> exercises = new ArrayList<>();
+    public static final int BREAK_BETWEEN_SETS = 180000;
+    private static final int BREAK_BETWEEN_EXERCISES = 60000;
+
     private String name;
     private String description;
     private Boolean isSaved = false;
 
     public Workout() {
     }
+
+    public int getWorkoutDuration()
+    {
+        int workoutDuration = 0;
+        boolean first = true;
+        for (WorkoutExercise exercise : exercises)
+        {
+            if (first)
+            {
+                first = false;
+            }
+            else
+            {
+                workoutDuration+= BREAK_BETWEEN_EXERCISES;
+            }
+
+            int timeForSet = exercise.getRepsPerSet() * exercise.getExercise().timePerRep;
+            workoutDuration += timeForSet * exercise.getSets();
+            workoutDuration += BREAK_BETWEEN_SETS * (exercise.getSets() - 1);
+        }
+        return workoutDuration;
+    }
+
 
     public void setName(String name) {
         this.name = name;
