@@ -36,10 +36,7 @@ public class Workout implements Serializable {
 
             int timeForSet = exercise.getRepsPerSet() * exercise.getExercise().timePerRep;
             workoutDuration += timeForSet * exercise.getSets();
-            if (exercise.getSets() != 1)
-            {
-                workoutDuration += BREAK_BETWEEN_SETS * exercise.getSets() - 1;
-            }
+            workoutDuration += BREAK_BETWEEN_SETS * (exercise.getSets() - 1);
         }
         return workoutDuration;
     }
