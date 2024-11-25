@@ -8,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -54,8 +55,8 @@ public class HomeScreenView {
         quickWorkoutPane.setAlignment(Pos.CENTER);
         quickWorkoutPane.setPrefSize(640, 600);
         quickWorkoutPane.setMaxWidth(Region.USE_PREF_SIZE);
-        Pane savedWorkoutsPane = createWorkoutsPane("Saved");
-        Pane popularWorkoutsPane = createWorkoutsPane("Popular");
+        ScrollPane savedWorkoutsPane = createWorkoutsPane("Saved");
+        ScrollPane popularWorkoutsPane = createWorkoutsPane("Popular");
         quickWorkoutPane.getChildren().addAll(savedWorkoutsPane, popularWorkoutsPane);
 
         return quickWorkoutPane;
@@ -88,11 +89,12 @@ public class HomeScreenView {
         return buttonPane;
     }
 
-    private static Pane createWorkoutsPane(String workoutsToShow) {
+    private static ScrollPane createWorkoutsPane(String workoutsToShow) {
         VBox workoutsPane = new VBox();
         workoutsPane.setPrefSize(320, 600);
         workoutsPane.setMaxWidth(Region.USE_PREF_SIZE);
         workoutsPane.setSpacing(10);
+        workoutsPane.setPadding(new Insets(10));
         workoutsPane.setAlignment(Pos.TOP_CENTER);
         workoutsPane.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, null, null)));
 
@@ -100,8 +102,8 @@ public class HomeScreenView {
         title.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         workoutsPane.getChildren().add(title);
 
-        MockWorkouts mcokData = new MockWorkouts();
-        List<Workout> favoriteWorkouts = mcokData.getWorkouts();
+        MockWorkouts mockData = new MockWorkouts();
+        List<Workout> favoriteWorkouts = mockData.getWorkouts();
 
         List<Workout> workouts;
         if ("Saved".equals(workoutsToShow)) {
@@ -126,6 +128,10 @@ public class HomeScreenView {
             workoutsPane.getChildren().add(workoutItem);
         }
 
-        return workoutsPane;
+        ScrollPane scrollPane = new ScrollPane(workoutsPane);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setPrefViewportHeight(600);
+
+        return scrollPane;
     }
 }
