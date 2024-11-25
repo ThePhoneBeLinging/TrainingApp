@@ -36,7 +36,7 @@ public class WorkoutUtils {
         writeToFile();
     }
 
-    private static void writeToFile() {
+    public static void writeToFile() {
         JSONParser.saveObjectsAsJSON(USER_DATA_PATH, savedWorkouts.toArray());
     }
 }

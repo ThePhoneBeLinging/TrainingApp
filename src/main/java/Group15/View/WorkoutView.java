@@ -176,7 +176,6 @@ public class WorkoutView {
     }
 
     private static void handleSaveAction() {
-        // Create a dialog box
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Save Workout");
         alert.setHeaderText("Choose an option");
@@ -190,7 +189,12 @@ public class WorkoutView {
 
         alert.showAndWait().ifPresent(type -> {
             if (type == buttonTypeSave) {
-                WorkoutUtils.addWorkout(WorkoutView.workout);
+                if (!workout.getIsSaved()) {
+                    workout.setIsSaved(true);
+                    WorkoutUtils.addWorkout(WorkoutView.workout);
+                } else {
+                    WorkoutUtils.writeToFile();
+                }
                 ViewController.goHome();
             } else if (type == buttonTypePDF) {
                 try {
