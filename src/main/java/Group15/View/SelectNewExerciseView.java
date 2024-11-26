@@ -21,10 +21,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 public class SelectNewExerciseView {
-    private static Exercise exerciseToSwap;
+    private static WorkoutExercise exerciseToSwap;
 
-    public static Scene createScene(Exercise exercise, Workout workout) {
-        exerciseToSwap = exercise;
+    public static Scene createScene(WorkoutExercise workoutExercise, Workout workout) {
+        exerciseToSwap = workoutExercise;
         VBox vBox = new VBox();
         vBox.getChildren().add(createTitlePane());
         vBox.setPrefSize(640, 400);
@@ -92,13 +92,11 @@ public class SelectNewExerciseView {
                     workoutExercise.setRepsPerSet(5);
                     workout.addExercise(workoutExercise);
                 } else {
-                    var workoutExercise = new WorkoutExercise();
-                    workoutExercise.setExercise(exerciseToSwap);
                     var otherWorkOutExercise = new WorkoutExercise();
                     otherWorkOutExercise.setExercise(exercise);
-                    otherWorkOutExercise.setSets(workoutExercise.getSets());
-                    otherWorkOutExercise.setRepsPerSet(workoutExercise.getRepsPerSet());
-                    workout.swapExercise(workoutExercise, otherWorkOutExercise);
+                    otherWorkOutExercise.setSets(exerciseToSwap.getSets());
+                    otherWorkOutExercise.setRepsPerSet(exerciseToSwap.getRepsPerSet());
+                    workout.swapExercise(exerciseToSwap, otherWorkOutExercise);
                 }
                 ViewController.applyChanges(EditWorkoutView.createScene(workout));
             });

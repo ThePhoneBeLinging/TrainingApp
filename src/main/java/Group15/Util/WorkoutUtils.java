@@ -33,7 +33,7 @@ public class WorkoutUtils {
                 .collect(Collectors.toList());
         if (popularWorkouts != null) {
             popularWorkouts = popularWorkouts.stream()
-                    .filter(workout -> workout.getName() != null || workout.getDescription() != null || !workout.getExercises().isEmpty())
+                    .filter(workout -> workout.getName() != null || !workout.getExercises().isEmpty())
                     .collect(Collectors.toList());
         }
 
