@@ -20,12 +20,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 
-public class EditWorkoutView
-{
+public class EditWorkoutView {
     private static final String[] buttons = {"Cancel", "Add Exercise", "Apply Changes"};
 
-    public static Scene createScene(Workout workout)
-    {
+    public static Scene createScene(Workout workout) {
         BorderPane layout = new BorderPane();
         layout.setPadding(new Insets(20));
 
@@ -43,8 +41,7 @@ public class EditWorkoutView
         return new Scene(layout);
     }
 
-    private static Pane createTitlePane()
-    {
+    private static Pane createTitlePane() {
         HBox titlePane = new HBox();
         titlePane.setAlignment(Pos.TOP_CENTER);
         Label titleLabel = new Label("Edit Workout");
@@ -54,25 +51,20 @@ public class EditWorkoutView
         return titlePane;
     }
 
-    private static Node createWorkoutPane(Workout workout)
-    {
+    private static Node createWorkoutPane(Workout workout) {
         VBox workoutPane = new VBox();
         workoutPane.setAlignment(Pos.TOP_CENTER);
         workoutPane.setSpacing(20);
         workoutPane.setPrefSize(640, 600);
         workoutPane.setMaxWidth(Region.USE_PREF_SIZE);
 
-        for (WorkoutExercise workoutExercise : workout.getExercises())
-        {
+        for (WorkoutExercise workoutExercise : workout.getExercises()) {
             ImageView imageView = null;
 
-            try
-            {
+            try {
                 Image image = new Image(WorkoutView.class.getResource("/images/" + workoutExercise.getExercise().title + ".png").toExternalForm(), 100, 100, true, true);
                 imageView = new ImageView(image);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 System.out.println("Error loading image for exercise: " + workoutExercise.getExercise().title);
                 imageView = new ImageView();
             }
@@ -108,7 +100,7 @@ public class EditWorkoutView
             });
 
             swapExerciseButton.setOnAction(e -> {
-                ViewController.setScene(SelectNewExerciseView.createScene(workoutExercise.getExercise(), workout));
+                ViewController.setScene(SelectNewExerciseView.createScene(workoutExercise, workout));
             });
 
             //
@@ -129,37 +121,31 @@ public class EditWorkoutView
         return scrollPane;
     }
 
-    private static Pane createButtonPane(Workout workout)
-    {
+    private static Pane createButtonPane(Workout workout) {
         HBox buttonPane = new HBox();
         buttonPane.setAlignment(Pos.CENTER);
 
-        for (String button : buttons)
-        {
+        for (String button : buttons) {
             Button newButton = new Button(button);
             newButton.setPrefSize(200, 50);
             newButton.setOnAction(_ ->
-                {
-                switch (button)
-                {
+            {
+                switch (button) {
                     //TODO This should either be a copy of the workout object, or use more advanced navigation :)
-                    case "Cancel":
-                    {
+                    case "Cancel": {
                         ViewController.goBack();
                         break;
                     }
-                    case "Add Exercise":
-                    {
-                        ViewController.setScene(SelectNewExerciseView.createScene(null,workout));
+                    case "Add Exercise": {
+                        ViewController.setScene(SelectNewExerciseView.createScene(null, workout));
                         break;
                     }
-                    case "Apply Changes":
-                    {
+                    case "Apply Changes": {
                         ViewController.applyChanges(WorkoutView.createScene(workout));
                         break;
                     }
                 }
-                });
+            });
 
             buttonPane.getChildren().add(newButton);
             buttonPane.setSpacing(20);
