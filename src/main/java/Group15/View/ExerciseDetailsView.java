@@ -73,10 +73,10 @@ public class ExerciseDetailsView {
         descriptionLabel.setWrapText(true);
         descriptionLabel.setMaxWidth(600);
 
-        Label bodyPartLabel = new Label("Body Part: " + exercise.bodyParts);
+        Label bodyPartLabel = new Label("Body Part: " + exercise.makeBodypartsString());
         bodyPartLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
-        Label equipmentLabel = new Label("Equipment needed: " + exercise.equipment);
+        Label equipmentLabel = new Label("Equipment needed: " + exercise.makeEquipmentString());
         equipmentLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
 
         Label difficultyLabel = new Label("Difficulty: " + exercise.difficulty);

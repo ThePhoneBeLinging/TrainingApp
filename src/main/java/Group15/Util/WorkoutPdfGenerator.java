@@ -28,8 +28,8 @@ public class WorkoutPdfGenerator {
         for (WorkoutExercise workoutExercise : workout.getExercises()) {
             document.add(new Paragraph("Exercise: " + workoutExercise.getExercise().title).setFontSize(16).setBold());
             document.add(new Paragraph("Description: " + workoutExercise.getExercise().description).setFontSize(12));
-            document.add(new Paragraph("Body Part: " + workoutExercise.getExercise().bodyParts).setFontSize(12));
-            document.add(new Paragraph("Equipment: " + workoutExercise.getExercise().equipment + " | Difficulty: " + workoutExercise.getExercise().difficulty).setFontSize(12));
+            document.add(new Paragraph("Body Part: " + workoutExercise.getExercise().makeBodypartsString()).setFontSize(12));
+            document.add(new Paragraph("Equipment: " + workoutExercise.getExercise().makeEquipmentString() + " | Difficulty: " + workoutExercise.getExercise().difficulty).setFontSize(12));
 
             try {
                 URL imageUrl = WorkoutView.class.getResource("/images/" + workoutExercise.getExercise().title + ".png");

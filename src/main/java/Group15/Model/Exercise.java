@@ -29,6 +29,28 @@ public class Exercise
 
     }
 
+    public String makeBodypartsString() {
+        StringBuilder bodypartsString = new StringBuilder();
+        for (BodyPart bodyPart : bodyParts) {
+            bodypartsString.append(bodyPart.toString());
+            if (bodyParts.indexOf(bodyPart) != bodyParts.size() - 1) {
+                bodypartsString.append(", ");
+            }
+        }
+        return bodypartsString.toString();
+    }
+
+    public String makeEquipmentString() {
+        StringBuilder equipmentString = new StringBuilder();
+        for (Equipment equipment : equipment) {
+            equipmentString.append(equipment.toString());
+            if (this.equipment.indexOf(equipment) != this.equipment.size() - 1) {
+                equipmentString.append(", ");
+            }
+        }
+        return equipmentString.toString();
+    }
+
     @Override
     public boolean equals(Object obj)
     {
