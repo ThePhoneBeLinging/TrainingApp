@@ -20,15 +20,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class SelectNewExerciseView
-{
+public class SelectNewExerciseView {
     private static Exercise exerciseToSwap;
-    public static Scene createScene(Exercise exercise , Workout workout)
-    {
+
+    public static Scene createScene(Exercise exercise, Workout workout) {
         exerciseToSwap = exercise;
         VBox vBox = new VBox();
         vBox.getChildren().add(createTitlePane());
-        vBox.setPrefSize(640,400);
+        vBox.setPrefSize(640, 400);
         vBox.setMaxWidth(vBox.getPrefWidth());
         vBox.setMaxHeight(vBox.getPrefHeight());
         vBox.setAlignment(Pos.CENTER);
@@ -36,8 +35,7 @@ public class SelectNewExerciseView
         return new Scene(vBox);
     }
 
-    private static Pane createTitlePane()
-    {
+    private static Pane createTitlePane() {
         HBox titlePane = new HBox();
         titlePane.setAlignment(Pos.TOP_CENTER);
         Label titleLabel = new Label("Select Exercise");
@@ -47,25 +45,20 @@ public class SelectNewExerciseView
         return titlePane;
     }
 
-    private static Node createWorkoutPane(Workout workout)
-    {
+    private static Node createWorkoutPane(Workout workout) {
         VBox workoutPane = new VBox();
         workoutPane.setAlignment(Pos.CENTER);
         workoutPane.setSpacing(20);
         workoutPane.setPrefSize(640, 600);
         workoutPane.setMaxWidth(Region.USE_PREF_SIZE);
 
-        for (Exercise exercise : Api.getAllExercises())
-        {
+        for (Exercise exercise : Api.getAllExercises()) {
             ImageView imageView = null;
 
-            try
-            {
+            try {
                 Image image = new Image(WorkoutView.class.getResource("/images/" + exercise.title + ".png").toExternalForm(), 100, 100, true, true);
                 imageView = new ImageView(image);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 System.out.println("Error loading image for exercise: " + exercise.title);
                 imageView = new ImageView();
             }
@@ -74,10 +67,10 @@ public class SelectNewExerciseView
             exerciseLabel1.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 
             EventHandler<MouseEvent> clickAction = event ->
-                {
+            {
                 System.out.println("Image or title clicked for exercise: " + exercise.title);
                 ViewController.setScene(ExerciseDetailsView.createScene(exercise));
-                };
+            };
             HBox exerciseBox = new HBox();
             exerciseBox.setOnMouseClicked(clickAction);
             exerciseBox.setSpacing(10);
@@ -91,23 +84,24 @@ public class SelectNewExerciseView
             Button chooseExerciseButton = new Button("Choose Exercise");
 
             chooseExerciseButton.setOnAction(e ->
-                {
-                    if (exerciseToSwap == null)
-                    {
-                        var workoutExercise = new WorkoutExercise();
-                        workoutExercise.setExercise(exercise);
-                        workout.addExercise(workoutExercise);
-                    }
-                    else
-                    {
-                        var workoutExercise = new WorkoutExercise();
-                        workoutExercise.setExercise(exercise);
-                        var otherWorkOutExercise = new WorkoutExercise();
-                        otherWorkOutExercise.setExercise(exercise);
-                        workout.swapExercise(workoutExercise,otherWorkOutExercise);
-                    }
+            {
+                if (exerciseToSwap == null) {
+                    var workoutExercise = new WorkoutExercise();
+                    workoutExercise.setExercise(exercise);
+                    workoutExercise.setSets(3);
+                    workoutExercise.setRepsPerSet(5);
+                    workout.addExercise(workoutExercise);
+                } else {
+                    var workoutExercise = new WorkoutExercise();
+                    workoutExercise.setExercise(exerciseToSwap);
+                    var otherWorkOutExercise = new WorkoutExercise();
+                    otherWorkOutExercise.setExercise(exercise);
+                    otherWorkOutExercise.setSets(workoutExercise.getSets());
+                    otherWorkOutExercise.setRepsPerSet(workoutExercise.getRepsPerSet());
+                    workout.swapExercise(workoutExercise, otherWorkOutExercise);
+                }
                 ViewController.applyChanges(EditWorkoutView.createScene(workout));
-                });
+            });
 
             exerciseBox.getChildren().addAll(imageView, exerciseLabel1, spacer, chooseExerciseButton);
             workoutPane.getChildren().add(exerciseBox);
