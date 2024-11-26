@@ -53,4 +53,11 @@ public class ViewController
         navigationStack.push(HomeScreenView.createScene());
         stage.setScene(navigationStack.peek());
     }
+
+    public static void updateScene(Scene scene)
+    {
+        navigationStack.pop();
+        navigationStack.push(scene);
+        stage.setScene(navigationStack.peek());
+    }
 }

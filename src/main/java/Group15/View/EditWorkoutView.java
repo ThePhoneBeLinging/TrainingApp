@@ -96,16 +96,12 @@ public class EditWorkoutView {
 
             deleteExerciseButton.setOnAction(e -> {
                 workout.removeExercise(workoutExercise);
-                ViewController.setScene(EditWorkoutView.createScene(workout));
+                ViewController.updateScene(EditWorkoutView.createScene(workout));
             });
 
             swapExerciseButton.setOnAction(e -> {
                 ViewController.setScene(SelectNewExerciseView.createScene(workoutExercise, workout));
             });
-
-            //
-            //
-            //
 
             exerciseBox.getChildren().addAll(imageView, exerciseLabel1, spacer, deleteExerciseButton, swapExerciseButton);
 
