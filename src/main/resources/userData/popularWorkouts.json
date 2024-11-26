@@ -153,7 +153,7 @@
       }
     ],
     "name": "Leg Workout",
-    "isSaved": true
+    "isSaved": false
   },
   {
     "exercises": [
@@ -306,7 +306,7 @@
       }
     ],
     "name": "Arm Workout",
-    "isSaved": true
+    "isSaved": false
   },
   {
     "exercises": [
@@ -460,7 +460,7 @@
       }
     ],
     "name": "Back and Shoulders Workout",
-    "isSaved": true
+    "isSaved": false
   },
   {
     "exercises": [
@@ -614,7 +614,7 @@
       }
     ],
     "name": "Full Body Workout",
-    "isSaved": true
+    "isSaved": false
   },
   {
     "exercises": [
@@ -694,7 +694,7 @@
       }
     ],
     "name": "Full Body Workout",
-    "isSaved": true
+    "isSaved": false
   },
   {
     "exercises": [
@@ -919,6 +919,6 @@
       }
     ],
     "name": "Full Body Workout",
-    "isSaved": true
+    "isSaved": false
   }
 ]
