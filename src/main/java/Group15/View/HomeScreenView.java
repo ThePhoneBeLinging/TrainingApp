@@ -106,15 +106,13 @@ public class HomeScreenView {
         title.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         workoutsPane.getChildren().add(title);
 
-        MockWorkouts mockData = new MockWorkouts();
-        List<Workout> favoriteWorkouts = mockData.getWorkouts();
 
         List<Workout> workouts;
+
         if ("Saved".equals(workoutsToShow)) {
             workouts = WorkoutUtils.getSavedWorkouts();
         } else {
-            // TODO: Fetch popular workouts
-            workouts = favoriteWorkouts; // Placeholder for popular workouts
+            workouts = WorkoutUtils.getPopularWorkouts();
         }
 
         for (Workout workout : workouts) {
