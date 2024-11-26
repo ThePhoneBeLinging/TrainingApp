@@ -173,11 +173,12 @@ public class WorkoutView {
         return String.format("Duration: %02d:%02d:%02d", hours, minutes, seconds);
     }
 
-    private static void createSuccessSaveDialog() {
+    private static void createSuccessSaveDialog(String filePath) {
         Dialog<String> succesDialog = new Dialog<>();
         succesDialog.setTitle("!");
 
-        Label successSaveLabel = new Label("Succesfully saved workout as PDF");
+        Label successSaveLabel = new Label("Succesfully saved workout as PDF to: " + filePath);
+        successSaveLabel.setWrapText(true);
         successSaveLabel.setStyle("-fx-font-weight: bold");
 
         VBox dialogVBox = new VBox(10, successSaveLabel);
@@ -203,7 +204,7 @@ public class WorkoutView {
             newButton.setOnAction(_ -> {
                 switch (button) {
                     case "Back" -> ViewController.goBack();
-                    case "Edit Workout" -> ViewController.setScene(EditWorkoutView.createScene(WorkoutView.workout));
+                    case "Edit Workout" -> ViewController.setScene(EditWorkoutView.createScene(workout));
                     case "Save" -> handleSaveAction();
                 }
             });
@@ -230,15 +231,16 @@ public class WorkoutView {
             if (type == buttonTypeSave) {
                 if (!workout.getIsSaved()) {
                     workout.setIsSaved(true);
-                    WorkoutUtils.addWorkout(WorkoutView.workout);
+                    WorkoutUtils.addWorkout(workout);
                 } else {
                     WorkoutUtils.writeToFile();
                 }
                 ViewController.goHome();
             } else if (type == buttonTypePDF) {
                 try {
-                    WorkoutPdfGenerator.saveWorkoutAsPdf(WorkoutView.workout, "workout.pdf");
-                    createSuccessSaveDialog();
+                    String filePath = workout.getName() +".pdf";
+                    WorkoutPdfGenerator.saveWorkoutAsPdf(workout, filePath);
+                    createSuccessSaveDialog(filePath);
                 } catch (FileNotFoundException e) {
                     // TODO: Show error message to user instead of printing in console
                     System.err.println("Failed to save workout as PDF: " + e.getMessage());
