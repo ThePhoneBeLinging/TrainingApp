@@ -36,9 +36,12 @@ public class HomeScreenView {
         Pane quickWorkoutPane = quickWorkoutPane();
         layout.setCenter(quickWorkoutPane);
 
+        VBox bottomPane = new VBox();
+        bottomPane.setAlignment(Pos.CENTER);
         Pane buttonPane = createButtonPane();
         buttonPane.setPadding(new Insets(20, 0, 0, 0));
-        layout.setBottom(buttonPane);
+        bottomPane.getChildren().addAll(buttonPane, legalLabel());
+        layout.setBottom(bottomPane);
 
         return new Scene(layout);
     }
@@ -149,5 +152,14 @@ public class HomeScreenView {
         } else {
             System.err.println("Desktop is not supported. Cannot open PayPal link.");
         }
+    }
+
+    private static Label legalLabel() {
+        Label legalLabel = new Label("We are not responsible for any injuries you may sustain while using the app.");
+        legalLabel.setFont(Font.font("Arial", FontWeight.NORMAL, 12));
+        legalLabel.setWrapText(true);
+        legalLabel.setAlignment(Pos.CENTER);
+        legalLabel.setPadding(new Insets(10));
+        return legalLabel;
     }
 }
