@@ -155,14 +155,39 @@ public class WorkoutView {
             });
         });
 
+        workoutTitleHBox.getChildren().addAll(workoutTitleLabel, editNameButton);
+
+        if (workout.getIsSaved()) {
+            Button deleteWorkoutButton = deleteButton();
+            workoutTitleHBox.getChildren().add(deleteWorkoutButton);
+        }
+
         Label workoutDurationLabel = new Label(formatWorkoutDuration(workout.calculateWorkoutDuration()));
         workoutDurationLabel.setFont(Font.font("Arial", FontWeight.BOLD, 16));
         workoutDurationLabel.setAlignment(Pos.CENTER_RIGHT);
         HBox.setHgrow(workoutDurationLabel, Priority.ALWAYS);
 
-        workoutTitleHBox.getChildren().addAll(workoutTitleLabel, editNameButton, workoutDurationLabel);
+        workoutTitleHBox.getChildren().add(workoutDurationLabel);
 
         return workoutTitleHBox;
+    }
+
+    private static Button deleteButton() {
+        Button deleteWorkoutButton = new Button("Delete Workout");
+        deleteWorkoutButton.setOnAction(_ -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete Workout");
+            alert.setHeaderText("Are you sure you want to delete this workout?");
+            alert.setContentText("This action cannot be undone.");
+
+            alert.showAndWait().ifPresent(type -> {
+                if (type == ButtonType.OK) {
+                    WorkoutUtils.deleteWorkout(workout);
+                    ViewController.goHome();
+                }
+            });
+        });
+        return deleteWorkoutButton;
     }
 
     public static String formatWorkoutDuration(int durationInMilli) {

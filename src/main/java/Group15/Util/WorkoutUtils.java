@@ -52,5 +52,10 @@ public class WorkoutUtils {
         writeToFile();
     }
 
+    public static void deleteWorkout(Workout workout) {
+        savedWorkouts.remove(workout);
+        writeToFile();
+    }
+
     public static void writeToFile() {JSONParser.saveObjectsAsJSON(USER_DATA_PATH, savedWorkouts.toArray());}
 }
