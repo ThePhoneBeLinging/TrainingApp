@@ -4,7 +4,7 @@ import Group15.Model.Workout;
 
 import Group15.Model.WorkoutExercise;
 import Group15.Util.WorkoutUtils;
-import Group15.WorkoutPdfGenerator;
+import Group15.Util.WorkoutPdfGenerator;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -67,6 +67,11 @@ public class WorkoutView {
 
         Node workoutTitleNode = createWorkoutTitleNode();
         workoutPane.getChildren().add(workoutTitleNode);
+        Label breakField = new Label("" + Workout.BREAK_BETWEEN_SETS / 1000 + " seconds break between sets");
+        String breakFieldString = Workout.BREAK_BETWEEN_SETS / 1000 + " seconds break between sets" + " | " + Workout.BREAK_BETWEEN_EXERCISES / 1000 + " seconds break between exercises";
+        breakField.setText(breakFieldString);
+        workoutPane.getChildren().add(breakField);
+        breakField.setFont(Font.font("Arial", FontWeight.MEDIUM, FontPosture.ITALIC, 18));
 
         for (WorkoutExercise workoutExercise : workout.getExercises()) {
             ImageView imageView = null;
@@ -160,7 +165,7 @@ public class WorkoutView {
         return workoutTitleHBox;
     }
 
-    private static String formatWorkoutDuration(int durationInMilli) {
+    public static String formatWorkoutDuration(int durationInMilli) {
         int totalSeconds = durationInMilli / 1000;
         int hours = totalSeconds / 3600;
         int minutes = (totalSeconds % 3600) / 60;

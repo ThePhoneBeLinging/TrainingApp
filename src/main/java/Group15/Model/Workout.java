@@ -11,7 +11,7 @@ import java.util.List;
 public class Workout implements Serializable {
     private final List<WorkoutExercise> exercises = new ArrayList<>();
     public static final int BREAK_BETWEEN_SETS = 180000;
-    private static final int BREAK_BETWEEN_EXERCISES = 60000;
+    public static final int BREAK_BETWEEN_EXERCISES = 60000;
 
     private String name;
     private Boolean isSaved = false;
