@@ -130,7 +130,7 @@ public class WorkoutView {
 
         workoutTitleHBox.getChildren().add(workoutTitleLabel);
 
-        if (workout.getIsSaved()) {
+        if (!WorkoutUtils.isPopularWorkout(workout)) {
             Button editNameButton = new Button("Edit Name");
             editNameButton.setOnAction(_ -> {
                 Dialog<String> editNameDialog = new Dialog<>();
@@ -159,9 +159,12 @@ public class WorkoutView {
                     }
                 });
             });
+            workoutTitleHBox.getChildren().add(editNameButton);
+        }
 
+        if (workout.getIsSaved()) {
             Button deleteWorkoutButton = deleteButton();
-            workoutTitleHBox.getChildren().addAll(editNameButton, deleteWorkoutButton);
+            workoutTitleHBox.getChildren().add(deleteWorkoutButton);
         }
 
         Label workoutDurationLabel = new Label(formatWorkoutDuration(workout.calculateWorkoutDuration()));
