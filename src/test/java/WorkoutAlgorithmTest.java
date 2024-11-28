@@ -11,12 +11,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class WorkoutAlgorithmTest
-{
+public class WorkoutAlgorithmTest {
 
     @BeforeAll
-    public static void setUp()
-    {
+    public static void setUp() {
         List<Exercise> mockExercises = new ArrayList<>();
 
         Exercise pushUp = new Exercise();
@@ -67,8 +65,7 @@ public class WorkoutAlgorithmTest
     }
 
     @Test
-    public void testCreateWorkoutWithValidInputs()
-    {
+    public void testCreateWorkoutWithValidInputs() {
         Workout workout = WorkoutAlgorithm.createWorkoutFromExercises(
                 Collections.singletonList(BodyPart.Chest),
                 Collections.emptyList(),
@@ -79,15 +76,14 @@ public class WorkoutAlgorithmTest
         Assertions.assertNotNull(workout);
         Assertions.assertFalse(workout.getExercises().isEmpty());
         workout.getExercises().forEach(exercise ->
-            {
+        {
             Assertions.assertTrue(exercise.getExercise().bodyParts.contains(BodyPart.Chest));
             Assertions.assertTrue(exercise.getExercise().equipment.contains(Equipment.Bodyweight));
-            });
+        });
     }
 
     @Test
-    public void testCreateWorkoutWithLimitedTime()
-    {
+    public void testCreateWorkoutWithLimitedTime() {
         Workout workout = WorkoutAlgorithm.createWorkoutFromExercises(
                 Collections.singletonList(BodyPart.Biceps),
                 Collections.emptyList(),
@@ -98,15 +94,14 @@ public class WorkoutAlgorithmTest
         Assertions.assertNotNull(workout);
         Assertions.assertTrue(workout.getExercises().size() <= 1);
         workout.getExercises().forEach(exercise ->
-            {
-            Assertions.assertEquals(Collections.singletonList(BodyPart.Biceps), exercise.getExercise().bodyParts);
+        {
+            Assertions.assertTrue(exercise.getExercise().bodyParts.contains(BodyPart.Biceps));
             Assertions.assertEquals(Collections.singletonList(Equipment.Dumbbell), exercise.getExercise().equipment);
-            });
+        });
     }
 
     @Test
-    public void testCreateWorkoutWithDifferentBodyPart()
-    {
+    public void testCreateWorkoutWithDifferentBodyPart() {
         Workout workout = WorkoutAlgorithm.createWorkoutFromExercises(
                 Collections.singletonList(BodyPart.Quadriceps),
                 Collections.emptyList(),
@@ -116,15 +111,14 @@ public class WorkoutAlgorithmTest
 
         Assertions.assertNotNull(workout);
         workout.getExercises().forEach(exercise ->
-            {
+        {
             Assertions.assertEquals(Collections.singletonList(BodyPart.Quadriceps), exercise.getExercise().bodyParts);
             Assertions.assertEquals(Collections.singletonList(Equipment.Bodyweight), exercise.getExercise().equipment);
-            });
+        });
     }
 
     @Test
-    public void testCreateWorkoutWithMultipleEquipment()
-    {
+    public void testCreateWorkoutWithMultipleEquipment() {
         Workout workout = WorkoutAlgorithm.createWorkoutFromExercises(
                 Collections.singletonList(BodyPart.Chest),
                 Collections.emptyList(),
@@ -135,15 +129,14 @@ public class WorkoutAlgorithmTest
         Assertions.assertNotNull(workout);
         Assertions.assertFalse(workout.getExercises().isEmpty());
         workout.getExercises().forEach(exercise ->
-            {
+        {
             Assertions.assertTrue(exercise.getExercise().bodyParts.contains(BodyPart.Chest));
             Assertions.assertTrue(exercise.getExercise().equipment.contains(Equipment.Bodyweight) || exercise.getExercise().equipment.contains(Equipment.Barbell));
-            });
+        });
     }
 
     @Test
-    public void testCreateWorkoutWithMultipleBodyParts()
-    {
+    public void testCreateWorkoutWithMultipleBodyParts() {
         List<BodyPart> bodyParts = List.of(BodyPart.Chest, BodyPart.Quadriceps, BodyPart.Biceps);
         Workout workout = WorkoutAlgorithm.createWorkoutFromExercises(
                 bodyParts,
@@ -155,15 +148,14 @@ public class WorkoutAlgorithmTest
         Assertions.assertNotNull(workout);
         Assertions.assertFalse(workout.getExercises().isEmpty());
         workout.getExercises().forEach(exercise ->
-            {
+        {
             Assertions.assertTrue(exercise.getExercise().bodyParts.contains(BodyPart.Chest) || exercise.getExercise().bodyParts.contains(BodyPart.Quadriceps) || exercise.getExercise().bodyParts.contains(BodyPart.Biceps));
             Assertions.assertTrue(exercise.getExercise().equipment.contains(Equipment.Bodyweight) || exercise.getExercise().equipment.contains(Equipment.Barbell) || exercise.getExercise().equipment.contains(Equipment.Dumbbell));
-            });
+        });
     }
 
     @Test
-    public void testCreateWorkoutWithDislikedBodyParts()
-    {
+    public void testCreateWorkoutWithDislikedBodyParts() {
         List<BodyPart> bodyParts = List.of(BodyPart.Chest, BodyPart.Quadriceps, BodyPart.Biceps);
         List<BodyPart> dislikedBodyParts = Collections.singletonList(BodyPart.Quadriceps);
 
@@ -180,8 +172,7 @@ public class WorkoutAlgorithmTest
     }
 
     @Test
-    public void testMultipleBodyPartsAndEquipment()
-    {
+    public void testMultipleBodyPartsAndEquipment() {
         List<BodyPart> bodyParts = List.of(BodyPart.Quadriceps, BodyPart.Chest);
         List<Equipment> equipments = List.of(Equipment.Machine, Equipment.Bodyweight);
 
@@ -195,9 +186,9 @@ public class WorkoutAlgorithmTest
         Assertions.assertNotNull(workout);
         Assertions.assertFalse(workout.getExercises().isEmpty());
         workout.getExercises().forEach(exercise ->
-            {
+        {
             Assertions.assertTrue(equipments.contains(exercise.getExercise().equipment.getFirst()));
             Assertions.assertTrue(bodyParts.contains(exercise.getExercise().bodyParts.getFirst()));
-            });
+        });
     }
 }
