@@ -104,6 +104,11 @@ public class Workout implements Serializable {
         if (!(obj instanceof Workout)) {
             return false;
         }
+
+        if (exercises.size() != ((Workout) obj).exercises.size()) {
+            return false;
+        }
+
         boolean result = true;
 
         for (int i = 0; i < exercises.size(); i++) {

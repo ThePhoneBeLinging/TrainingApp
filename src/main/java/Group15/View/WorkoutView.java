@@ -126,36 +126,41 @@ public class WorkoutView {
         Label workoutTitleLabel = new Label(workout.getName());
         workoutTitleLabel.setFont(Font.font("Arial", FontWeight.BOLD, FontPosture.ITALIC, 24));
 
-        Button editNameButton = new Button("Edit Name");
-        editNameButton.setOnAction(_ -> {
-            Dialog<String> editNameDialog = new Dialog<>();
-            editNameDialog.setTitle("Edit Workout Name");
 
-            Label instructionLabel = new Label("Enter a new name for your workout:");
-            TextField workoutNameInput = new TextField(workout.getName());
-            VBox dialogContent = new VBox(10, instructionLabel, workoutNameInput);
-            dialogContent.setAlignment(Pos.CENTER);
-            dialogContent.setPadding(new Insets(10));
 
-            editNameDialog.getDialogPane().setContent(dialogContent);
-            editNameDialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        workoutTitleHBox.getChildren().add(workoutTitleLabel);
 
-            editNameDialog.setResultConverter(dialogButton -> {
-                if (dialogButton == ButtonType.OK) {
-                    return workoutNameInput.getText().trim();
-                }
-                return null;
+        if (!WorkoutUtils.isPopularWorkout(workout)) {
+            Button editNameButton = new Button("Edit Name");
+            editNameButton.setOnAction(_ -> {
+                Dialog<String> editNameDialog = new Dialog<>();
+                editNameDialog.setTitle("Edit Workout Name");
+
+                Label instructionLabel = new Label("Enter a new name for your workout:");
+                TextField workoutNameInput = new TextField(workout.getName());
+                VBox dialogContent = new VBox(10, instructionLabel, workoutNameInput);
+                dialogContent.setAlignment(Pos.CENTER);
+                dialogContent.setPadding(new Insets(10));
+
+                editNameDialog.getDialogPane().setContent(dialogContent);
+                editNameDialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+                editNameDialog.setResultConverter(dialogButton -> {
+                    if (dialogButton == ButtonType.OK) {
+                        return workoutNameInput.getText().trim();
+                    }
+                    return null;
+                });
+
+                editNameDialog.showAndWait().ifPresent(newWorkoutName -> {
+                    if (!newWorkoutName.isEmpty()) {
+                        workout.setName(newWorkoutName);
+                        workoutTitleLabel.setText(newWorkoutName);
+                    }
+                });
             });
-
-            editNameDialog.showAndWait().ifPresent(newWorkoutName -> {
-                if (!newWorkoutName.isEmpty()) {
-                    workout.setName(newWorkoutName);
-                    workoutTitleLabel.setText(newWorkoutName);
-                }
-            });
-        });
-
-        workoutTitleHBox.getChildren().addAll(workoutTitleLabel, editNameButton);
+            workoutTitleHBox.getChildren().add(editNameButton);
+        }
 
         if (workout.getIsSaved()) {
             Button deleteWorkoutButton = deleteButton();

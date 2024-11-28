@@ -47,6 +47,13 @@ public class WorkoutUtils {
         return popularWorkouts;
     }
 
+    public static Boolean isPopularWorkout(Workout workout) {
+        if (workout.getIsSaved()) {
+            return false;
+        }
+        return popularWorkouts.contains(workout);
+    }
+
     public static void addWorkout(Workout workout) {
         savedWorkouts.add(workout);
         writeToFile();
