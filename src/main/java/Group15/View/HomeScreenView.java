@@ -1,6 +1,5 @@
 package Group15.View;
 
-import Group15.MockData.MockWorkouts;
 import Group15.Model.Workout;
 import Group15.Util.WorkoutUtils;
 import javafx.geometry.Insets;
